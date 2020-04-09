@@ -1,0 +1,92 @@
+#################
+## Eclipse
+#################
+*.pydevproject
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+#################
+## Idea
+#################
+**/*.iml
+.idea/
+
+#################
+## Maven
+#################
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
+!/.mvn/wrapper/maven-wrapper.jar
+
+#################
+## Logger Files
+#################
+/fdr-impl/logs/
+/fdr-node/fdr-node-maintain/logs/
+/fdr-node/fdr-node-record/logs/
+/fdr-node/fdr-node-inspect/logs/
+/fdr-node/fdr-node-all/logs/
+
+#################
+## Configuration Files
+#################
+/fdr-impl/conf/
+/fdr-node/fdr-node-maintain/conf/
+/fdr-node/fdr-node-record/conf/
+/fdr-node/fdr-node-inspect/conf/
+/fdr-node/fdr-node-all/conf/
+
+#################
+## Libext Files
+#################
+/fdr-node/fdr-node-maintain/libext/
+/fdr-node/fdr-node-record/libext/
+/fdr-node/fdr-node-inspect/libext/
+/fdr-node/fdr-node-all/libext/
+
+#################
+## Opt Files
+#################
+/fdr-node/fdr-node-maintain/opt/
+/fdr-node/fdr-node-record/opt/
+/fdr-node/fdr-node-inspect/opt/
+/fdr-node/fdr-node-all/opt/
+
+#################
+## Optext Files
+#################
+/fdr-node/fdr-node-maintain/optext/
+/fdr-node/fdr-node-record/optext/
+/fdr-node/fdr-node-inspect/optext/
+/fdr-node/fdr-node-all/optext/
