@@ -4,7 +4,10 @@
 
 #### 功能构建
 
-- (无)
+- 实现实体并通过单元测试。
+  - com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory
+  - com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting
+  - com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm
 
 #### Bug修复
 

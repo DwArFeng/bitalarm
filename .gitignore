@@ -52,41 +52,36 @@ buildNumber.properties
 #################
 ## Logger Files
 #################
-/fdr-impl/logs/
-/fdr-node/fdr-node-maintain/logs/
-/fdr-node/fdr-node-record/logs/
-/fdr-node/fdr-node-inspect/logs/
-/fdr-node/fdr-node-all/logs/
+/bitalarm-impl/logs/
+/bitalarm-node/bitalarm-node-maintain/logs/
+/bitalarm-node/bitalarm-node-alarm/logs/
+/bitalarm-node/bitalarm-node-all/logs/
 
 #################
 ## Configuration Files
 #################
-/fdr-impl/conf/
-/fdr-node/fdr-node-maintain/conf/
-/fdr-node/fdr-node-record/conf/
-/fdr-node/fdr-node-inspect/conf/
-/fdr-node/fdr-node-all/conf/
+/bitalarm-impl/conf/
+/bitalarm-node/bitalarm-node-maintain/conf/
+/bitalarm-node/bitalarm-node-alarm/conf/
+/bitalarm-node/bitalarm-node-all/conf/
 
 #################
 ## Libext Files
 #################
-/fdr-node/fdr-node-maintain/libext/
-/fdr-node/fdr-node-record/libext/
-/fdr-node/fdr-node-inspect/libext/
-/fdr-node/fdr-node-all/libext/
+/bitalarm-node/bitalarm-node-maintain/libext/
+/bitalarm-node/bitalarm-node-alarm/libext/
+/bitalarm-node/bitalarm-node-all/libext/
 
 #################
 ## Opt Files
 #################
-/fdr-node/fdr-node-maintain/opt/
-/fdr-node/fdr-node-record/opt/
-/fdr-node/fdr-node-inspect/opt/
-/fdr-node/fdr-node-all/opt/
+/bitalarm-node/bitalarm-node-maintain/opt/
+/bitalarm-node/bitalarm-node-alarm/opt/
+/bitalarm-node/bitalarm-node-all/opt/
 
 #################
 ## Optext Files
 #################
-/fdr-node/fdr-node-maintain/optext/
-/fdr-node/fdr-node-record/optext/
-/fdr-node/fdr-node-inspect/optext/
-/fdr-node/fdr-node-all/optext/
+/bitalarm-node/bitalarm-node-maintain/optext/
+/bitalarm-node/bitalarm-node-alarm/optext/
+/bitalarm-node/bitalarm-node-all/optext/
