@@ -1,8 +1,8 @@
 package com.dwarfeng.bitalarm.impl.handler.pusher;
 
 import com.dwarfeng.bitalarm.impl.handler.Pusher;
-import com.dwarfeng.bitalarm.stack.bean.dto.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,10 +52,10 @@ public class MultiPusher implements Pusher {
     }
 
     @Override
-    public void alarmAppeared(AlarmInfo alarmInfo) {
+    public void alarmUpdated(AlarmInfo alarmInfo) {
         for (Pusher delegate : delegates) {
             try {
-                delegate.alarmAppeared(alarmInfo);
+                delegate.alarmUpdated(alarmInfo);
             } catch (Exception e) {
                 LOGGER.warn("代理推送器推送数据失败，异常信息如下: ", e);
             }
@@ -63,32 +63,10 @@ public class MultiPusher implements Pusher {
     }
 
     @Override
-    public void alarmAppeared(List<AlarmInfo> alarmInfos) {
+    public void alarmUpdated(List<AlarmInfo> alarmInfos) {
         for (Pusher delegate : delegates) {
             try {
-                delegate.alarmAppeared(alarmInfos);
-            } catch (Exception e) {
-                LOGGER.warn("代理推送器推送数据失败，异常信息如下: ", e);
-            }
-        }
-    }
-
-    @Override
-    public void alarmDisappeared(AlarmInfo alarmInfo) {
-        for (Pusher delegate : delegates) {
-            try {
-                delegate.alarmDisappeared(alarmInfo);
-            } catch (Exception e) {
-                LOGGER.warn("代理推送器推送数据失败，异常信息如下: ", e);
-            }
-        }
-    }
-
-    @Override
-    public void alarmDisappeared(List<AlarmInfo> alarmInfos) {
-        for (Pusher delegate : delegates) {
-            try {
-                delegate.alarmDisappeared(alarmInfos);
+                delegate.alarmUpdated(alarmInfos);
             } catch (Exception e) {
                 LOGGER.warn("代理推送器推送数据失败，异常信息如下: ", e);
             }

@@ -1,7 +1,7 @@
 package com.dwarfeng.bitalarm.impl.handler;
 
-import com.dwarfeng.bitalarm.stack.bean.dto.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
 import com.dwarfeng.bitalarm.stack.exception.AlarmDisabledException;
@@ -35,17 +35,14 @@ public class AlarmHandlerImpl implements AlarmHandler {
     @Autowired
     private CurrentAlarmMaintainService currentAlarmMaintainService;
     @Autowired
-    @Qualifier("alarmAppearEventConsumerHandler")
-    private ConsumeHandler<AlarmInfo> alarmAppearEventConsumerHandler;
+    @Qualifier("alarmUpdatedEventConsumeHandler")
+    private ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler;
     @Autowired
-    @Qualifier("alarmDisappearEventConsumerHandler")
-    private ConsumeHandler<AlarmInfo> alarmDisappearEventConsumerHandler;
+    @Qualifier("historyRecordedEventConsumeHandler")
+    private ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler;
     @Autowired
-    @Qualifier("historyRecordEventConsumerHandler")
-    private ConsumeHandler<AlarmHistory> historyRecordEventConsumerHandler;
-    @Autowired
-    @Qualifier("alarmHistoryValueConsumerHandler")
-    private ConsumeHandler<AlarmHistory> alarmHistoryValueConsumerHandler;
+    @Qualifier("alarmHistoryValueConsumeHandler")
+    private ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler;
 
     private final Lock lock = new ReentrantLock();
 
@@ -140,8 +137,8 @@ public class AlarmHandlerImpl implements AlarmHandler {
                         );
                         currentAlarmMaintainService.insertOrUpdate(currentAlarm);
                     }
-                    // 消费者消费报警信息出现事件。
-                    alarmAppearEventConsumerHandler.accept(alarmInfo);
+                    // 消费者消费报警信息更新事件。
+                    alarmUpdatedEventConsumeHandler.accept(alarmInfo);
                 }
                 // 2.4 否则。
                 else {
@@ -159,11 +156,11 @@ public class AlarmHandlerImpl implements AlarmHandler {
                                 alarmInfo.getHappenedDate(),
                                 alarmInfo.getHappenedDate().getTime() - currentAlarm.getHappenedDate().getTime()
                         );
-                        alarmHistoryValueConsumerHandler.accept(alarmHistory);
-                        historyRecordEventConsumerHandler.accept(alarmHistory);
+                        alarmHistoryValueConsumeHandler.accept(alarmHistory);
+                        historyRecordedEventConsumeHandler.accept(alarmHistory);
                     }
-                    // 消费者消费报警信息消失事件。
-                    alarmDisappearEventConsumerHandler.accept(alarmInfo);
+                    // 消费者消费报警信息更新事件。
+                    alarmUpdatedEventConsumeHandler.accept(alarmInfo);
                 }
             }
         } catch (HandlerException e) {

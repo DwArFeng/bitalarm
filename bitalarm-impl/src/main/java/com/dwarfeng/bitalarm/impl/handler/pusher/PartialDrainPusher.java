@@ -1,8 +1,8 @@
 package com.dwarfeng.bitalarm.impl.handler.pusher;
 
 import com.dwarfeng.bitalarm.impl.handler.Pusher;
-import com.dwarfeng.bitalarm.stack.bean.dto.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,10 +26,8 @@ public class PartialDrainPusher implements Pusher {
 
     @Value("${pusher.partial_drain.delegate_type}")
     private String delegateType;
-    @Value("${pusher.partial_drain.drain_alarm_appeared}")
-    private boolean drainAlarmAppeared;
-    @Value("${pusher.partial_drain.drain_alarm_disappeared}")
-    private boolean drainAlarmDisappeared;
+    @Value("${pusher.partial_drain.drain_alarm_updated}")
+    private boolean drainAlarmUpdated;
     @Value("${pusher.partial_drain.drain_history_recorded}")
     private boolean drainHistoryRecorded;
 
@@ -47,30 +45,16 @@ public class PartialDrainPusher implements Pusher {
     }
 
     @Override
-    public void alarmAppeared(AlarmInfo alarmInfo) throws HandlerException {
-        if (!drainAlarmAppeared) {
-            delegate.alarmAppeared(alarmInfo);
+    public void alarmUpdated(AlarmInfo alarmInfo) throws HandlerException {
+        if (!drainAlarmUpdated) {
+            delegate.alarmUpdated(alarmInfo);
         }
     }
 
     @Override
-    public void alarmAppeared(List<AlarmInfo> alarmInfos) throws HandlerException {
-        if (!drainAlarmAppeared) {
-            delegate.alarmAppeared(alarmInfos);
-        }
-    }
-
-    @Override
-    public void alarmDisappeared(AlarmInfo alarmInfo) throws HandlerException {
-        if (!drainAlarmDisappeared) {
-            delegate.alarmDisappeared(alarmInfo);
-        }
-    }
-
-    @Override
-    public void alarmDisappeared(List<AlarmInfo> alarmInfos) throws HandlerException {
-        if (!drainAlarmDisappeared) {
-            delegate.alarmDisappeared(alarmInfos);
+    public void alarmUpdated(List<AlarmInfo> alarmInfos) throws HandlerException {
+        if (!drainAlarmUpdated) {
+            delegate.alarmUpdated(alarmInfos);
         }
     }
 
@@ -96,20 +80,12 @@ public class PartialDrainPusher implements Pusher {
         this.delegate = delegate;
     }
 
-    public boolean isDrainAlarmAppeared() {
-        return drainAlarmAppeared;
+    public boolean isDrainAlarmUpdated() {
+        return drainAlarmUpdated;
     }
 
-    public void setDrainAlarmAppeared(boolean drainAlarmAppeared) {
-        this.drainAlarmAppeared = drainAlarmAppeared;
-    }
-
-    public boolean isDrainAlarmDisappeared() {
-        return drainAlarmDisappeared;
-    }
-
-    public void setDrainAlarmDisappeared(boolean drainAlarmDisappeared) {
-        this.drainAlarmDisappeared = drainAlarmDisappeared;
+    public void setDrainAlarmUpdated(boolean drainAlarmUpdated) {
+        this.drainAlarmUpdated = drainAlarmUpdated;
     }
 
     public boolean isDrainHistoryRecorded() {

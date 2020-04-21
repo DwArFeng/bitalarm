@@ -1,29 +1,29 @@
-package com.dwarfeng.bitalarm.sdk.bean.dto;
+package com.dwarfeng.bitalarm.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.bitalarm.stack.bean.dto.AlarmInfo;
-import com.dwarfeng.subgrade.sdk.bean.key.FastJsonLongIdKey;
-import com.dwarfeng.subgrade.stack.bean.dto.Dto;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
+import com.dwarfeng.subgrade.sdk.bean.key.JSFixedFastJsonLongIdKey;
+import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import java.util.Date;
 import java.util.Objects;
 
 /**
- * FastJson 报警信息。
+ * JSFixed FastJson 报警信息。
  *
  * @author DwArFeng
  * @since 1.0.0
  */
-public class FastJsonAlarmInfo implements Dto {
+public class JSFixedFastJsonAlarmInfo implements Bean {
 
-    private static final long serialVersionUID = 4612606099912988815L;
+    private static final long serialVersionUID = 2576171375273917608L;
 
-    public static FastJsonAlarmInfo of(AlarmInfo alarmInfo) {
+    public static JSFixedFastJsonAlarmInfo of(AlarmInfo alarmInfo) {
         if (Objects.isNull(alarmInfo)) {
             return null;
         } else {
-            return new FastJsonAlarmInfo(
-                    FastJsonLongIdKey.of(alarmInfo.getKey()),
+            return new JSFixedFastJsonAlarmInfo(
+                    JSFixedFastJsonLongIdKey.of(alarmInfo.getKey()),
                     alarmInfo.getIndex(),
                     alarmInfo.getAlarmMessage(),
                     alarmInfo.getAlarmType(),
@@ -34,7 +34,7 @@ public class FastJsonAlarmInfo implements Dto {
     }
 
     @JSONField(name = "key", ordinal = 1)
-    private FastJsonLongIdKey key;
+    private JSFixedFastJsonLongIdKey key;
 
     @JSONField(name = "index", ordinal = 2)
     private int index;
@@ -51,11 +51,11 @@ public class FastJsonAlarmInfo implements Dto {
     @JSONField(name = "alarming", ordinal = 6)
     private boolean alarming;
 
-    public FastJsonAlarmInfo() {
+    public JSFixedFastJsonAlarmInfo() {
     }
 
-    public FastJsonAlarmInfo(
-            FastJsonLongIdKey key, int index, String alarmMessage, byte alarmType, Date happenedDate,
+    public JSFixedFastJsonAlarmInfo(
+            JSFixedFastJsonLongIdKey key, int index, String alarmMessage, byte alarmType, Date happenedDate,
             boolean alarming) {
         this.key = key;
         this.index = index;
@@ -65,11 +65,11 @@ public class FastJsonAlarmInfo implements Dto {
         this.alarming = alarming;
     }
 
-    public FastJsonLongIdKey getKey() {
+    public JSFixedFastJsonLongIdKey getKey() {
         return key;
     }
 
-    public void setKey(FastJsonLongIdKey key) {
+    public void setKey(JSFixedFastJsonLongIdKey key) {
         this.key = key;
     }
 
@@ -115,7 +115,7 @@ public class FastJsonAlarmInfo implements Dto {
 
     @Override
     public String toString() {
-        return "FastJsonAlarmInfo{" +
+        return "JSFixedFastJsonAlarmInfo{" +
                 "key=" + key +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +

@@ -1,8 +1,8 @@
 package com.dwarfeng.bitalarm.impl.service;
 
 import com.dwarfeng.bitalarm.impl.handler.Source;
-import com.dwarfeng.bitalarm.stack.bean.dto.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.handler.AlarmHandler;
 import com.dwarfeng.bitalarm.stack.handler.AlarmLocalCacheHandler;
 import com.dwarfeng.bitalarm.stack.handler.ConsumeHandler;
@@ -37,17 +37,14 @@ public class AlarmQosServiceImpl implements AlarmQosService {
     @Autowired
     private AlarmHandler alarmHandler;
     @Autowired
-    @Qualifier("alarmAppearEventConsumerHandler")
-    private ConsumeHandler<AlarmInfo> alarmAppearEventConsumerHandler;
+    @Qualifier("alarmUpdatedEventConsumeHandler")
+    private ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler;
     @Autowired
-    @Qualifier("alarmDisappearEventConsumerHandler")
-    private ConsumeHandler<AlarmInfo> alarmDisappearEventConsumerHandler;
+    @Qualifier("historyRecordedEventConsumeHandler")
+    private ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler;
     @Autowired
-    @Qualifier("historyRecordEventConsumerHandler")
-    private ConsumeHandler<AlarmHistory> historyRecordEventConsumerHandler;
-    @Autowired
-    @Qualifier("alarmHistoryValueConsumerHandler")
-    private ConsumeHandler<AlarmHistory> alarmHistoryValueConsumerHandler;
+    @Qualifier("alarmHistoryValueConsumeHandler")
+    private ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler;
 
     @Autowired
     private ServiceExceptionMapper sem;
@@ -80,10 +77,9 @@ public class AlarmQosServiceImpl implements AlarmQosService {
         lock.lock();
         try {
             LOGGER.info("开启记录服务...");
-            alarmAppearEventConsumerHandler.start();
-            alarmDisappearEventConsumerHandler.start();
-            historyRecordEventConsumerHandler.start();
-            alarmHistoryValueConsumerHandler.start();
+            alarmUpdatedEventConsumeHandler.start();
+            historyRecordedEventConsumeHandler.start();
+            alarmHistoryValueConsumeHandler.start();
 
             alarmHandler.enable();
 
@@ -115,10 +111,9 @@ public class AlarmQosServiceImpl implements AlarmQosService {
             }
             alarmHandler.disable();
 
-            alarmAppearEventConsumerHandler.stop();
-            alarmDisappearEventConsumerHandler.stop();
-            historyRecordEventConsumerHandler.stop();
-            alarmHistoryValueConsumerHandler.stop();
+            alarmUpdatedEventConsumeHandler.stop();
+            historyRecordedEventConsumeHandler.stop();
+            alarmHistoryValueConsumeHandler.stop();
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("关闭记录服务时发生异常",
                     LogLevel.WARN, sem, e

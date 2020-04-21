@@ -3,10 +3,10 @@ package com.dwarfeng.bitalarm.impl.handler.pusher;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dwarfeng.bitalarm.impl.handler.Pusher;
-import com.dwarfeng.bitalarm.sdk.bean.dto.FastJsonAlarmInfo;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmHistory;
-import com.dwarfeng.bitalarm.stack.bean.dto.AlarmInfo;
+import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
@@ -43,10 +43,8 @@ public class NativeKafkaPusher implements Pusher {
     @Qualifier("nativeKafkaPusher.kafkaTemplate")
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    @Value("${pusher.native.kafka.topic.alarm_appeared}")
-    private String alarmAppearedTopic;
-    @Value("${pusher.native.kafka.topic.alarm_disappeared}")
-    private String alarmDisappearedTopic;
+    @Value("${pusher.native.kafka.topic.alarm_updated}")
+    private String alarmUpdatedTopic;
     @Value("${pusher.native.kafka.topic.history_recorded}")
     private String historyRecordedTopic;
 
@@ -57,28 +55,15 @@ public class NativeKafkaPusher implements Pusher {
 
     @Override
     @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
-    public void alarmAppeared(AlarmInfo alarmInfo) {
+    public void alarmUpdated(AlarmInfo alarmInfo) {
         String message = JSON.toJSONString(FastJsonAlarmInfo.of(alarmInfo), SerializerFeature.WriteClassName);
-        kafkaTemplate.send(alarmAppearedTopic, message);
+        kafkaTemplate.send(alarmUpdatedTopic, message);
     }
 
     @Override
     @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
-    public void alarmAppeared(List<AlarmInfo> alarmInfos) {
-        alarmInfos.forEach(this::alarmAppeared);
-    }
-
-    @Override
-    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
-    public void alarmDisappeared(AlarmInfo alarmInfo) {
-        String message = JSON.toJSONString(FastJsonAlarmInfo.of(alarmInfo), SerializerFeature.WriteClassName);
-        kafkaTemplate.send(alarmDisappearedTopic, message);
-    }
-
-    @Override
-    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
-    public void alarmDisappeared(List<AlarmInfo> alarmInfos) {
-        alarmInfos.forEach(this::alarmDisappeared);
+    public void alarmUpdated(List<AlarmInfo> alarmInfos) {
+        alarmInfos.forEach(this::alarmUpdated);
     }
 
     @Override

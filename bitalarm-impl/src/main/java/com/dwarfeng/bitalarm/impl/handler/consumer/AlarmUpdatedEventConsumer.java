@@ -1,7 +1,7 @@
 package com.dwarfeng.bitalarm.impl.handler.consumer;
 
 import com.dwarfeng.bitalarm.impl.handler.Consumer;
-import com.dwarfeng.bitalarm.stack.bean.dto.AlarmInfo;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.handler.PushHandler;
 import com.dwarfeng.dutil.basic.mea.TimeMeasurer;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class AlarmAppearEventConsumer implements Consumer<AlarmInfo> {
+public class AlarmUpdatedEventConsumer implements Consumer<AlarmInfo> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AlarmAppearEventConsumer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AlarmUpdatedEventConsumer.class);
 
     @Autowired
     private PushHandler pushHandler;
@@ -42,7 +42,7 @@ public class AlarmAppearEventConsumer implements Consumer<AlarmInfo> {
             }
 
             try {
-                pushHandler.alarmAppeared(new ArrayList<>(alarmInfoMap.values()));
+                pushHandler.alarmUpdated(new ArrayList<>(alarmInfoMap.values()));
                 return;
             } catch (Exception e) {
                 LOGGER.error("数据推送失败, 试图使用不同的策略进行推送: 逐条推送", e);
@@ -52,7 +52,7 @@ public class AlarmAppearEventConsumer implements Consumer<AlarmInfo> {
 
             for (AlarmInfo alarmInfo : alarmInfoMap.values()) {
                 try {
-                    pushHandler.alarmAppeared(alarmInfo);
+                    pushHandler.alarmUpdated(alarmInfo);
                 } catch (Exception e) {
                     LOGGER.error("数据推送失败, 放弃对数据的推送: " + alarmInfo, e);
                     failedList.add(alarmInfo);

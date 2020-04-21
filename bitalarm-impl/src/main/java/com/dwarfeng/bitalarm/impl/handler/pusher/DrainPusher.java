@@ -1,8 +1,8 @@
 package com.dwarfeng.bitalarm.impl.handler.pusher;
 
 import com.dwarfeng.bitalarm.impl.handler.Pusher;
-import com.dwarfeng.bitalarm.stack.bean.dto.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,19 +25,11 @@ public class DrainPusher implements Pusher {
     }
 
     @Override
-    public void alarmAppeared(AlarmInfo alarmInfo) {
+    public void alarmUpdated(AlarmInfo alarmInfo) {
     }
 
     @Override
-    public void alarmAppeared(List<AlarmInfo> alarmInfos) {
-    }
-
-    @Override
-    public void alarmDisappeared(AlarmInfo alarmInfo) {
-    }
-
-    @Override
-    public void alarmDisappeared(List<AlarmInfo> alarmInfos) {
+    public void alarmUpdated(List<AlarmInfo> alarmInfos) {
     }
 
     @Override

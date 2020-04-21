@@ -1,7 +1,7 @@
 package com.dwarfeng.bitalarm.impl.handler;
 
-import com.dwarfeng.bitalarm.stack.bean.dto.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.handler.PushHandler;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,23 +31,13 @@ public class PushHandlerImpl implements PushHandler {
     }
 
     @Override
-    public void alarmAppeared(AlarmInfo alarmInfo) throws HandlerException {
-        pusher.alarmAppeared(alarmInfo);
+    public void alarmUpdated(AlarmInfo alarmInfo) throws HandlerException {
+        pusher.alarmUpdated(alarmInfo);
     }
 
     @Override
-    public void alarmAppeared(List<AlarmInfo> alarmInfos) throws HandlerException {
-        pusher.alarmAppeared(alarmInfos);
-    }
-
-    @Override
-    public void alarmDisappeared(AlarmInfo alarmInfo) throws HandlerException {
-        pusher.alarmDisappeared(alarmInfo);
-    }
-
-    @Override
-    public void alarmDisappeared(List<AlarmInfo> alarmInfos) throws HandlerException {
-        pusher.alarmDisappeared(alarmInfos);
+    public void alarmUpdated(List<AlarmInfo> alarmInfos) throws HandlerException {
+        pusher.alarmUpdated(alarmInfos);
     }
 
     @Override

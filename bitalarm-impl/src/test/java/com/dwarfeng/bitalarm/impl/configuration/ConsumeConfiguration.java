@@ -1,12 +1,11 @@
 package com.dwarfeng.bitalarm.impl.configuration;
 
 import com.dwarfeng.bitalarm.impl.handler.ConsumeHandlerImpl;
-import com.dwarfeng.bitalarm.impl.handler.consumer.AlarmAppearEventConsumer;
-import com.dwarfeng.bitalarm.impl.handler.consumer.AlarmDisappearEventConsumer;
 import com.dwarfeng.bitalarm.impl.handler.consumer.AlarmHistoryValueConsumer;
+import com.dwarfeng.bitalarm.impl.handler.consumer.AlarmUpdatedEventConsumer;
 import com.dwarfeng.bitalarm.impl.handler.consumer.HistoryRecordEventConsumer;
-import com.dwarfeng.bitalarm.stack.bean.dto.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.handler.ConsumeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,52 +22,27 @@ public class ConsumeConfiguration {
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     @Autowired
-    private AlarmAppearEventConsumer alarmAppearedEventConsumer;
-    @Value("${consume.alarm_appeared_event.consumer_thread}")
-    private int alarmAppearedEventConsumerThread;
-    @Value("${consume.alarm_appeared_event.buffer_size}")
-    private int alarmAppearedEventBufferSize;
-    @Value("${consume.alarm_appeared_event.batch_size}")
-    private int alarmAppearedEventBatchSize;
-    @Value("${consume.alarm_appeared_event.max_idle_time}")
-    private long alarmAppearedEventMaxIdleTime;
+    private AlarmUpdatedEventConsumer alarmUpdatedEventConsumer;
+    @Value("${consume.alarm_updated_event.consumer_thread}")
+    private int alarmUpdatedEventConsumerThread;
+    @Value("${consume.alarm_updated_event.buffer_size}")
+    private int alarmUpdatedEventBufferSize;
+    @Value("${consume.alarm_updated_event.batch_size}")
+    private int alarmUpdatedEventBatchSize;
+    @Value("${consume.alarm_updated_event.max_idle_time}")
+    private long alarmUpdatedEventMaxIdleTime;
 
-    @Bean("alarmAppearEventConsumerHandler")
-    public ConsumeHandler<AlarmInfo> alarmAppearEventConsumerHandler() {
+    @Bean("alarmUpdatedEventConsumeHandler")
+    public ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler() {
         ConsumeHandlerImpl<AlarmInfo> consumeHandler = new ConsumeHandlerImpl<>(
                 threadPoolTaskExecutor,
                 new ArrayList<>(),
                 new ArrayList<>(),
-                alarmAppearedEventConsumer,
-                alarmAppearedEventConsumerThread
+                alarmUpdatedEventConsumer,
+                alarmUpdatedEventConsumerThread
         );
-        consumeHandler.setBufferParameters(alarmAppearedEventBufferSize, alarmAppearedEventBatchSize,
-                alarmAppearedEventMaxIdleTime);
-        return consumeHandler;
-    }
-
-    @Autowired
-    private AlarmDisappearEventConsumer alarmDisappearEventConsumer;
-    @Value("${consume.alarm_disappeared_event.consumer_thread}")
-    private int alarmDisappearedEventConsumerThread;
-    @Value("${consume.alarm_disappeared_event.buffer_size}")
-    private int alarmDisappearedEventBufferSize;
-    @Value("${consume.alarm_disappeared_event.batch_size}")
-    private int alarmDisappearedEventBatchSize;
-    @Value("${consume.alarm_disappeared_event.max_idle_time}")
-    private long alarmDisappearedEventMaxIdleTime;
-
-    @Bean("alarmDisappearEventConsumerHandler")
-    public ConsumeHandler<AlarmInfo> alarmDisappearEventConsumerHandler() {
-        ConsumeHandlerImpl<AlarmInfo> consumeHandler = new ConsumeHandlerImpl<>(
-                threadPoolTaskExecutor,
-                new ArrayList<>(),
-                new ArrayList<>(),
-                alarmDisappearEventConsumer,
-                alarmDisappearedEventConsumerThread
-        );
-        consumeHandler.setBufferParameters(alarmDisappearedEventBufferSize, alarmDisappearedEventBatchSize,
-                alarmDisappearedEventMaxIdleTime);
+        consumeHandler.setBufferParameters(alarmUpdatedEventBufferSize, alarmUpdatedEventBatchSize,
+                alarmUpdatedEventMaxIdleTime);
         return consumeHandler;
     }
 
@@ -108,7 +82,7 @@ public class ConsumeConfiguration {
     @Value("${consume.alarm_history_value.max_idle_time}")
     private long alarmHistoryValueMaxIdleTime;
 
-    @Bean
+    @Bean("alarmHistoryValueConsumeHandler")
     public ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler() {
         ConsumeHandlerImpl<AlarmHistory> consumeHandler = new ConsumeHandlerImpl<>(
                 threadPoolTaskExecutor,

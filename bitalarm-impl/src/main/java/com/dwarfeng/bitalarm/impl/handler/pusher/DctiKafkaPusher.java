@@ -2,10 +2,10 @@ package com.dwarfeng.bitalarm.impl.handler.pusher;
 
 import com.alibaba.fastjson.JSON;
 import com.dwarfeng.bitalarm.impl.handler.Pusher;
-import com.dwarfeng.bitalarm.sdk.bean.dto.FastJsonAlarmInfo;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmHistory;
-import com.dwarfeng.bitalarm.stack.bean.dto.AlarmInfo;
+import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -44,10 +44,8 @@ public class DctiKafkaPusher implements Pusher {
     @Qualifier("dctiKafkaPusher.kafkaTemplate")
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    @Value("${pusher.dcti.kafka.topic.alarm_appeared}")
-    private String alarmAppearedTopic;
-    @Value("${pusher.dcti.kafka.topic.alarm_disappeared}")
-    private String alarmDisappearedTopic;
+    @Value("${pusher.dcti.kafka.topic.alarm_updated}")
+    private String alarmUpdatedTopic;
     @Value("${pusher.dcti.kafka.topic.history_recorded}")
     private String historyRecordedTopic;
 
@@ -58,32 +56,17 @@ public class DctiKafkaPusher implements Pusher {
 
     @Override
     @Transactional(transactionManager = "dctiKafkaPusher.kafkaTransactionManager")
-    public void alarmAppeared(AlarmInfo alarmInfo) {
+    public void alarmUpdated(AlarmInfo alarmInfo) {
         String value = JSON.toJSONString(FastJsonAlarmInfo.of(alarmInfo));
         DataInfo dataInfo = new DataInfo(
                 alarmInfo.getKey().getLongId(), value, alarmInfo.getHappenedDate());
-        kafkaTemplate.send(alarmDisappearedTopic, DataInfoUtil.toMessage(dataInfo));
+        kafkaTemplate.send(alarmUpdatedTopic, DataInfoUtil.toMessage(dataInfo));
     }
 
     @Override
     @Transactional(transactionManager = "dctiKafkaPusher.kafkaTransactionManager")
-    public void alarmAppeared(List<AlarmInfo> alarmInfos) {
-        alarmInfos.forEach(this::alarmAppeared);
-    }
-
-    @Override
-    @Transactional(transactionManager = "dctiKafkaPusher.kafkaTransactionManager")
-    public void alarmDisappeared(AlarmInfo alarmInfo) {
-        String value = JSON.toJSONString(FastJsonAlarmInfo.of(alarmInfo));
-        DataInfo dataInfo = new DataInfo(
-                alarmInfo.getKey().getLongId(), value, alarmInfo.getHappenedDate());
-        kafkaTemplate.send(alarmAppearedTopic, DataInfoUtil.toMessage(dataInfo));
-    }
-
-    @Override
-    @Transactional(transactionManager = "dctiKafkaPusher.kafkaTransactionManager")
-    public void alarmDisappeared(List<AlarmInfo> alarmInfos) {
-        alarmInfos.forEach(this::alarmDisappeared);
+    public void alarmUpdated(List<AlarmInfo> alarmInfos) {
+        alarmInfos.forEach(this::alarmUpdated);
     }
 
     @Override
