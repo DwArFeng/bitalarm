@@ -24,6 +24,7 @@ public class FastJsonAlarmSetting implements Bean {
             return new FastJsonAlarmSetting(
                     FastJsonLongIdKey.of(alarmSetting.getKey()),
                     alarmSetting.getPointId(),
+                    alarmSetting.isEnabled(),
                     alarmSetting.getIndex(),
                     alarmSetting.getAlarmMessage(),
                     alarmSetting.getAlarmType(),
@@ -38,25 +39,30 @@ public class FastJsonAlarmSetting implements Bean {
     @JSONField(name = "point_id", ordinal = 2)
     private long pointId;
 
-    @JSONField(name = "index", ordinal = 3)
+    @JSONField(name = "enabled", ordinal = 3)
+    private boolean enabled;
+
+    @JSONField(name = "index", ordinal = 4)
     private int index;
 
-    @JSONField(name = "alarm_message", ordinal = 4)
+    @JSONField(name = "alarm_message", ordinal = 5)
     private String alarmMessage;
 
-    @JSONField(name = "alarm_type", ordinal = 5)
+    @JSONField(name = "alarm_type", ordinal = 6)
     private byte alarmType;
 
-    @JSONField(name = "remark", ordinal = 6)
+    @JSONField(name = "remark", ordinal = 7)
     private String remark;
 
     public FastJsonAlarmSetting() {
     }
 
     public FastJsonAlarmSetting(
-            FastJsonLongIdKey key, long pointId, int index, String alarmMessage, byte alarmType, String remark) {
+            FastJsonLongIdKey key, long pointId, boolean enabled, int index, String alarmMessage, byte alarmType,
+            String remark) {
         this.key = key;
         this.pointId = pointId;
+        this.enabled = enabled;
         this.index = index;
         this.alarmMessage = alarmMessage;
         this.alarmType = alarmType;
@@ -77,6 +83,14 @@ public class FastJsonAlarmSetting implements Bean {
 
     public void setPointId(long pointId) {
         this.pointId = pointId;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public int getIndex() {
@@ -116,6 +130,7 @@ public class FastJsonAlarmSetting implements Bean {
         return "FastJsonAlarmSetting{" +
                 "key=" + key +
                 ", pointId=" + pointId +
+                ", enabled=" + enabled +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

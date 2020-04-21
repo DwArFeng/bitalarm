@@ -1,7 +1,8 @@
 package com.dwarfeng.bitalarm.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.subgrade.sdk.bean.key.FastJsonLongIdKey;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
+import com.dwarfeng.subgrade.sdk.bean.key.WebInputLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.validation.Valid;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.groups.Default;
+import java.util.Objects;
 
 /**
  * WebInput 报警设置。
@@ -20,46 +22,67 @@ public class WebInputAlarmSetting implements Bean {
 
     private static final long serialVersionUID = -8990834706382227655L;
 
-    @JSONField(name = "key", ordinal = 1)
+    public static AlarmSetting toStackBean(WebInputAlarmSetting webInputAlarmSetting) {
+        if (Objects.isNull(webInputAlarmSetting)) {
+            return null;
+        } else {
+            return new AlarmSetting(
+                    WebInputLongIdKey.toStackBean(webInputAlarmSetting.getKey()),
+                    webInputAlarmSetting.getPointId(),
+                    webInputAlarmSetting.isEnabled(),
+                    webInputAlarmSetting.getIndex(),
+                    webInputAlarmSetting.getAlarmMessage(),
+                    webInputAlarmSetting.getAlarmType(),
+                    webInputAlarmSetting.getRemark()
+            );
+        }
+    }
+
+    @JSONField(name = "key")
     @Valid
     @NotNull(groups = Default.class)
-    private FastJsonLongIdKey key;
+    private WebInputLongIdKey key;
 
-    @JSONField(name = "point_id", ordinal = 2)
+    @JSONField(name = "point_id")
     private long pointId;
 
-    @JSONField(name = "index", ordinal = 3)
+    @JSONField(name = "enabled")
+    private boolean enabled;
+
+    @JSONField(name = "index")
     @PositiveOrZero
     private int index;
 
-    @JSONField(name = "alarm_message", ordinal = 4)
+    @JSONField(name = "alarm_message")
     @NotEmpty
     private String alarmMessage;
 
-    @JSONField(name = "alarm_type", ordinal = 5)
+    @JSONField(name = "alarm_type")
     private byte alarmType;
 
-    @JSONField(name = "remark", ordinal = 6)
+    @JSONField(name = "remark")
     private String remark;
 
     public WebInputAlarmSetting() {
     }
 
     public WebInputAlarmSetting(
-            FastJsonLongIdKey key, long pointId, int index, String alarmMessage, byte alarmType, String remark) {
+            WebInputLongIdKey key, long pointId, boolean enabled, int index, String alarmMessage, byte alarmType,
+            String remark) {
         this.key = key;
         this.pointId = pointId;
+        this.enabled = enabled;
         this.index = index;
         this.alarmMessage = alarmMessage;
         this.alarmType = alarmType;
         this.remark = remark;
     }
 
-    public FastJsonLongIdKey getKey() {
+    public WebInputLongIdKey getKey() {
         return key;
     }
 
-    public void setKey(FastJsonLongIdKey key) {
+    public void setKey(WebInputLongIdKey key) {
         this.key = key;
     }
 
@@ -69,6 +92,14 @@ public class WebInputAlarmSetting implements Bean {
 
     public void setPointId(long pointId) {
         this.pointId = pointId;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public int getIndex() {
@@ -108,6 +139,7 @@ public class WebInputAlarmSetting implements Bean {
         return "WebInputAlarmSetting{" +
                 "key=" + key +
                 ", pointId=" + pointId +
+                ", enabled=" + enabled +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

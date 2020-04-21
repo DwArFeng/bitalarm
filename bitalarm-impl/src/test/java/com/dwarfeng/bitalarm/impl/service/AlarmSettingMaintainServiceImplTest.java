@@ -32,6 +32,7 @@ public class AlarmSettingMaintainServiceImplTest {
             AlarmSetting alarmSetting = new AlarmSetting(
                     null,
                     1L,
+                    true,
                     1,
                     "我是报警信息",
                     (byte) 0,

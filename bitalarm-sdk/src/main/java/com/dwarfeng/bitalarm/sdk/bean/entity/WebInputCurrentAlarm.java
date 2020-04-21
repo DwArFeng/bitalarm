@@ -1,7 +1,8 @@
 package com.dwarfeng.bitalarm.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.subgrade.sdk.bean.key.FastJsonLongIdKey;
+import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
+import com.dwarfeng.subgrade.sdk.bean.key.WebInputLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.validation.Valid;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * WebInput 当前报警。
@@ -20,30 +22,45 @@ public class WebInputCurrentAlarm implements Bean {
 
     private static final long serialVersionUID = -267558087245060993L;
 
-    @JSONField(name = "key", ordinal = 1)
+    public static CurrentAlarm toStackBean(WebInputCurrentAlarm webInputCurrentAlarm) {
+        if (Objects.isNull(webInputCurrentAlarm)) {
+            return null;
+        } else {
+            return new CurrentAlarm(
+                    WebInputLongIdKey.toStackBean(webInputCurrentAlarm.getKey()),
+                    webInputCurrentAlarm.getIndex(),
+                    webInputCurrentAlarm.getAlarmMessage(),
+                    webInputCurrentAlarm.getAlarmType(),
+                    webInputCurrentAlarm.getHappenedDate()
+            );
+        }
+    }
+
+    @JSONField(name = "key")
     @Valid
     @NotNull
-    private FastJsonLongIdKey key;
+    private WebInputLongIdKey key;
 
-    @JSONField(name = "index", ordinal = 2)
+    @JSONField(name = "index")
     @PositiveOrZero
     private int index;
 
-    @JSONField(name = "alarm_message", ordinal = 3)
+    @JSONField(name = "alarm_message")
     @NotEmpty
     private String alarmMessage;
 
-    @JSONField(name = "alarm_type", ordinal = 4)
+    @JSONField(name = "alarm_type")
     private byte alarmType;
 
-    @JSONField(name = "happened_date", ordinal = 5)
+    @JSONField(name = "happened_date")
     @NotNull
     private Date happenedDate;
 
     public WebInputCurrentAlarm() {
     }
 
-    public WebInputCurrentAlarm(FastJsonLongIdKey key, int index, String alarmMessage, byte alarmType, Date happenedDate) {
+    public WebInputCurrentAlarm(
+            WebInputLongIdKey key, int index, String alarmMessage, byte alarmType, Date happenedDate) {
         this.key = key;
         this.index = index;
         this.alarmMessage = alarmMessage;
@@ -51,11 +68,11 @@ public class WebInputCurrentAlarm implements Bean {
         this.happenedDate = happenedDate;
     }
 
-    public FastJsonLongIdKey getKey() {
+    public WebInputLongIdKey getKey() {
         return key;
     }
 
-    public void setKey(FastJsonLongIdKey key) {
+    public void setKey(WebInputLongIdKey key) {
         this.key = key;
     }
 

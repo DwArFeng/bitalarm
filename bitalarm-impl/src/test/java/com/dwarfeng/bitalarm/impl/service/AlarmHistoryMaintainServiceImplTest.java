@@ -38,6 +38,7 @@ public class AlarmHistoryMaintainServiceImplTest {
         parentAlarmSetting = new AlarmSetting(
                 null,
                 1L,
+                true,
                 1,
                 "我是报警信息",
                 (byte) 0,

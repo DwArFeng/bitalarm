@@ -2,8 +2,8 @@ package com.dwarfeng.bitalarm.impl.service.operation;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
-import com.dwarfeng.bitalarm.stack.cache.AlarmHistoryCache;
 import com.dwarfeng.bitalarm.stack.cache.AlarmSettingCache;
+import com.dwarfeng.bitalarm.stack.cache.EnabledAlarmSettingCache;
 import com.dwarfeng.bitalarm.stack.dao.AlarmHistoryDao;
 import com.dwarfeng.bitalarm.stack.dao.AlarmSettingDao;
 import com.dwarfeng.bitalarm.stack.service.AlarmHistoryMaintainService;
@@ -28,8 +28,9 @@ public class AlarmSettingCrudOperation implements CrudOperation<LongIdKey, Alarm
 
     @Autowired
     private AlarmSettingCache alarmSettingCache;
+
     @Autowired
-    private AlarmHistoryCache alarmHistoryCache;
+    private EnabledAlarmSettingCache enabledAlarmSettingCache;
 
     @Value("${cache.timeout.entity.alarm_setting}")
     private long alarmSettingTimeout;
@@ -55,18 +56,33 @@ public class AlarmSettingCrudOperation implements CrudOperation<LongIdKey, Alarm
 
     @Override
     public LongIdKey insert(AlarmSetting alarmSetting) throws Exception {
+        LongIdKey pointKey = new LongIdKey(alarmSetting.getPointId());
+        enabledAlarmSettingCache.delete(pointKey);
+
         alarmSettingCache.push(alarmSetting, alarmSettingTimeout);
         return alarmSettingDao.insert(alarmSetting);
     }
 
     @Override
     public void update(AlarmSetting alarmSetting) throws Exception {
+        LongIdKey oldPointKey = new LongIdKey(get(alarmSetting.getKey()).getPointId());
+        enabledAlarmSettingCache.delete(oldPointKey);
+
+        LongIdKey pointKey = new LongIdKey(alarmSetting.getPointId());
+        enabledAlarmSettingCache.delete(pointKey);
+
         alarmSettingCache.push(alarmSetting, alarmSettingTimeout);
         alarmSettingDao.update(alarmSetting);
     }
 
     @Override
     public void delete(LongIdKey key) throws Exception {
+        //清除旧的报警信息的点位相关的使能报警信息缓存。
+        {
+            LongIdKey oldPointKey = new LongIdKey(get(key).getPointId());
+            enabledAlarmSettingCache.delete(oldPointKey);
+        }
+
         //删除与点位相关的过滤器触发器。
         {
             //查找点位拥有的过滤器与触发器。
@@ -76,7 +92,6 @@ public class AlarmSettingCrudOperation implements CrudOperation<LongIdKey, Alarm
 
             //删除点位拥有的过滤器与触发器。
             alarmHistoryDao.batchDelete(alarmHistoryKeys);
-            alarmHistoryCache.batchDelete(alarmHistoryKeys);
         }
 
         alarmSettingDao.delete(key);

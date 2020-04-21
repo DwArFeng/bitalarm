@@ -2,10 +2,10 @@ package com.dwarfeng.bitalarm.impl.cache;
 
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
-import com.dwarfeng.bitalarm.stack.cache.AlarmHistoryCache;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public class AlarmHistoryCacheImpl implements AlarmHistoryCache {
+public class AlarmHistoryCacheImpl implements BatchBaseCache<LongIdKey, AlarmHistory> {
 
     @Autowired
     private RedisBatchBaseCache<LongIdKey, AlarmHistory, FastJsonAlarmHistory> alarmHistoryBatchBaseDelegate;

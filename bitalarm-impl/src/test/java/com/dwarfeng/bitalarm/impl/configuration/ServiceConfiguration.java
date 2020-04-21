@@ -10,6 +10,7 @@ import com.dwarfeng.bitalarm.stack.dao.AlarmHistoryDao;
 import com.dwarfeng.bitalarm.stack.dao.AlarmSettingDao;
 import com.dwarfeng.bitalarm.stack.dao.CurrentAlarmDao;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
+import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
 import com.dwarfeng.subgrade.impl.service.CustomCrudService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
@@ -73,8 +74,8 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public CustomCrudService<LongIdKey, AlarmHistory> alarmHistoryCustomCrudService() {
-        return new CustomCrudService<>(
+    public CustomBatchCrudService<LongIdKey, AlarmHistory> alarmHistoryCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
                 alarmHistoryCrudOperation,
                 longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),

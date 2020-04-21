@@ -25,6 +25,9 @@ public class HibernateAlarmSetting implements Bean {
     @Column(name = "point_id")
     private long pointId;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
     @Column(name = "column_index")
     private int index;
 
@@ -66,6 +69,14 @@ public class HibernateAlarmSetting implements Bean {
 
     public void setPointId(long pointId) {
         this.pointId = pointId;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public int getIndex() {
@@ -113,10 +124,12 @@ public class HibernateAlarmSetting implements Bean {
         return "HibernateAlarmSetting{" +
                 "longId=" + longId +
                 ", pointId=" + pointId +
+                ", enabled=" + enabled +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +
                 ", remark='" + remark + '\'' +
+                ", alarmHistories=" + alarmHistories +
                 '}';
     }
 }

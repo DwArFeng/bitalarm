@@ -15,6 +15,7 @@ public class AlarmSetting implements Entity<LongIdKey> {
 
     private LongIdKey key;
     private long pointId;
+    private boolean enabled;
     private int index;
     private String alarmMessage;
     private byte alarmType;
@@ -23,9 +24,12 @@ public class AlarmSetting implements Entity<LongIdKey> {
     public AlarmSetting() {
     }
 
-    public AlarmSetting(LongIdKey key, long pointId, int index, String alarmMessage, byte alarmType, String remark) {
+    public AlarmSetting(
+            LongIdKey key, long pointId, boolean enabled, int index, String alarmMessage, byte alarmType,
+            String remark) {
         this.key = key;
         this.pointId = pointId;
+        this.enabled = enabled;
         this.index = index;
         this.alarmMessage = alarmMessage;
         this.alarmType = alarmType;
@@ -48,6 +52,14 @@ public class AlarmSetting implements Entity<LongIdKey> {
 
     public void setPointId(long pointId) {
         this.pointId = pointId;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public int getIndex() {
@@ -87,6 +99,7 @@ public class AlarmSetting implements Entity<LongIdKey> {
         return "AlarmSetting{" +
                 "key=" + key +
                 ", pointId=" + pointId +
+                ", enabled=" + enabled +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

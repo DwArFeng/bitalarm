@@ -1,7 +1,8 @@
 package com.dwarfeng.bitalarm.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.subgrade.sdk.bean.key.FastJsonLongIdKey;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.subgrade.sdk.bean.key.WebInputLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.validation.Valid;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.groups.Default;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * WebInput 报警历史。
@@ -21,35 +23,52 @@ public class WebInputAlarmHistory implements Bean {
 
     private static final long serialVersionUID = -3691357596642270738L;
 
-    @JSONField(name = "key", ordinal = 1)
+    public static AlarmHistory toStackBean(WebInputAlarmHistory webInputAlarmHistory) {
+        if (Objects.isNull(webInputAlarmHistory)) {
+            return null;
+        } else {
+            return new AlarmHistory(
+                    WebInputLongIdKey.toStackBean(webInputAlarmHistory.getKey()),
+                    WebInputLongIdKey.toStackBean(webInputAlarmHistory.getAlarmSettingKey()),
+                    webInputAlarmHistory.getIndex(),
+                    webInputAlarmHistory.getAlarmMessage(),
+                    webInputAlarmHistory.getAlarmType(),
+                    webInputAlarmHistory.getStartDate(),
+                    webInputAlarmHistory.getEndDate(),
+                    webInputAlarmHistory.getDuration()
+            );
+        }
+    }
+
+    @JSONField(name = "key")
     @Valid
     @NotNull(groups = Default.class)
-    private FastJsonLongIdKey key;
+    private WebInputLongIdKey key;
 
-    @JSONField(name = "alarm_setting_key", ordinal = 2)
+    @JSONField(name = "alarm_setting_key")
     @Valid
-    private FastJsonLongIdKey alarmSettingKey;
+    private WebInputLongIdKey alarmSettingKey;
 
-    @JSONField(name = "index", ordinal = 3)
+    @JSONField(name = "index")
     @PositiveOrZero
     private int index;
 
-    @JSONField(name = "alarm_message", ordinal = 4)
+    @JSONField(name = "alarm_message")
     @NotEmpty
     private String alarmMessage;
 
-    @JSONField(name = "type", ordinal = 5)
+    @JSONField(name = "type")
     private byte alarmType;
 
-    @JSONField(name = "start_date", ordinal = 6)
+    @JSONField(name = "start_date")
     @NotNull
     private Date startDate;
 
-    @JSONField(name = "end_date", ordinal = 7)
+    @JSONField(name = "end_date")
     @NotNull
     private Date endDate;
 
-    @JSONField(name = "duration", ordinal = 8)
+    @JSONField(name = "duration")
     @PositiveOrZero
     private long duration;
 
@@ -57,7 +76,7 @@ public class WebInputAlarmHistory implements Bean {
     }
 
     public WebInputAlarmHistory(
-            FastJsonLongIdKey key, FastJsonLongIdKey alarmSettingKey, int index, String alarmMessage, byte alarmType,
+            WebInputLongIdKey key, WebInputLongIdKey alarmSettingKey, int index, String alarmMessage, byte alarmType,
             Date startDate, Date endDate, Long duration) {
         this.key = key;
         this.alarmSettingKey = alarmSettingKey;
@@ -69,19 +88,19 @@ public class WebInputAlarmHistory implements Bean {
         this.duration = duration;
     }
 
-    public FastJsonLongIdKey getKey() {
+    public WebInputLongIdKey getKey() {
         return key;
     }
 
-    public void setKey(FastJsonLongIdKey key) {
+    public void setKey(WebInputLongIdKey key) {
         this.key = key;
     }
 
-    public FastJsonLongIdKey getAlarmSettingKey() {
+    public WebInputLongIdKey getAlarmSettingKey() {
         return alarmSettingKey;
     }
 
-    public void setAlarmSettingKey(FastJsonLongIdKey alarmSettingKey) {
+    public void setAlarmSettingKey(WebInputLongIdKey alarmSettingKey) {
         this.alarmSettingKey = alarmSettingKey;
     }
 
