@@ -15,11 +15,11 @@ bit位报警内容是约定的，一个byte数组中的每一位报警都有对�
 
    使用git进行源码下载。
    ```
-   git clone git@github.com:DwArFeng/fdr-manager.git
+   git clone git@github.com:DwArFeng/bitalarm.git
    ```
    对于中国用户，可以使用gitee进行高速下载。
    ```
-   git clone git@gitee.com:dwarfeng/fdr-manager.git
+   git clone git@gitee.com:dwarfeng/bitalarm.git
    ```
    
 2. 项目打包
@@ -36,7 +36,6 @@ bit位报警内容是约定的，一个byte数组中的每一位报警都有对�
    bitalarm-node/bitalarm-node-all/target/bitalarm-node-all-[version]-release.tar.gz
    bitalarm-node/bitalarm-node-alarm/target/bitalarm-node-alarm-[version]-release.tar.gz
    bitalarm-node/bitalarm-node-maintain/target/bitalarm-node-maintain-[version]-release.tar.gz
-   bitalarm-node/bitalarm-node-all/target/bitalarm-node-all-[version]-release.tar.gz
    ```
    将其解压至windows系统或者linux系统
    
@@ -47,6 +46,8 @@ bit位报警内容是约定的，一个byte数组中的每一位报警都有对�
    2. 修改conf文件夹下的配置文件，着重修改各连接的url与密码。
    
 5. enjoy it
+
+---
 
 ## 分布式说明
 
