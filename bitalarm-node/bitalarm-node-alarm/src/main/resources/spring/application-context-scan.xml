@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--扫描service的实现包。 -->
+    <context:component-scan base-package="com.dwarfeng.bitalarm.impl.service"/>
+    <!--扫描handler的实现包。 -->
+    <context:component-scan base-package="com.dwarfeng.bitalarm.impl.handler">
+        <context:exclude-filter type="regex" expression="^com\.dwarfeng\.bitalarm\.impl\.handler\.source.*$"/>
+        <context:exclude-filter type="regex" expression="^com\.dwarfeng\.bitalarm\.impl\.handler\.pusher.*$"/>
+    </context:component-scan>
+    <!--扫描dao的实现包。 -->
+    <context:component-scan base-package="com.dwarfeng.bitalarm.impl.dao"/>
+    <!--扫描cache的实现包。 -->
+    <context:component-scan base-package="com.dwarfeng.bitalarm.impl.cache"/>
+    <!--扫描配置类所在的包。 -->
+    <context:component-scan base-package="com.dwarfeng.bitalarm.node.alarm.configuration"/>
+    <!--扫描启动器有关的handler所在的包。 -->
+    <context:component-scan base-package="com.dwarfeng.bitalarm.node.alarm.handler"/>
+    <!--扫描aop增强所在的包。 -->
+    <context:component-scan base-package="com.dwarfeng.subgrade.sdk.interceptor.analyse"/>
+</beans>
