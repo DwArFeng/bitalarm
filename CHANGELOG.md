@@ -1,6 +1,6 @@
 # ChangeLog
 
-### Beta_1.0.0_20200409_build_A
+### Beta_1.0.0_20200422_build_A
 
 #### 功能构建
 
@@ -15,6 +15,7 @@
   - node-alarm
   - node-maintain
 - 编写节点的装配文件，实现节点的自动打包。
+- 编写README.md说明文件。
 
 #### Bug修复
 
