@@ -4,8 +4,10 @@ import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmHistory;
 import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmSetting;
 import com.dwarfeng.bitalarm.impl.dao.preset.AlarmHistoryPresetCriteriaMaker;
 import com.dwarfeng.bitalarm.impl.dao.preset.AlarmSettingPresetCriteriaMaker;
+import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmInfo;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonCurrentAlarm;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
@@ -39,6 +41,8 @@ public class DaoConfiguration {
 
     @Value("${redis.dbkey.current_alarm}")
     private String currentAlarmDbKey;
+    @Value("${redis.dbkey.alarm_info}")
+    private String alarmInfoDbKey;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -124,6 +128,28 @@ public class DaoConfiguration {
                 new LongIdStringKeyFormatter("key."),
                 new DozerBeanTransformer<>(CurrentAlarm.class, FastJsonCurrentAlarm.class, mapper),
                 currentAlarmDbKey
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> alarmInfoRedisBatchBaseDao() {
+        return new RedisBatchBaseDao<>(
+                (RedisTemplate<String, FastJsonAlarmInfo>) redisTemplate,
+                new LongIdStringKeyFormatter("key."),
+                new DozerBeanTransformer<>(AlarmInfo.class, FastJsonAlarmInfo.class, mapper),
+                alarmInfoDbKey
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisEntireLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> alarmInfoRedisEntireLookupDao() {
+        return new RedisEntireLookupDao<>(
+                (RedisTemplate<String, FastJsonAlarmInfo>) redisTemplate,
+                new LongIdStringKeyFormatter("key."),
+                new DozerBeanTransformer<>(AlarmInfo.class, FastJsonAlarmInfo.class, mapper),
+                alarmInfoDbKey
         );
     }
 }

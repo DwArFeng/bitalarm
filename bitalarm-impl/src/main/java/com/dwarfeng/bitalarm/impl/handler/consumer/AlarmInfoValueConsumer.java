@@ -2,7 +2,6 @@ package com.dwarfeng.bitalarm.impl.handler.consumer;
 
 import com.dwarfeng.bitalarm.impl.handler.Consumer;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
-import com.dwarfeng.bitalarm.stack.handler.PushHandler;
 import com.dwarfeng.bitalarm.stack.service.AlarmInfoMaintainService;
 import com.dwarfeng.dutil.basic.mea.TimeMeasurer;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -14,14 +13,12 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class AlarmUpdatedEventConsumer implements Consumer<AlarmInfo> {
+public class AlarmInfoValueConsumer implements Consumer<AlarmInfo> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AlarmUpdatedEventConsumer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AlarmInfoValueConsumer.class);
 
     @Autowired
     private AlarmInfoMaintainService alarmInfoMaintainService;
-    @Autowired
-    private PushHandler pushHandler;
 
     @Override
     public void consume(List<AlarmInfo> alarmInfos) {
@@ -42,7 +39,7 @@ public class AlarmUpdatedEventConsumer implements Consumer<AlarmInfo> {
                     }
                 }
             } catch (Exception e) {
-                LOGGER.error("记录数据时发生异常, 最多 " + alarmInfos.size() + " 个数据信息丢失", e);
+                LOGGER.error("处理数据时发生异常, 最多 " + alarmInfos.size() + " 个数据信息丢失", e);
                 alarmInfos.forEach(alarmInfo -> LOGGER.debug(alarmInfo + ""));
                 return;
             }
@@ -53,21 +50,21 @@ public class AlarmUpdatedEventConsumer implements Consumer<AlarmInfo> {
                 try {
                     AlarmInfo ifExists = alarmInfoMaintainService.getIfExists(alarmInfo.getKey());
                     if (Objects.isNull(ifExists)) {
-                        pushHandler.alarmUpdated(alarmInfo);
+                        alarmInfoMaintainService.insert(alarmInfo);
                     } else {
                         int compareResult = alarmInfo.getHappenedDate().compareTo(ifExists.getHappenedDate());
-                        if (compareResult >= 0) {
-                            pushHandler.alarmUpdated(alarmInfo);
+                        if (compareResult > 0) {
+                            alarmInfoMaintainService.update(alarmInfo);
                         }
                     }
                 } catch (Exception e) {
-                    LOGGER.error("数据推送失败, 放弃对数据的推送: " + alarmInfo, e);
+                    LOGGER.error("数据插入失败, 放弃对数据的推送: " + alarmInfo, e);
                     failedList.add(alarmInfo);
                 }
             }
 
             if (!failedList.isEmpty()) {
-                LOGGER.error("推送数据时发生异常, 最多 " + failedList.size() + " 个数据信息丢失");
+                LOGGER.error("记录数据时发生异常, 最多 " + failedList.size() + " 个数据信息丢失");
                 failedList.forEach(alarmInfo -> LOGGER.debug(alarmInfo + ""));
             }
         } finally {

@@ -38,6 +38,9 @@ public class AlarmHandlerImpl implements AlarmHandler {
     @Qualifier("alarmUpdatedEventConsumeHandler")
     private ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler;
     @Autowired
+    @Qualifier("alarmInfoValueConsumeHandler")
+    private ConsumeHandler<AlarmInfo> alarmInfoValueConsumeHandler;
+    @Autowired
     @Qualifier("historyRecordedEventConsumeHandler")
     private ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler;
     @Autowired
@@ -137,8 +140,6 @@ public class AlarmHandlerImpl implements AlarmHandler {
                         );
                         currentAlarmMaintainService.insertOrUpdate(currentAlarm);
                     }
-                    // 消费者消费报警信息更新事件。
-                    alarmUpdatedEventConsumeHandler.accept(alarmInfo);
                 }
                 // 2.4 否则。
                 else {
@@ -159,9 +160,11 @@ public class AlarmHandlerImpl implements AlarmHandler {
                         alarmHistoryValueConsumeHandler.accept(alarmHistory);
                         historyRecordedEventConsumeHandler.accept(alarmHistory);
                     }
-                    // 消费者消费报警信息更新事件。
-                    alarmUpdatedEventConsumeHandler.accept(alarmInfo);
                 }
+                // 消费者消费报警信息值。
+                alarmInfoValueConsumeHandler.accept(alarmInfo);
+                // 消费者消费报警信息更新事件。
+                alarmUpdatedEventConsumeHandler.accept(alarmInfo);
             }
         } catch (HandlerException e) {
             throw e;

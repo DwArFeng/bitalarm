@@ -2,6 +2,7 @@ package com.dwarfeng.bitalarm.impl.configuration;
 
 import com.dwarfeng.bitalarm.impl.handler.ConsumeHandlerImpl;
 import com.dwarfeng.bitalarm.impl.handler.consumer.AlarmHistoryValueConsumer;
+import com.dwarfeng.bitalarm.impl.handler.consumer.AlarmInfoValueConsumer;
 import com.dwarfeng.bitalarm.impl.handler.consumer.AlarmUpdatedEventConsumer;
 import com.dwarfeng.bitalarm.impl.handler.consumer.HistoryRecordEventConsumer;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
@@ -43,6 +44,31 @@ public class ConsumeConfiguration {
         );
         consumeHandler.setBufferParameters(alarmUpdatedEventBufferSize, alarmUpdatedEventBatchSize,
                 alarmUpdatedEventMaxIdleTime);
+        return consumeHandler;
+    }
+
+    @Autowired
+    private AlarmInfoValueConsumer alarmInfoValueConsumer;
+    @Value("${consume.alarm_info_value.consumer_thread}")
+    private int alarmInfoValueConsumerThread;
+    @Value("${consume.alarm_info_value.buffer_size}")
+    private int alarmInfoValueBufferSize;
+    @Value("${consume.alarm_info_value.batch_size}")
+    private int alarmInfoValueBatchSize;
+    @Value("${consume.alarm_info_value.max_idle_time}")
+    private long alarmInfoValueMaxIdleTime;
+
+    @Bean("alarmInfoValueConsumeHandler")
+    public ConsumeHandler<AlarmInfo> alarmInfoValueConsumeHandler() {
+        ConsumeHandlerImpl<AlarmInfo> consumeHandler = new ConsumeHandlerImpl<>(
+                threadPoolTaskExecutor,
+                new ArrayList<>(),
+                new ArrayList<>(),
+                alarmInfoValueConsumer,
+                alarmInfoValueConsumerThread
+        );
+        consumeHandler.setBufferParameters(alarmInfoValueBufferSize, alarmInfoValueBatchSize,
+                alarmInfoValueMaxIdleTime);
         return consumeHandler;
     }
 

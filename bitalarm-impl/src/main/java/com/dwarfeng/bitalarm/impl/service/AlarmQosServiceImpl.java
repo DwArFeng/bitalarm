@@ -40,6 +40,9 @@ public class AlarmQosServiceImpl implements AlarmQosService {
     @Qualifier("alarmUpdatedEventConsumeHandler")
     private ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler;
     @Autowired
+    @Qualifier("alarmInfoValueConsumeHandler")
+    private ConsumeHandler<AlarmInfo> alarmInfoValueConsumeHandler;
+    @Autowired
     @Qualifier("historyRecordedEventConsumeHandler")
     private ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler;
     @Autowired
@@ -78,6 +81,7 @@ public class AlarmQosServiceImpl implements AlarmQosService {
         try {
             LOGGER.info("开启记录服务...");
             alarmUpdatedEventConsumeHandler.start();
+            alarmInfoValueConsumeHandler.start();
             historyRecordedEventConsumeHandler.start();
             alarmHistoryValueConsumeHandler.start();
 
@@ -112,6 +116,7 @@ public class AlarmQosServiceImpl implements AlarmQosService {
             alarmHandler.disable();
 
             alarmUpdatedEventConsumeHandler.stop();
+            alarmInfoValueConsumeHandler.stop();
             historyRecordedEventConsumeHandler.stop();
             alarmHistoryValueConsumeHandler.stop();
         } catch (Exception e) {
