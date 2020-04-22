@@ -5,7 +5,9 @@ import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.bitalarm.stack.cache.AlarmSettingCache;
 import com.dwarfeng.bitalarm.stack.cache.EnabledAlarmSettingCache;
 import com.dwarfeng.bitalarm.stack.dao.AlarmHistoryDao;
+import com.dwarfeng.bitalarm.stack.dao.AlarmInfoDao;
 import com.dwarfeng.bitalarm.stack.dao.AlarmSettingDao;
+import com.dwarfeng.bitalarm.stack.dao.CurrentAlarmDao;
 import com.dwarfeng.bitalarm.stack.service.AlarmHistoryMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.CrudOperation;
@@ -25,10 +27,13 @@ public class AlarmSettingCrudOperation implements CrudOperation<LongIdKey, Alarm
     private AlarmSettingDao alarmSettingDao;
     @Autowired
     private AlarmHistoryDao alarmHistoryDao;
+    @Autowired
+    private CurrentAlarmDao currentAlarmDao;
+    @Autowired
+    private AlarmInfoDao alarmInfoDao;
 
     @Autowired
     private AlarmSettingCache alarmSettingCache;
-
     @Autowired
     private EnabledAlarmSettingCache enabledAlarmSettingCache;
 
@@ -81,6 +86,16 @@ public class AlarmSettingCrudOperation implements CrudOperation<LongIdKey, Alarm
         {
             LongIdKey oldPointKey = new LongIdKey(get(key).getPointId());
             enabledAlarmSettingCache.delete(oldPointKey);
+        }
+
+        //如果存在当前报警和报警信息，则删除。
+        {
+            if (currentAlarmDao.exists(key)) {
+                currentAlarmDao.delete(key);
+            }
+            if (alarmInfoDao.exists(key)) {
+                alarmInfoDao.delete(key);
+            }
         }
 
         //删除与点位相关的过滤器触发器。

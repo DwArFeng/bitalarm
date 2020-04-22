@@ -47,7 +47,8 @@ public class AlarmHandlerImpl implements AlarmHandler {
     @Qualifier("alarmHistoryValueConsumeHandler")
     private ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler;
 
-    private final Lock lock = new ReentrantLock();
+    // 由于报警逻辑严格与时间相关，此处使用公平锁保证执行顺序的一致性。
+    private final Lock lock = new ReentrantLock(true);
 
     private boolean enabledFlag = false;
 
