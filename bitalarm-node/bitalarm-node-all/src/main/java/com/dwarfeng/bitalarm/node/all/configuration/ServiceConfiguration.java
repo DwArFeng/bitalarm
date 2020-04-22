@@ -1,15 +1,19 @@
 package com.dwarfeng.bitalarm.node.all.configuration;
 
 import com.dwarfeng.bitalarm.impl.service.operation.AlarmHistoryCrudOperation;
+import com.dwarfeng.bitalarm.impl.service.operation.AlarmInfoCrudOperation;
 import com.dwarfeng.bitalarm.impl.service.operation.AlarmSettingCrudOperation;
 import com.dwarfeng.bitalarm.impl.service.operation.CurrentAlarmCrudOperation;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
 import com.dwarfeng.bitalarm.stack.dao.AlarmHistoryDao;
+import com.dwarfeng.bitalarm.stack.dao.AlarmInfoDao;
 import com.dwarfeng.bitalarm.stack.dao.AlarmSettingDao;
 import com.dwarfeng.bitalarm.stack.dao.CurrentAlarmDao;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
+import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
 import com.dwarfeng.subgrade.impl.service.CustomCrudService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
@@ -40,9 +44,13 @@ public class ServiceConfiguration {
     @Autowired
     private AlarmHistoryDao alarmHistoryDao;
     @Autowired
+    private CurrentAlarmCrudOperation currentAlarmCrudOperation;
+    @Autowired
     private CurrentAlarmDao currentAlarmDao;
     @Autowired
-    private CurrentAlarmCrudOperation currentAlarmCrudOperation;
+    private AlarmInfoCrudOperation alarmInfoCrudOperation;
+    @Autowired
+    private AlarmInfoDao alarmInfoDao;
 
     @Bean
     public CustomCrudService<LongIdKey, AlarmSetting> alarmSettingCustomCrudService() {
@@ -73,8 +81,8 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public CustomCrudService<LongIdKey, AlarmHistory> alarmHistoryCustomCrudService() {
-        return new CustomCrudService<>(
+    public CustomBatchCrudService<LongIdKey, AlarmHistory> alarmHistoryCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
                 alarmHistoryCrudOperation,
                 longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
@@ -114,6 +122,25 @@ public class ServiceConfiguration {
     public DaoOnlyEntireLookupService<CurrentAlarm> currentAlarmDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
                 currentAlarmDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public CustomCrudService<LongIdKey, AlarmInfo> alarmInfoCustomCrudService() {
+        return new CustomCrudService<>(
+                alarmInfoCrudOperation,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AlarmInfo> alarmInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                alarmInfoDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

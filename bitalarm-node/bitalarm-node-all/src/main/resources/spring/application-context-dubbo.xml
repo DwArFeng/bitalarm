@@ -20,9 +20,16 @@
                     threads="100"/>
 
     <!-- 向注册中心注册暴露服务地址,注册服务 -->
-    <!--    <dubbo:service interface="com.dwarfeng.fdr.stack.service.PointMaintainService"-->
-    <!--                   ref="pointMaintainServiceImpl"/>-->
-    <!--    TODO-->
+    <dubbo:service interface="com.dwarfeng.bitalarm.stack.service.AlarmSettingMaintainService"
+                   ref="alarmSettingMaintainServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.bitalarm.stack.service.CurrentAlarmMaintainService"
+                   ref="currentAlarmMaintainServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.bitalarm.stack.service.AlarmHistoryMaintainService"
+                   ref="alarmHistoryMaintainServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.bitalarm.stack.service.EnabledAlarmSettingLookupService"
+                   ref="enabledAlarmSettingLookupServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.bitalarm.stack.service.AlarmQosService"
+                   ref="alarmQosServiceImpl"/>
 
     <!-- 向注册中心注册暴露服务地址,注册消费者服务 -->
     <dubbo:reference id="longIdService" interface="com.dwarfeng.sfds.stack.service.LongIdService"/>

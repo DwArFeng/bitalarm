@@ -6,6 +6,7 @@ import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
+import com.dwarfeng.subgrade.impl.cache.RedisKeyListCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.dozer.Mapper;
@@ -27,6 +28,8 @@ public class CacheConfiguration {
     private String alarmSettingPrefix;
     @Value("${cache.prefix.entity.alarm_history}")
     private String alarmHistoryPrefix;
+    @Value("${cache.prefix.list.enabled_alarm_setting}")
+    private String enabledAlarmSettingPrefix;
 
     @Bean
     @SuppressWarnings("unchecked")
@@ -45,6 +48,16 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonAlarmHistory>) template,
                 new LongIdStringKeyFormatter(alarmHistoryPrefix),
                 new DozerBeanTransformer<>(AlarmHistory.class, FastJsonAlarmHistory.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisKeyListCache<LongIdKey, AlarmSetting, FastJsonAlarmSetting> alarmSettingEnabledRedisKeyListCache() {
+        return new RedisKeyListCache<>(
+                (RedisTemplate<String, FastJsonAlarmSetting>) template,
+                new LongIdStringKeyFormatter(enabledAlarmSettingPrefix),
+                new DozerBeanTransformer<>(AlarmSetting.class, FastJsonAlarmSetting.class, mapper)
         );
     }
 }
