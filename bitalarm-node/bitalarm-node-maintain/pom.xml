@@ -78,10 +78,22 @@
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-sdk</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-kafka</artifactId>
+                    <groupId>org.springframework.kafka</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-impl</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-kafka</artifactId>
+                    <groupId>org.springframework.kafka</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- spring-terminator组件 -->
         <dependency>

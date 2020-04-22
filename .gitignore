@@ -75,7 +75,6 @@ buildNumber.properties
 #################
 ## Opt Files
 #################
-/bitalarm-node/bitalarm-node-maintain/opt/
 /bitalarm-node/bitalarm-node-alarm/opt/
 /bitalarm-node/bitalarm-node-all/opt/
 
