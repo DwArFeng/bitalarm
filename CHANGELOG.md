@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 添加com.dwarfeng.bitalarm.sdk.bean.entity.WebInputAlarmInfo。
 
 #### Bug修复
 
