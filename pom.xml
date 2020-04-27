@@ -6,7 +6,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>bitalarm</artifactId>
-    <version>1.0.1.a</version>
+    <version>1.1.0.a-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -57,7 +57,7 @@
         <dutil.version>beta-0.2.1.a</dutil.version>
         <kafka.version>2.4.0</kafka.version>
         <snowflake.version>1.2.4.a</snowflake.version>
-        <subgrade.version>beta-0.3.2.b</subgrade.version>
+        <subgrade.version>1.0.0.a</subgrade.version>
         <spring-terminator.version>1.0.3.a</spring-terminator.version>
         <dcti.version>1.1.0.a</dcti.version>
         <!-- Maven插件版本声明 -->
@@ -390,32 +390,32 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-stack</artifactId>
-                <version>1.0.1.a</version>
+                <version>1.1.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-sdk</artifactId>
-                <version>1.0.1.a</version>
+                <version>1.1.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-impl</artifactId>
-                <version>1.0.1.a</version>
+                <version>1.1.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-node-alarm</artifactId>
-                <version>1.0.1.a</version>
+                <version>1.1.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-node-maintain</artifactId>
-                <version>1.0.1.a</version>
+                <version>1.1.0.a-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-node-all</artifactId>
-                <version>1.0.1.a</version>
+                <version>1.1.0.a-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

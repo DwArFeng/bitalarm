@@ -100,7 +100,7 @@ public class AlarmSettingDaoImpl implements AlarmSettingDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
-    public List<AlarmSetting> batchGet(List<LongIdKey> keys) {
+    public List<AlarmSetting> batchGet(List<LongIdKey> keys) throws DaoException {
         return batchBaseDao.batchGet(keys);
     }
 

@@ -1,5 +1,23 @@
 # ChangeLog
 
+### Release_1.1.0_20200426_build_A
+
+#### 功能构建
+
+- 实现实体维护并通过单元测试。
+  - com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator
+- 升级subgrade依赖至1.0.0.a，修复轻微不兼容的错误。
+
+#### Bug修复
+
+- (无)
+
+#### 功能移除
+
+- (无)
+
+---
+
 ### Release_1.0.1_20200425_build_A
 
 #### 功能构建

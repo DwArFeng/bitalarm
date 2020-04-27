@@ -16,6 +16,10 @@ public final class Constraints {
      * 备注的长度约束。
      */
     public static final int LENGTH_REMARK = 100;
+    /**
+     * 标签的长度约束。
+     */
+    public static final int LENGTH_LABEL = 10;
 
     private Constraints() {
         throw new IllegalStateException("禁止实例化");

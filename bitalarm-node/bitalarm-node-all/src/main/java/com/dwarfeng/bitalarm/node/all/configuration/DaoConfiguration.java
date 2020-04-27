@@ -2,19 +2,19 @@ package com.dwarfeng.bitalarm.node.all.configuration;
 
 import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmHistory;
 import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmSetting;
+import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmTypeIndicator;
 import com.dwarfeng.bitalarm.impl.dao.preset.AlarmHistoryPresetCriteriaMaker;
 import com.dwarfeng.bitalarm.impl.dao.preset.AlarmSettingPresetCriteriaMaker;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmInfo;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonCurrentAlarm;
-import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
-import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
-import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
-import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
+import com.dwarfeng.bitalarm.stack.bean.entity.*;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.*;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateByteIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletionMod;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
+import com.dwarfeng.subgrade.stack.bean.key.ByteIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,6 +150,28 @@ public class DaoConfiguration {
                 new LongIdStringKeyFormatter("key."),
                 new DozerBeanTransformer<>(AlarmInfo.class, FastJsonAlarmInfo.class, mapper),
                 alarmInfoDbKey
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<ByteIdKey, HibernateByteIdKey, AlarmTypeIndicator, HibernateAlarmTypeIndicator>
+    alarmTypeIndicatorHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(ByteIdKey.class, HibernateByteIdKey.class, mapper),
+                new DozerBeanTransformer<>(AlarmTypeIndicator.class, HibernateAlarmTypeIndicator.class, mapper),
+                HibernateAlarmTypeIndicator.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<AlarmTypeIndicator, HibernateAlarmTypeIndicator> alarmTypeIndicatorHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(AlarmTypeIndicator.class, HibernateAlarmTypeIndicator.class, mapper),
+                HibernateAlarmTypeIndicator.class
         );
     }
 }

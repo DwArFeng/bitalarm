@@ -4,23 +4,18 @@ import com.dwarfeng.bitalarm.impl.service.operation.AlarmHistoryCrudOperation;
 import com.dwarfeng.bitalarm.impl.service.operation.AlarmInfoCrudOperation;
 import com.dwarfeng.bitalarm.impl.service.operation.AlarmSettingCrudOperation;
 import com.dwarfeng.bitalarm.impl.service.operation.CurrentAlarmCrudOperation;
-import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
-import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
-import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
-import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
-import com.dwarfeng.bitalarm.stack.dao.AlarmHistoryDao;
-import com.dwarfeng.bitalarm.stack.dao.AlarmInfoDao;
-import com.dwarfeng.bitalarm.stack.dao.AlarmSettingDao;
-import com.dwarfeng.bitalarm.stack.dao.CurrentAlarmDao;
+import com.dwarfeng.bitalarm.stack.bean.entity.*;
+import com.dwarfeng.bitalarm.stack.cache.AlarmTypeIndicatorCache;
+import com.dwarfeng.bitalarm.stack.dao.*;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
-import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
-import com.dwarfeng.subgrade.impl.service.CustomCrudService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
+import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
+import com.dwarfeng.subgrade.impl.service.*;
+import com.dwarfeng.subgrade.stack.bean.key.ByteIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -51,6 +46,13 @@ public class ServiceConfiguration {
     private AlarmInfoCrudOperation alarmInfoCrudOperation;
     @Autowired
     private AlarmInfoDao alarmInfoDao;
+    @Autowired
+    private AlarmTypeIndicatorDao alarmTypeIndicatorDao;
+    @Autowired
+    private AlarmTypeIndicatorCache alarmTypeIndicatorCache;
+
+    @Value("${cache.timeout.entity.alarm_type_indicator}")
+    private long alarmTypeIndicatorTimeout;
 
     @Bean
     public CustomCrudService<LongIdKey, AlarmSetting> alarmSettingCustomCrudService() {
@@ -141,6 +143,27 @@ public class ServiceConfiguration {
     public DaoOnlyEntireLookupService<AlarmInfo> alarmInfoDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
                 alarmInfoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<ByteIdKey, AlarmTypeIndicator> alarmTypeIndicatorGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                alarmTypeIndicatorDao,
+                alarmTypeIndicatorCache,
+                new ExceptionKeyFetcher<>(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                alarmTypeIndicatorTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<AlarmTypeIndicator> alarmTypeIndicatorDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                alarmTypeIndicatorDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

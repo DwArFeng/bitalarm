@@ -2,12 +2,16 @@ package com.dwarfeng.bitalarm.impl.configuration;
 
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmHistory;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmSetting;
+import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmTypeIndicator;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.impl.cache.RedisKeyListCache;
+import com.dwarfeng.subgrade.sdk.redis.formatter.ByteIdStringKeyFormatter;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
+import com.dwarfeng.subgrade.stack.bean.key.ByteIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,8 @@ public class CacheConfiguration {
     private String alarmHistoryPrefix;
     @Value("${cache.prefix.list.enabled_alarm_setting}")
     private String enabledAlarmSettingPrefix;
+    @Value("${cache.prefix.entity.alarm_type_indicator}")
+    private String alarmTypeIndicatorPrefix;
 
     @Bean
     @SuppressWarnings("unchecked")
@@ -58,6 +64,16 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonAlarmSetting>) template,
                 new LongIdStringKeyFormatter(enabledAlarmSettingPrefix),
                 new DozerBeanTransformer<>(AlarmSetting.class, FastJsonAlarmSetting.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<ByteIdKey, AlarmTypeIndicator, FastJsonAlarmTypeIndicator> alarmTypeIndicatorRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAlarmTypeIndicator>) template,
+                new ByteIdStringKeyFormatter(alarmTypeIndicatorPrefix),
+                new DozerBeanTransformer<>(AlarmTypeIndicator.class, FastJsonAlarmTypeIndicator.class, mapper)
         );
     }
 }
