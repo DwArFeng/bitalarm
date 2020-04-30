@@ -1,5 +1,21 @@
 # ChangeLog
 
+### Release_1.2.1_20200430_build_A
+
+#### 功能构建
+
+- 优化查询预设AlarmSettingMaintainService.CHILD_FOR_POINT。
+
+#### Bug修复
+
+- (无)
+
+#### 功能移除
+
+- (无)
+
+---
+
 ### Release_1.2.0_20200430_build_A
 
 #### 功能构建

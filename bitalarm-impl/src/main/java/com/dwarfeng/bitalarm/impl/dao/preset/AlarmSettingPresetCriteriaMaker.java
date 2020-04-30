@@ -40,8 +40,8 @@ public class AlarmSettingPresetCriteriaMaker implements PresetCriteriaMaker {
             if (Objects.isNull(objects[0])) {
                 detachedCriteria.add(Restrictions.isNull("pointId"));
             } else {
-                LongIdKey longIdKey = (LongIdKey) objects[0];
-                detachedCriteria.add(Restrictions.eqOrIsNull("pointId", longIdKey.getLongId()));
+                long pointId = (long) objects[0];
+                detachedCriteria.add(Restrictions.eqOrIsNull("pointId", pointId));
             }
             detachedCriteria.addOrder(Order.asc("longId"));
         } catch (Exception e) {
