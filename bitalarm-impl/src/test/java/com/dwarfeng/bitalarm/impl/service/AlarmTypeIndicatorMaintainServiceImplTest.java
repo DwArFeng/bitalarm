@@ -47,7 +47,7 @@ public class AlarmTypeIndicatorMaintainServiceImplTest {
     public void test() throws Exception {
         try {
             for (AlarmTypeIndicator alarmTypeIndicator : alarmTypeIndicators) {
-                alarmTypeIndicatorMaintainService.insert(alarmTypeIndicator);
+                alarmTypeIndicatorMaintainService.insertOrUpdate(alarmTypeIndicator);
                 alarmTypeIndicatorMaintainService.update(alarmTypeIndicator);
                 AlarmTypeIndicator testAlarmTypeIndicator = alarmTypeIndicatorMaintainService.get(alarmTypeIndicator.getKey());
                 assertEquals(BeanUtils.describe(alarmTypeIndicator), BeanUtils.describe(testAlarmTypeIndicator));

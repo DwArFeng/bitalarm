@@ -5,16 +5,14 @@ import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @Entity
 @IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_alarm_setting")
 public class HibernateAlarmSetting implements Bean {
 
-    private static final long serialVersionUID = 1846238781655012413L;
+    private static final long serialVersionUID = 5052011856627355626L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -39,10 +37,6 @@ public class HibernateAlarmSetting implements Bean {
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
-
-    // -----------------------------------------------------------一对多-----------------------------------------------------------
-    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateAlarmHistory.class, mappedBy = "alarmSetting")
-    private Set<HibernateAlarmHistory> alarmHistories = new HashSet<>();
 
     public HibernateAlarmSetting() {
     }
@@ -111,14 +105,6 @@ public class HibernateAlarmSetting implements Bean {
         this.remark = remark;
     }
 
-    public Set<HibernateAlarmHistory> getAlarmHistories() {
-        return alarmHistories;
-    }
-
-    public void setAlarmHistories(Set<HibernateAlarmHistory> alarmHistories) {
-        this.alarmHistories = alarmHistories;
-    }
-
     @Override
     public String toString() {
         return "HibernateAlarmSetting{" +
@@ -129,7 +115,6 @@ public class HibernateAlarmSetting implements Bean {
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +
                 ", remark='" + remark + '\'' +
-                ", alarmHistories=" + alarmHistories +
                 '}';
     }
 }

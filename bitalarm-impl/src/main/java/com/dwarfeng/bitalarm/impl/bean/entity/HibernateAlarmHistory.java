@@ -13,18 +13,17 @@ import java.util.Optional;
 @Table(name = "tbl_alarm_history")
 public class HibernateAlarmHistory implements Bean {
 
-    private static final long serialVersionUID = -278831682409412348L;
+    private static final long serialVersionUID = -3771822009780091113L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private Long longId;
 
-    // -----------------------------------------------------------外键-----------------------------------------------------------
+    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "alarm_setting_id")
     private Long alarmSettingLongId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "column_index")
     private int index;
 
@@ -44,13 +43,6 @@ public class HibernateAlarmHistory implements Bean {
 
     @Column(name = "duration")
     private long duration;
-
-    // -----------------------------------------------------------多对一-----------------------------------------------------------
-    @ManyToOne(targetEntity = HibernateAlarmSetting.class)
-    @JoinColumns({ //
-            @JoinColumn(name = "alarm_setting_id", referencedColumnName = "id", insertable = false, updatable = false), //
-    })
-    private HibernateAlarmSetting alarmSetting;
 
     public HibernateAlarmHistory() {
     }
@@ -133,14 +125,6 @@ public class HibernateAlarmHistory implements Bean {
 
     public void setDuration(long duration) {
         this.duration = duration;
-    }
-
-    public HibernateAlarmSetting getAlarmSetting() {
-        return alarmSetting;
-    }
-
-    public void setAlarmSetting(HibernateAlarmSetting alarmSetting) {
-        this.alarmSetting = alarmSetting;
     }
 
     @Override

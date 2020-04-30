@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 取消AlarmSetting和AlarmHistory的级联关系。
 
 #### Bug修复
 
