@@ -47,7 +47,7 @@ public class JSFixedFastJsonAlarmHistory implements Bean {
     @JSONField(name = "alarm_message", ordinal = 4)
     private String alarmMessage;
 
-    @JSONField(name = "type", ordinal = 5)
+    @JSONField(name = "alarm_type", ordinal = 5)
     private byte alarmType;
 
     @JSONField(name = "start_date", ordinal = 6)

@@ -57,7 +57,7 @@ public class WebInputAlarmHistory implements Bean {
     @NotEmpty
     private String alarmMessage;
 
-    @JSONField(name = "type")
+    @JSONField(name = "alarm_type")
     private byte alarmType;
 
     @JSONField(name = "start_date")

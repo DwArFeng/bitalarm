@@ -11,7 +11,10 @@
 
 #### Bug修复
 
-- (无)
+- 修正部分AlarmHistory实体错误的JSON输入输出字段名称。
+  - com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmHistory
+  - com.dwarfeng.bitalarm.sdk.bean.entity.JSFixedFastJsonAlarmHistory
+  - com.dwarfeng.bitalarm.sdk.bean.entity.WebInputAlarmHistory
 
 #### 功能移除
 
