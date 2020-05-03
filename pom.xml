@@ -57,7 +57,7 @@
         <dutil.version>beta-0.2.1.a</dutil.version>
         <kafka.version>2.4.0</kafka.version>
         <snowflake.version>1.2.4.a</snowflake.version>
-        <subgrade.version>1.0.0.a</subgrade.version>
+        <subgrade.version>1.0.1.a</subgrade.version>
         <spring-terminator.version>1.0.3.a</spring-terminator.version>
         <dcti.version>1.1.0.a</dcti.version>
         <!-- Maven插件版本声明 -->

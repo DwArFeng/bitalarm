@@ -7,6 +7,7 @@
 - 为报警模态实体添加pointId属性。
   - com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo
   - com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm
+- 升级subgrade依赖至1.0.1.a，以避免潜在的RedisDao的分页bug。
 
 #### Bug修复
 
