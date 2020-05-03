@@ -1,5 +1,23 @@
 # ChangeLog
 
+### Release_1.2.2_20200503_build_A
+
+#### 功能构建
+
+- 改动CriteriaMaker，使得其兼容 Dubbo RPC 框架下的数据类型问题。
+  - com.dwarfeng.bitalarm.impl.dao.preset.AlarmHistoryPresetCriteriaMaker
+  - com.dwarfeng.bitalarm.impl.dao.preset.AlarmHistoryPresetCriteriaMaker
+
+#### Bug修复
+
+- (无)
+
+#### 功能移除
+
+- (无)
+
+---
+
 ### Release_1.2.1_20200430_build_A
 
 #### 功能构建

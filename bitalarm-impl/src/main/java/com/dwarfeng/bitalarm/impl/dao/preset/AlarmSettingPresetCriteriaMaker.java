@@ -77,7 +77,12 @@ public class AlarmSettingPresetCriteriaMaker implements PresetCriteriaMaker {
 
     private void alarmTypeEquals(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
-            byte alarmType = (byte) objects[0];
+            byte alarmType;
+            if (objects[0] instanceof Integer) {
+                alarmType = (byte) ((int) objects[0]);
+            } else {
+                alarmType = (byte) objects[0];
+            }
             detachedCriteria.add(Restrictions.eq("alarmType", alarmType));
             detachedCriteria.addOrder(Order.asc("longId"));
         } catch (Exception e) {
