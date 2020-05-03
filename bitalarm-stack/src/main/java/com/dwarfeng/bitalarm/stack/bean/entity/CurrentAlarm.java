@@ -13,9 +13,10 @@ import java.util.Date;
  */
 public class CurrentAlarm implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = 8028832852594473572L;
+    private static final long serialVersionUID = 3699294937879624655L;
 
     private LongIdKey key;
+    private long pointId;
     private int index;
     private String alarmMessage;
     private byte alarmType;
@@ -24,8 +25,10 @@ public class CurrentAlarm implements Entity<LongIdKey> {
     public CurrentAlarm() {
     }
 
-    public CurrentAlarm(LongIdKey key, int index, String alarmMessage, byte alarmType, Date happenedDate) {
+    public CurrentAlarm(
+            LongIdKey key, long pointId, int index, String alarmMessage, byte alarmType, Date happenedDate) {
         this.key = key;
+        this.pointId = pointId;
         this.index = index;
         this.alarmMessage = alarmMessage;
         this.alarmType = alarmType;
@@ -40,6 +43,14 @@ public class CurrentAlarm implements Entity<LongIdKey> {
     @Override
     public void setKey(LongIdKey key) {
         this.key = key;
+    }
+
+    public long getPointId() {
+        return pointId;
+    }
+
+    public void setPointId(long pointId) {
+        this.pointId = pointId;
     }
 
     public int getIndex() {
@@ -78,6 +89,7 @@ public class CurrentAlarm implements Entity<LongIdKey> {
     public String toString() {
         return "CurrentAlarm{" +
                 "key=" + key +
+                ", pointId=" + pointId +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

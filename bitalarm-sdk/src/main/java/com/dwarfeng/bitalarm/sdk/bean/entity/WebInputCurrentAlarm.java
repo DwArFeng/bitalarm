@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class WebInputCurrentAlarm implements Bean {
 
-    private static final long serialVersionUID = -267558087245060993L;
+    private static final long serialVersionUID = -3486150466541025564L;
 
     public static CurrentAlarm toStackBean(WebInputCurrentAlarm webInputCurrentAlarm) {
         if (Objects.isNull(webInputCurrentAlarm)) {
@@ -28,6 +28,7 @@ public class WebInputCurrentAlarm implements Bean {
         } else {
             return new CurrentAlarm(
                     WebInputLongIdKey.toStackBean(webInputCurrentAlarm.getKey()),
+                    webInputCurrentAlarm.getPointId(),
                     webInputCurrentAlarm.getIndex(),
                     webInputCurrentAlarm.getAlarmMessage(),
                     webInputCurrentAlarm.getAlarmType(),
@@ -40,6 +41,9 @@ public class WebInputCurrentAlarm implements Bean {
     @Valid
     @NotNull
     private WebInputLongIdKey key;
+
+    @JSONField(name = "point_id")
+    private long pointId;
 
     @JSONField(name = "index")
     @PositiveOrZero
@@ -60,8 +64,9 @@ public class WebInputCurrentAlarm implements Bean {
     }
 
     public WebInputCurrentAlarm(
-            WebInputLongIdKey key, int index, String alarmMessage, byte alarmType, Date happenedDate) {
+            WebInputLongIdKey key, long pointId, int index, String alarmMessage, byte alarmType, Date happenedDate) {
         this.key = key;
+        this.pointId = pointId;
         this.index = index;
         this.alarmMessage = alarmMessage;
         this.alarmType = alarmType;
@@ -74,6 +79,14 @@ public class WebInputCurrentAlarm implements Bean {
 
     public void setKey(WebInputLongIdKey key) {
         this.key = key;
+    }
+
+    public long getPointId() {
+        return pointId;
+    }
+
+    public void setPointId(long pointId) {
+        this.pointId = pointId;
     }
 
     public int getIndex() {
@@ -112,6 +125,7 @@ public class WebInputCurrentAlarm implements Bean {
     public String toString() {
         return "WebInputCurrentAlarm{" +
                 "key=" + key +
+                ", pointId=" + pointId +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

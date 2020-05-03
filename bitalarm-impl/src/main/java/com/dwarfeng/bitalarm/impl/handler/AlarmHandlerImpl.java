@@ -122,6 +122,7 @@ public class AlarmHandlerImpl implements AlarmHandler {
                 // 2.2 取出指定index上的报警的bit值，生成alarmInfo。
                 AlarmInfo alarmInfo = new AlarmInfo(
                         alarmSetting.getKey(),
+                        alarmSetting.getPointId(),
                         alarmSetting.getIndex(),
                         alarmSetting.getAlarmMessage(),
                         alarmSetting.getAlarmType(),
@@ -134,6 +135,7 @@ public class AlarmHandlerImpl implements AlarmHandler {
                     if (!currentAlarmMaintainService.exists(alarmInfo.getKey())) {
                         CurrentAlarm currentAlarm = new CurrentAlarm(
                                 alarmInfo.getKey(),
+                                alarmInfo.getPointId(),
                                 alarmInfo.getIndex(),
                                 alarmInfo.getAlarmMessage(),
                                 alarmInfo.getAlarmType(),

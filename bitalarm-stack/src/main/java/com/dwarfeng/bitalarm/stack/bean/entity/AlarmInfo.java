@@ -13,9 +13,10 @@ import java.util.Date;
  */
 public class AlarmInfo implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -4106289261786855412L;
+    private static final long serialVersionUID = 2679203071902735737L;
 
     private LongIdKey key;
+    private long pointId;
     private int index;
     private String alarmMessage;
     private byte alarmType;
@@ -26,8 +27,10 @@ public class AlarmInfo implements Entity<LongIdKey> {
     }
 
     public AlarmInfo(
-            LongIdKey key, int index, String alarmMessage, byte alarmType, Date happenedDate, boolean alarming) {
+            LongIdKey key, long pointId, int index, String alarmMessage, byte alarmType, Date happenedDate,
+            boolean alarming) {
         this.key = key;
+        this.pointId = pointId;
         this.index = index;
         this.alarmMessage = alarmMessage;
         this.alarmType = alarmType;
@@ -43,6 +46,14 @@ public class AlarmInfo implements Entity<LongIdKey> {
     @Override
     public void setKey(LongIdKey key) {
         this.key = key;
+    }
+
+    public long getPointId() {
+        return pointId;
+    }
+
+    public void setPointId(long pointId) {
+        this.pointId = pointId;
     }
 
     public int getIndex() {
@@ -89,6 +100,7 @@ public class AlarmInfo implements Entity<LongIdKey> {
     public String toString() {
         return "AlarmInfo{" +
                 "key=" + key +
+                ", pointId=" + pointId +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

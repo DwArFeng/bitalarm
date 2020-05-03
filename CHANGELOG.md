@@ -4,7 +4,9 @@
 
 #### 功能构建
 
-- (无)
+- 为报警模态实体添加pointId属性。
+  - com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo
+  - com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm
 
 #### Bug修复
 

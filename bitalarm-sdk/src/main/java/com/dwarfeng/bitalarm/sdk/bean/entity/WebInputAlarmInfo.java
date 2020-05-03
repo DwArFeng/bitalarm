@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class WebInputAlarmInfo implements Bean {
 
-    private static final long serialVersionUID = 7296921847414242775L;
+    private static final long serialVersionUID = 2637279789447201650L;
 
     public static AlarmInfo toStackBean(WebInputAlarmInfo webInputAlarmInfo) {
         if (Objects.isNull(webInputAlarmInfo)) {
@@ -28,6 +28,7 @@ public class WebInputAlarmInfo implements Bean {
         } else {
             return new AlarmInfo(
                     WebInputLongIdKey.toStackBean(webInputAlarmInfo.getKey()),
+                    webInputAlarmInfo.getPointId(),
                     webInputAlarmInfo.getIndex(),
                     webInputAlarmInfo.getAlarmMessage(),
                     webInputAlarmInfo.getAlarmType(),
@@ -41,6 +42,9 @@ public class WebInputAlarmInfo implements Bean {
     @Valid
     @NotNull
     private WebInputLongIdKey key;
+
+    @JSONField(name = "point_id")
+    private long pointId;
 
     @JSONField(name = "index")
     @PositiveOrZero
@@ -64,9 +68,10 @@ public class WebInputAlarmInfo implements Bean {
     }
 
     public WebInputAlarmInfo(
-            WebInputLongIdKey key, int index, String alarmMessage, byte alarmType, Date happenedDate,
+            WebInputLongIdKey key, long pointId, int index, String alarmMessage, byte alarmType, Date happenedDate,
             boolean alarming) {
         this.key = key;
+        this.pointId = pointId;
         this.index = index;
         this.alarmMessage = alarmMessage;
         this.alarmType = alarmType;
@@ -80,6 +85,14 @@ public class WebInputAlarmInfo implements Bean {
 
     public void setKey(WebInputLongIdKey key) {
         this.key = key;
+    }
+
+    public long getPointId() {
+        return pointId;
+    }
+
+    public void setPointId(long pointId) {
+        this.pointId = pointId;
     }
 
     public int getIndex() {
@@ -126,6 +139,7 @@ public class WebInputAlarmInfo implements Bean {
     public String toString() {
         return "WebInputAlarmInfo{" +
                 "key=" + key +
+                ", pointId=" + pointId +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

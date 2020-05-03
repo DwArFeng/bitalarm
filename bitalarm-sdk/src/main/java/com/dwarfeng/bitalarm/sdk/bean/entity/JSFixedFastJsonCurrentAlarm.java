@@ -1,6 +1,7 @@
 package com.dwarfeng.bitalarm.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
 import com.dwarfeng.subgrade.sdk.bean.key.JSFixedFastJsonLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
@@ -16,7 +17,7 @@ import java.util.Objects;
  */
 public class JSFixedFastJsonCurrentAlarm implements Bean {
 
-    private static final long serialVersionUID = -5496161500703003902L;
+    private static final long serialVersionUID = -6807345843469912747L;
 
     public static JSFixedFastJsonCurrentAlarm of(CurrentAlarm currentAlarm) {
         if (Objects.isNull(currentAlarm)) {
@@ -24,6 +25,7 @@ public class JSFixedFastJsonCurrentAlarm implements Bean {
         } else {
             return new JSFixedFastJsonCurrentAlarm(
                     JSFixedFastJsonLongIdKey.of(currentAlarm.getKey()),
+                    currentAlarm.getPointId(),
                     currentAlarm.getIndex(),
                     currentAlarm.getAlarmMessage(),
                     currentAlarm.getAlarmType(),
@@ -35,24 +37,29 @@ public class JSFixedFastJsonCurrentAlarm implements Bean {
     @JSONField(name = "key", ordinal = 1)
     private JSFixedFastJsonLongIdKey key;
 
-    @JSONField(name = "index", ordinal = 2)
+    @JSONField(name = "point_id", ordinal = 2, serializeUsing = ToStringSerializer.class)
+    private long pointId;
+
+    @JSONField(name = "index", ordinal = 3)
     private int index;
 
-    @JSONField(name = "alarm_message", ordinal = 3)
+    @JSONField(name = "alarm_message", ordinal = 4)
     private String alarmMessage;
 
-    @JSONField(name = "alarm_type", ordinal = 4)
+    @JSONField(name = "alarm_type", ordinal = 5)
     private byte alarmType;
 
-    @JSONField(name = "happened_date", ordinal = 5)
+    @JSONField(name = "happened_date", ordinal = 6)
     private Date happenedDate;
 
     public JSFixedFastJsonCurrentAlarm() {
     }
 
     public JSFixedFastJsonCurrentAlarm(
-            JSFixedFastJsonLongIdKey key, int index, String alarmMessage, byte alarmType, Date happenedDate) {
+            JSFixedFastJsonLongIdKey key, long pointId, int index, String alarmMessage, byte alarmType,
+            Date happenedDate) {
         this.key = key;
+        this.pointId = pointId;
         this.index = index;
         this.alarmMessage = alarmMessage;
         this.alarmType = alarmType;
@@ -65,6 +72,14 @@ public class JSFixedFastJsonCurrentAlarm implements Bean {
 
     public void setKey(JSFixedFastJsonLongIdKey key) {
         this.key = key;
+    }
+
+    public long getPointId() {
+        return pointId;
+    }
+
+    public void setPointId(long pointId) {
+        this.pointId = pointId;
     }
 
     public int getIndex() {
@@ -103,6 +118,7 @@ public class JSFixedFastJsonCurrentAlarm implements Bean {
     public String toString() {
         return "JSFixedFastJsonCurrentAlarm{" +
                 "key=" + key +
+                ", pointId=" + pointId +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

@@ -4,7 +4,7 @@ import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.bitalarm.stack.service.AlarmInfoMaintainService;
 import com.dwarfeng.bitalarm.stack.service.AlarmSettingMaintainService;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import org.apache.commons.beanutils.BeanUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/application-context*.xml")
@@ -40,6 +42,7 @@ public class AlarmInfoMaintainServiceImplTest {
         );
         alarmInfo = new AlarmInfo(
                 null,
+                1L,
                 1,
                 "我是报警信息",
                 (byte) 0,
@@ -55,11 +58,13 @@ public class AlarmInfoMaintainServiceImplTest {
     }
 
     @Test
-    public void test() throws ServiceException {
+    public void test() throws Exception {
         try {
             parentAlarmSetting.setKey(alarmSettingMaintainService.insert(parentAlarmSetting));
             alarmInfo.setKey(parentAlarmSetting.getKey());
             alarmInfoMaintainService.insert(alarmInfo);
+            AlarmInfo alarmInfo1 = alarmInfoMaintainService.get(this.alarmInfo.getKey());
+            assertEquals(BeanUtils.describe(alarmInfo), BeanUtils.describe(alarmInfo1));
         } finally {
             alarmInfoMaintainService.deleteIfExists(alarmInfo.getKey());
             alarmSettingMaintainService.deleteIfExists(parentAlarmSetting.getKey());
