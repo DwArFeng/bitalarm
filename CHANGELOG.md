@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 将部分实体的Crud服务升级为BatchCrud服务。
+  - com.dwarfeng.bitalarm.stack.service.AlarmSettingMaintainService
 
 #### Bug修复
 

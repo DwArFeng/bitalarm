@@ -55,8 +55,8 @@ public class ServiceConfiguration {
     private long alarmTypeIndicatorTimeout;
 
     @Bean
-    public CustomCrudService<LongIdKey, AlarmSetting> alarmSettingCustomCrudService() {
-        return new CustomCrudService<>(
+    public CustomBatchCrudService<LongIdKey, AlarmSetting> alarmSettingCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
                 alarmSettingCrudOperation,
                 longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),

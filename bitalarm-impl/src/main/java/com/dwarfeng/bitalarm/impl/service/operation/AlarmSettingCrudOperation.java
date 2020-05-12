@@ -8,15 +8,17 @@ import com.dwarfeng.bitalarm.stack.dao.AlarmInfoDao;
 import com.dwarfeng.bitalarm.stack.dao.AlarmSettingDao;
 import com.dwarfeng.bitalarm.stack.dao.CurrentAlarmDao;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
-import com.dwarfeng.subgrade.sdk.service.custom.operation.CrudOperation;
+import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
-public class AlarmSettingCrudOperation implements CrudOperation<LongIdKey, AlarmSetting> {
+public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, AlarmSetting> {
 
     @Autowired
     private AlarmSettingDao alarmSettingDao;
@@ -95,5 +97,61 @@ public class AlarmSettingCrudOperation implements CrudOperation<LongIdKey, Alarm
 
         alarmSettingDao.delete(key);
         alarmSettingCache.delete(key);
+    }
+
+    @Override
+    public boolean allExists(List<LongIdKey> keys) throws Exception {
+        return alarmSettingCache.allExists(keys) || alarmSettingDao.allExists(keys);
+    }
+
+    @Override
+    public boolean nonExists(List<LongIdKey> keys) throws Exception {
+        return alarmSettingCache.nonExists(keys) && alarmSettingDao.nonExists(keys);
+    }
+
+    @Override
+    public List<AlarmSetting> batchGet(List<LongIdKey> keys) throws Exception {
+        if (alarmSettingCache.allExists(keys)) {
+            return alarmSettingCache.batchGet(keys);
+        } else {
+            if (!alarmSettingDao.allExists(keys)) {
+                throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+            }
+            List<AlarmSetting> alarmSettings = alarmSettingDao.batchGet(keys);
+            alarmSettingCache.batchPush(alarmSettings, alarmSettingTimeout);
+            return alarmSettings;
+        }
+    }
+
+    @Override
+    public List<LongIdKey> batchInsert(List<AlarmSetting> alarmSettings) throws Exception {
+        for (AlarmSetting alarmSetting : alarmSettings) {
+            LongIdKey pointKey = new LongIdKey(alarmSetting.getPointId());
+            enabledAlarmSettingCache.delete(pointKey);
+        }
+
+        alarmSettingCache.batchPush(alarmSettings, alarmSettingTimeout);
+        return alarmSettingDao.batchInsert(alarmSettings);
+    }
+
+    @Override
+    public void batchUpdate(List<AlarmSetting> alarmSettings) throws Exception {
+        for (AlarmSetting alarmSetting : alarmSettings) {
+            LongIdKey oldPointKey = new LongIdKey(get(alarmSetting.getKey()).getPointId());
+            enabledAlarmSettingCache.delete(oldPointKey);
+
+            LongIdKey pointKey = new LongIdKey(alarmSetting.getPointId());
+            enabledAlarmSettingCache.delete(pointKey);
+        }
+
+        alarmSettingCache.batchPush(alarmSettings, alarmSettingTimeout);
+        alarmSettingDao.batchUpdate(alarmSettings);
+    }
+
+    @Override
+    public void batchDelete(List<LongIdKey> keys) throws Exception {
+        for (LongIdKey key : keys) {
+            delete(key);
+        }
     }
 }
