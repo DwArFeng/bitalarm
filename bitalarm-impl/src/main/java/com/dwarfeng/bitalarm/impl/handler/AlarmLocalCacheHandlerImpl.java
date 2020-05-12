@@ -79,7 +79,7 @@ public class AlarmLocalCacheHandlerImpl implements AlarmLocalCacheHandler {
         private EnabledAlarmSettingLookupService enabledAlarmSettingLookupService;
 
         @BehaviorAnalyse
-        @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
+        @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
         public List<AlarmSetting> fetchAlarmSettings(LongIdKey pointKey) throws Exception {
             List<AlarmSetting> enabledAlarmSettings =
                     enabledAlarmSettingLookupService.getEnabledAlarmSettings(pointKey);
