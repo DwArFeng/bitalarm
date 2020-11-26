@@ -1,6 +1,6 @@
 package com.dwarfeng.bitalarm.stack.handler;
 
-import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
 
@@ -10,7 +10,7 @@ import com.dwarfeng.subgrade.stack.handler.Handler;
  * @author DwArFeng
  * @since 1.0.0
  */
-public interface ConsumeHandler<E extends Bean> extends Handler {
+public interface ConsumeHandler<E extends Entity<?>> extends Handler {
 
     /**
      * 消费处理器是否启动。
@@ -18,7 +18,7 @@ public interface ConsumeHandler<E extends Bean> extends Handler {
      * @return 消费处理器是否启动。
      * @throws HandlerException 处理器异常。
      */
-    boolean isStart() throws HandlerException;
+    boolean isStarted() throws HandlerException;
 
     /**
      * 开启消费处理器。
@@ -41,6 +41,14 @@ public interface ConsumeHandler<E extends Bean> extends Handler {
      * @throws HandlerException 处理器异常。
      */
     void accept(E element) throws HandlerException;
+
+    /**
+     * 获取缓冲器已经缓冲的容量。
+     *
+     * @return 缓冲器已经缓冲的容量。
+     * @throws HandlerException 处理器异常。
+     */
+    int bufferedSize() throws HandlerException;
 
     /**
      * 获取缓冲器的容量。

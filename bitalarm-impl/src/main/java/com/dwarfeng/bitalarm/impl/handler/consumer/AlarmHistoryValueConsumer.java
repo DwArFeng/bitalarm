@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("DuplicatedCode")
 @Component
 public class AlarmHistoryValueConsumer implements Consumer<AlarmHistory> {
 
@@ -56,7 +57,7 @@ public class AlarmHistoryValueConsumer implements Consumer<AlarmHistory> {
             }
         } finally {
             tm.stop();
-            LOGGER.info("消费者处理了 " + alarmHistories.size() + " 条数据, 共用时 " + tm.getTimeMs() + " 毫秒");
+            LOGGER.debug("消费者处理了 " + alarmHistories.size() + " 条数据, 共用时 " + tm.getTimeMs() + " 毫秒");
         }
     }
 }

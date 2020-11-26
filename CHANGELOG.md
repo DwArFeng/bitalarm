@@ -8,6 +8,10 @@
 - 升级 spring-terminator 依赖版本为 1.0.7.a
 - dubbo 配置项优化。
 - 设置 application-context-task.xml 中的参数设置为可配置。
+- 优化与增强 ConsumeHandler 的性能。
+  - 添加容量监视功能，缓存中的容量与最大容量之间的比例超过设定的阈值会产生报警日志。
+  - 结束时输出的日志更加人性化。
+  - 优化处理器在工作时的日志输出。
 
 #### Bug修复
 

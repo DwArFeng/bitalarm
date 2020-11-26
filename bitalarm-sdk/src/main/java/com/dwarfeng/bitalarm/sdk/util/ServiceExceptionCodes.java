@@ -14,6 +14,8 @@ public final class ServiceExceptionCodes {
 
     public static final ServiceException.Code ALARM_HANDLER_DISABLED =
             new ServiceException.Code(EXCEPTION_CODE_OFFSET, "alarm handler disabled");
+    public static final ServiceException.Code CONSUME_HANDLER_STOPPED =
+            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 10, "consume handler stopped");
 
     /**
      * 获取异常代号的偏移量。

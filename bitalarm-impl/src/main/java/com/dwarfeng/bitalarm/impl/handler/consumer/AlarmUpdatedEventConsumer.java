@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@SuppressWarnings("DuplicatedCode")
 @Component
 public class AlarmUpdatedEventConsumer implements Consumer<AlarmInfo> {
 
@@ -72,7 +73,7 @@ public class AlarmUpdatedEventConsumer implements Consumer<AlarmInfo> {
             }
         } finally {
             tm.stop();
-            LOGGER.info("消费者处理了 " + alarmInfos.size() + " 条数据, 共用时 " + tm.getTimeMs() + " 毫秒");
+            LOGGER.debug("消费者处理了 " + alarmInfos.size() + " 条数据, 共用时 " + tm.getTimeMs() + " 毫秒");
         }
     }
 }

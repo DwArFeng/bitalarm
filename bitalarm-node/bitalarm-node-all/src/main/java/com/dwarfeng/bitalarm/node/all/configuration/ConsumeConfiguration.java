@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,11 @@ import java.util.ArrayList;
 public class ConsumeConfiguration {
 
     @Autowired
-    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+    private ThreadPoolTaskExecutor executor;
+    @Autowired
+    private ThreadPoolTaskScheduler scheduler;
+    @Value("${consume.threshold.warn}")
+    private double warnThreshold;
 
     @Autowired
     private AlarmUpdatedEventConsumer alarmUpdatedEventConsumer;
@@ -36,11 +41,13 @@ public class ConsumeConfiguration {
     @Bean("alarmUpdatedEventConsumeHandler")
     public ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler() {
         ConsumeHandlerImpl<AlarmInfo> consumeHandler = new ConsumeHandlerImpl<>(
-                threadPoolTaskExecutor,
+                executor,
+                scheduler,
                 new ArrayList<>(),
                 new ArrayList<>(),
                 alarmUpdatedEventConsumer,
-                alarmUpdatedEventConsumerThread
+                alarmUpdatedEventConsumerThread,
+                warnThreshold
         );
         consumeHandler.setBufferParameters(alarmUpdatedEventBufferSize, alarmUpdatedEventBatchSize,
                 alarmUpdatedEventMaxIdleTime);
@@ -61,11 +68,13 @@ public class ConsumeConfiguration {
     @Bean("alarmInfoValueConsumeHandler")
     public ConsumeHandler<AlarmInfo> alarmInfoValueConsumeHandler() {
         ConsumeHandlerImpl<AlarmInfo> consumeHandler = new ConsumeHandlerImpl<>(
-                threadPoolTaskExecutor,
+                executor,
+                scheduler,
                 new ArrayList<>(),
                 new ArrayList<>(),
                 alarmInfoValueConsumer,
-                alarmInfoValueConsumerThread
+                alarmInfoValueConsumerThread,
+                warnThreshold
         );
         consumeHandler.setBufferParameters(alarmInfoValueBufferSize, alarmInfoValueBatchSize,
                 alarmInfoValueMaxIdleTime);
@@ -86,11 +95,13 @@ public class ConsumeConfiguration {
     @Bean("historyRecordedEventConsumeHandler")
     public ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler() {
         ConsumeHandlerImpl<AlarmHistory> consumeHandler = new ConsumeHandlerImpl<>(
-                threadPoolTaskExecutor,
+                executor,
+                scheduler,
                 new ArrayList<>(),
                 new ArrayList<>(),
                 alarmHistoryValueConsumer,
-                historyRecordedEventConsumerThread
+                historyRecordedEventConsumerThread,
+                warnThreshold
         );
         consumeHandler.setBufferParameters(historyRecordedEventBufferSize, historyRecordedEventBatchSize,
                 historyRecordedEventMaxIdleTime);
@@ -111,11 +122,13 @@ public class ConsumeConfiguration {
     @Bean("alarmHistoryValueConsumeHandler")
     public ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler() {
         ConsumeHandlerImpl<AlarmHistory> consumeHandler = new ConsumeHandlerImpl<>(
-                threadPoolTaskExecutor,
+                executor,
+                scheduler,
                 new ArrayList<>(),
                 new ArrayList<>(),
                 historyRecordEventConsumer,
-                alarmHistoryValueConsumerThread
+                alarmHistoryValueConsumerThread,
+                warnThreshold
         );
         consumeHandler.setBufferParameters(alarmHistoryValueBufferSize, alarmHistoryValueBatchSize,
                 alarmHistoryValueMaxIdleTime);
