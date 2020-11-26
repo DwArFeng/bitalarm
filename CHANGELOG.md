@@ -7,6 +7,7 @@
 - 升级 subgrade 依赖版本为 1.2.0.b。
 - 升级 spring-terminator 依赖版本为 1.0.7.a
 - dubbo 配置项优化。
+- 设置 application-context-task.xml 中的参数设置为可配置。
 
 #### Bug修复
 
