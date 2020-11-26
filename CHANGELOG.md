@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 升级 subgrade 依赖版本为 1.2.0.b。
+- 升级 spring-terminator 依赖版本为 1.0.7.a
 
 #### Bug修复
 
