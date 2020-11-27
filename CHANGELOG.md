@@ -17,6 +17,7 @@
 - 优化配置文件中的默认值名称。
   - conf/bitalarm/push.properties
   - conf/bitalarm/source.properties
+- 优化 DctiKafkaSource 的处理性能。
 
 #### Bug修复
 
