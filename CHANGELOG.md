@@ -13,6 +13,7 @@
   - 结束时输出的日志更加人性化。
   - 优化处理器在工作时的日志输出。
 - AlarmQosService 功能增强。
+- 为服务提供 spring-telqos 支持。
 
 #### Bug修复
 

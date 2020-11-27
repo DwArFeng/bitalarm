@@ -11,6 +11,12 @@
     <context:component-scan base-package="com.dwarfeng.bitalarm.impl.service">
         <context:exclude-filter type="assignable" expression="com.dwarfeng.bitalarm.stack.service.AlarmQosService"/>
         <context:exclude-filter type="assignable" expression="com.dwarfeng.bitalarm.stack.service.AlarmService"/>
+        <context:exclude-filter type="assignable"
+                                expression="com.dwarfeng.bitalarm.impl.service.telqos.AlarmCommand"/>
+        <context:exclude-filter type="assignable"
+                                expression="com.dwarfeng.bitalarm.impl.service.telqos.AlarmLocalCacheCommand"/>
+        <context:exclude-filter type="assignable"
+                                expression="com.dwarfeng.bitalarm.impl.service.telqos.ConsumerCommand"/>
     </context:component-scan>
     <!--扫描dao的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.bitalarm.impl.dao"/>
