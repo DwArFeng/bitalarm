@@ -13,9 +13,15 @@ public final class ServiceExceptionCodes {
     private static int EXCEPTION_CODE_OFFSET = 6000;
 
     public static final ServiceException.Code ALARM_HANDLER_DISABLED =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET, "alarm handler disabled");
+            new ServiceException.Code(offset(0), "alarm handler disabled");
     public static final ServiceException.Code CONSUME_HANDLER_STOPPED =
-            new ServiceException.Code(EXCEPTION_CODE_OFFSET + 10, "consume handler stopped");
+            new ServiceException.Code(offset(10), "consume handler stopped");
+    public static final ServiceException.Code POINT_NOT_EXISTS =
+            new ServiceException.Code(offset(20), "point not exists");
+
+    private static int offset(int i) {
+        return EXCEPTION_CODE_OFFSET + i;
+    }
 
     /**
      * 获取异常代号的偏移量。

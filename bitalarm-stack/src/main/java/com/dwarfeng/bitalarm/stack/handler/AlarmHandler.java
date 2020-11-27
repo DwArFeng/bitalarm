@@ -14,26 +14,26 @@ import java.util.Date;
 public interface AlarmHandler extends Handler {
 
     /**
-     * 报警处理器是否被启用。
+     * 报警处理器是否启动。
      *
-     * @return 报警处理器是否被启用。
+     * @return 报警处理器是否启动。
      * @throws HandlerException 处理器异常。
      */
-    boolean isEnabled() throws HandlerException;
+    boolean isStarted() throws HandlerException;
 
     /**
-     * 启用报警处理器。
+     * 开启报警处理器。
      *
      * @throws HandlerException 处理器异常。
      */
-    void enable() throws HandlerException;
+    void start() throws HandlerException;
 
     /**
-     * 禁用报警处理器。
+     * 关闭报警处理器。
      *
      * @throws HandlerException 处理器异常。
      */
-    void disable() throws HandlerException;
+    void stop() throws HandlerException;
 
     /**
      * 处理指定的报警信息。

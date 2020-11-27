@@ -5,6 +5,7 @@ import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
 import com.dwarfeng.bitalarm.stack.exception.AlarmDisabledException;
+import com.dwarfeng.bitalarm.stack.exception.PointNotExistsException;
 import com.dwarfeng.bitalarm.stack.handler.AlarmHandler;
 import com.dwarfeng.bitalarm.stack.handler.AlarmLocalCacheHandler;
 import com.dwarfeng.bitalarm.stack.handler.ConsumeHandler;
@@ -50,25 +51,25 @@ public class AlarmHandlerImpl implements AlarmHandler {
     // 由于报警逻辑严格与时间相关，此处使用公平锁保证执行顺序的一致性。
     private final Lock lock = new ReentrantLock(true);
 
-    private boolean enabledFlag = false;
+    private boolean startFlag = false;
 
     @Override
-    public boolean isEnabled() {
+    public boolean isStarted() {
         lock.lock();
         try {
-            return enabledFlag;
+            return startFlag;
         } finally {
             lock.unlock();
         }
     }
 
     @Override
-    public void enable() {
+    public void start() {
         lock.lock();
         try {
-            if (!enabledFlag) {
+            if (!startFlag) {
                 LOGGER.info("启用 alarm handler...");
-                enabledFlag = true;
+                startFlag = true;
             }
         } finally {
             lock.unlock();
@@ -76,12 +77,12 @@ public class AlarmHandlerImpl implements AlarmHandler {
     }
 
     @Override
-    public void disable() {
+    public void stop() {
         lock.lock();
         try {
-            if (enabledFlag) {
+            if (startFlag) {
                 LOGGER.info("禁用 alarm handler...");
-                enabledFlag = false;
+                startFlag = false;
             }
         } finally {
             lock.unlock();
@@ -93,7 +94,7 @@ public class AlarmHandlerImpl implements AlarmHandler {
         lock.lock();
         try {
             // 判断是否允许记录，如果不允许，直接报错。
-            if (!isEnabled()) {
+            if (!isStarted()) {
                 throw new AlarmDisabledException();
             }
 
@@ -103,8 +104,7 @@ public class AlarmHandlerImpl implements AlarmHandler {
             // 1. 获取指定数据点的所有报警设置。
             List<AlarmSetting> alarmSettings = alarmLocalCacheHandler.getAlarmSetting(pointKey);
             if (Objects.isNull(alarmSettings) || alarmSettings.isEmpty()) {
-                LOGGER.debug("找不到数据点 " + pointId + " 的任何报警配置，分析过程中止");
-                return;
+                throw new PointNotExistsException(pointKey);
             }
             // 2. 分析所有报警设置。
             for (AlarmSetting alarmSetting : alarmSettings) {
