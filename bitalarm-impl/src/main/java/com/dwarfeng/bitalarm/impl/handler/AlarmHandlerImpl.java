@@ -185,8 +185,8 @@ public class AlarmHandlerImpl implements AlarmHandler {
         // 根据row取出具体的某个byte。
         byte b = data[row];
         // 根据column按位运算，返回结果。
-        byte bitwize = (byte) (1 << column);
-        return (b & bitwize) != 0;
+        byte mask = (byte) (1 << column);
+        return (b & mask) != 0;
     }
 
     private String toHexString(byte[] data) {
