@@ -14,6 +14,9 @@
   - 优化处理器在工作时的日志输出。
 - AlarmQosService 功能增强。
 - 为服务提供 spring-telqos 支持。
+- 优化配置文件中的默认值名称。
+  - conf/bitalarm/push.properties
+  - conf/bitalarm/source.properties
 
 #### Bug修复
 
