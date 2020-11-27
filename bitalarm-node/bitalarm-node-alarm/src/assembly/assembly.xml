@@ -49,6 +49,17 @@
             <fileMode>0644</fileMode>
         </fileSet>
         <fileSet>
+            <outputDirectory>conf/telqos</outputDirectory>
+            <directory>src/main/resources/telqos</directory>
+            <includes>
+                <include>*.properties</include>
+            </includes>
+            <excludes>
+                <exclude>banner.txt</exclude>
+            </excludes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
             <outputDirectory>opt</outputDirectory>
             <directory>src/main/resources/opt</directory>
             <includes>
