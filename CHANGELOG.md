@@ -18,6 +18,7 @@
   - conf/bitalarm/push.properties
   - conf/bitalarm/source.properties
 - 优化 DctiKafkaSource 的处理性能。
+- 消除预设配置文件中的真实的 ip 地址。
 
 #### Bug修复
 
