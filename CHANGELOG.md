@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 为 AlarmHandlerImpl.processAlarm 方法增加性能分析增强。
 
 #### Bug修复
 

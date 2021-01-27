@@ -10,6 +10,8 @@ import com.dwarfeng.bitalarm.stack.handler.AlarmHandler;
 import com.dwarfeng.bitalarm.stack.handler.AlarmLocalCacheHandler;
 import com.dwarfeng.bitalarm.stack.handler.ConsumeHandler;
 import com.dwarfeng.bitalarm.stack.service.CurrentAlarmMaintainService;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
@@ -90,7 +92,8 @@ public class AlarmHandlerImpl implements AlarmHandler {
     }
 
     @Override
-    public void processAlarm(long pointId, byte[] data, Date happenedDate) throws HandlerException {
+    @BehaviorAnalyse
+    public void processAlarm(long pointId, @SkipRecord byte[] data, Date happenedDate) throws HandlerException {
         lock.lock();
         try {
             // 判断是否允许记录，如果不允许，直接报错。
