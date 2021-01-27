@@ -24,6 +24,9 @@ public class HibernateAlarmHistory implements Bean {
     @Column(name = "alarm_setting_id")
     private Long alarmSettingLongId;
 
+    @Column(name = "point_id")
+    private Long pointId;
+
     @Column(name = "column_index")
     private int index;
 
@@ -79,6 +82,14 @@ public class HibernateAlarmHistory implements Bean {
         this.alarmSettingLongId = alarmSettingLongId;
     }
 
+    public Long getPointId() {
+        return pointId;
+    }
+
+    public void setPointId(Long pointId) {
+        this.pointId = pointId;
+    }
+
     public int getIndex() {
         return index;
     }
@@ -132,6 +143,7 @@ public class HibernateAlarmHistory implements Bean {
         return "HibernateAlarmHistory{" +
                 "longId=" + longId +
                 ", alarmSettingLongId=" + alarmSettingLongId +
+                ", pointId=" + pointId +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

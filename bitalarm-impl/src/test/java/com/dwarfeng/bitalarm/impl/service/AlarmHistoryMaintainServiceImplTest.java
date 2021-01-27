@@ -49,6 +49,7 @@ public class AlarmHistoryMaintainServiceImplTest {
             AlarmHistory alarmHistory = new AlarmHistory(
                     null,
                     null,
+                    12450,
                     1,
                     "我是报警信息",
                     (byte) 0,

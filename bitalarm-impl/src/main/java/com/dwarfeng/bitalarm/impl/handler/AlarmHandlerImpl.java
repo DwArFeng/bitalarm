@@ -156,7 +156,7 @@ public class AlarmHandlerImpl implements AlarmHandler {
                         AlarmHistory alarmHistory = new AlarmHistory(
                                 null,
                                 currentAlarm.getKey(),
-                                currentAlarm.getIndex(),
+                                pointId, currentAlarm.getIndex(),
                                 currentAlarm.getAlarmMessage(),
                                 currentAlarm.getAlarmType(),
                                 currentAlarm.getHappenedDate(),

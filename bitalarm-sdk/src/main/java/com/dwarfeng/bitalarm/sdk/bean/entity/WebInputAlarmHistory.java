@@ -30,6 +30,7 @@ public class WebInputAlarmHistory implements Bean {
             return new AlarmHistory(
                     WebInputLongIdKey.toStackBean(webInputAlarmHistory.getKey()),
                     WebInputLongIdKey.toStackBean(webInputAlarmHistory.getAlarmSettingKey()),
+                    webInputAlarmHistory.getPointId(),
                     webInputAlarmHistory.getIndex(),
                     webInputAlarmHistory.getAlarmMessage(),
                     webInputAlarmHistory.getAlarmType(),
@@ -48,6 +49,9 @@ public class WebInputAlarmHistory implements Bean {
     @JSONField(name = "alarm_setting_key")
     @Valid
     private WebInputLongIdKey alarmSettingKey;
+
+    @JSONField(name = "point_id")
+    private long pointId;
 
     @JSONField(name = "index")
     @PositiveOrZero
@@ -104,6 +108,14 @@ public class WebInputAlarmHistory implements Bean {
         this.alarmSettingKey = alarmSettingKey;
     }
 
+    public long getPointId() {
+        return pointId;
+    }
+
+    public void setPointId(long pointId) {
+        this.pointId = pointId;
+    }
+
     public int getIndex() {
         return index;
     }
@@ -157,6 +169,7 @@ public class WebInputAlarmHistory implements Bean {
         return "WebInputAlarmHistory{" +
                 "key=" + key +
                 ", alarmSettingKey=" + alarmSettingKey +
+                ", pointId=" + pointId +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +
