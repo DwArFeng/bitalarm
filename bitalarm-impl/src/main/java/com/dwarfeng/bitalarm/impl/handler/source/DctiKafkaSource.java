@@ -167,8 +167,6 @@ public class DctiKafkaSource implements Source {
         private int concurrency;
         @Value("${source.dcti.kafka.poll_timeout}")
         private int pollTimeout;
-        @Value("${source.dcti.kafka.auto_startup}")
-        private boolean autoStartup;
         @Value("${source.dcti.kafka.max_poll_records}")
         private int maxPollRecords;
         @Value("${source.dcti.kafka.max_poll_interval_ms}")
@@ -209,7 +207,8 @@ public class DctiKafkaSource implements Source {
             factory.setConsumerFactory(consumerFactory);
             factory.setConcurrency(concurrency);
             factory.getContainerProperties().setPollTimeout(pollTimeout);
-            factory.setAutoStartup(autoStartup);
+            // Kafka侦听容器通过框架对开启和关闭进行托管，因此在启动时不自动开启。
+            factory.setAutoStartup(false);
             // 监听器启用批量监听模式。
             factory.setBatchListener(true);
             // 配置ACK模式为手动立即提交。
