@@ -3,9 +3,11 @@ package com.dwarfeng.bitalarm.node.maintain.configuration;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmHistory;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmSetting;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmTypeIndicator;
+import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonPoint;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator;
+import com.dwarfeng.bitalarm.stack.bean.entity.Point;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.impl.cache.RedisKeyListCache;
@@ -36,6 +38,8 @@ public class CacheConfiguration {
     private String enabledAlarmSettingPrefix;
     @Value("${cache.prefix.entity.alarm_type_indicator}")
     private String alarmTypeIndicatorPrefix;
+    @Value("${cache.prefix.entity.point}")
+    private String pointPrefix;
 
     @Bean
     @SuppressWarnings("unchecked")
@@ -74,6 +78,16 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonAlarmTypeIndicator>) template,
                 new ByteIdStringKeyFormatter(alarmTypeIndicatorPrefix),
                 new DozerBeanTransformer<>(AlarmTypeIndicator.class, FastJsonAlarmTypeIndicator.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, Point, FastJsonPoint> pointRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonPoint>) template,
+                new LongIdStringKeyFormatter(pointPrefix),
+                new DozerBeanTransformer<>(Point.class, FastJsonPoint.class, mapper)
         );
     }
 }

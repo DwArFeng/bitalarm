@@ -1,12 +1,14 @@
 package com.dwarfeng.bitalarm.impl.dao;
 
-import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmInfo;
-import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
-import com.dwarfeng.bitalarm.stack.dao.AlarmInfoDao;
-import com.dwarfeng.subgrade.impl.dao.RedisBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.RedisEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.RedisPresetLookupDao;
+import com.dwarfeng.bitalarm.impl.bean.entity.HibernatePoint;
+import com.dwarfeng.bitalarm.stack.bean.entity.Point;
+import com.dwarfeng.bitalarm.stack.dao.PointDao;
+import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
+import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
+import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
@@ -17,26 +19,26 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public class AlarmInfoDaoImpl implements AlarmInfoDao {
+public class PointDaoImpl implements PointDao {
 
     @Autowired
-    private RedisBatchBaseDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> batchBaseDao;
+    private HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Point, HibernatePoint> batchBaseDao;
     @Autowired
-    private RedisEntireLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> entireLookupDao;
+    private HibernateEntireLookupDao<Point, HibernatePoint> entireLookupDao;
     @Autowired
-    private RedisPresetLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> presetLookupDao;
+    private HibernatePresetLookupDao<Point, HibernatePoint> presetLookupDao;
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public LongIdKey insert(AlarmInfo element) throws DaoException {
+    public LongIdKey insert(Point element) throws DaoException {
         return batchBaseDao.insert(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void update(AlarmInfo element) throws DaoException {
+    public void update(Point element) throws DaoException {
         batchBaseDao.update(element);
     }
 
@@ -57,63 +59,67 @@ public class AlarmInfoDaoImpl implements AlarmInfoDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public AlarmInfo get(LongIdKey key) throws DaoException {
+    public Point get(LongIdKey key) throws DaoException {
         return batchBaseDao.get(key);
     }
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<LongIdKey> batchInsert(List<AlarmInfo> elements) throws DaoException {
+    public List<LongIdKey> batchInsert(@SkipRecord List<Point> elements) throws DaoException {
         return batchBaseDao.batchInsert(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchUpdate(List<AlarmInfo> elements) throws DaoException {
+    public void batchUpdate(@SkipRecord List<Point> elements) throws DaoException {
         batchBaseDao.batchUpdate(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDelete(List<LongIdKey> keys) throws DaoException {
+    public void batchDelete(@SkipRecord List<LongIdKey> keys) throws DaoException {
         batchBaseDao.batchDelete(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(List<LongIdKey> keys) throws DaoException {
+    public boolean allExists(@SkipRecord List<LongIdKey> keys) throws DaoException {
         return batchBaseDao.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean nonExists(List<LongIdKey> keys) throws DaoException {
+    public boolean nonExists(@SkipRecord List<LongIdKey> keys) throws DaoException {
         return batchBaseDao.nonExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<AlarmInfo> batchGet(List<LongIdKey> keys) throws DaoException {
+    public List<Point> batchGet(@SkipRecord List<LongIdKey> keys) throws DaoException {
         return batchBaseDao.batchGet(keys);
     }
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<AlarmInfo> lookup() throws DaoException {
+    public List<Point> lookup() throws DaoException {
         return entireLookupDao.lookup();
     }
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<AlarmInfo> lookup(PagingInfo pagingInfo) throws DaoException {
+    public List<Point> lookup(PagingInfo pagingInfo) throws DaoException {
         return entireLookupDao.lookup(pagingInfo);
     }
 
@@ -126,15 +132,17 @@ public class AlarmInfoDaoImpl implements AlarmInfoDao {
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<AlarmInfo> lookup(String preset, Object[] objs) throws DaoException {
+    public List<Point> lookup(String preset, Object[] objs) throws DaoException {
         return presetLookupDao.lookup(preset, objs);
     }
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<AlarmInfo> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
+    public List<Point> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
         return presetLookupDao.lookup(preset, objs, pagingInfo);
     }
 

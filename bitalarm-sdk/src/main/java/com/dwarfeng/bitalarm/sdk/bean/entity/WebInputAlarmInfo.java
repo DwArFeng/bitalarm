@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class WebInputAlarmInfo implements Bean {
 
-    private static final long serialVersionUID = 2637279789447201650L;
+    private static final long serialVersionUID = 4726073174343772484L;
 
     public static AlarmInfo toStackBean(WebInputAlarmInfo webInputAlarmInfo) {
         if (Objects.isNull(webInputAlarmInfo)) {
@@ -28,7 +28,7 @@ public class WebInputAlarmInfo implements Bean {
         } else {
             return new AlarmInfo(
                     WebInputLongIdKey.toStackBean(webInputAlarmInfo.getKey()),
-                    webInputAlarmInfo.getPointId(),
+                    WebInputLongIdKey.toStackBean(webInputAlarmInfo.getPointKey()),
                     webInputAlarmInfo.getIndex(),
                     webInputAlarmInfo.getAlarmMessage(),
                     webInputAlarmInfo.getAlarmType(),
@@ -43,8 +43,9 @@ public class WebInputAlarmInfo implements Bean {
     @NotNull
     private WebInputLongIdKey key;
 
-    @JSONField(name = "point_id")
-    private long pointId;
+    @JSONField(name = "point_key")
+    @Valid
+    private WebInputLongIdKey pointKey;
 
     @JSONField(name = "index")
     @PositiveOrZero
@@ -67,18 +68,6 @@ public class WebInputAlarmInfo implements Bean {
     public WebInputAlarmInfo() {
     }
 
-    public WebInputAlarmInfo(
-            WebInputLongIdKey key, long pointId, int index, String alarmMessage, byte alarmType, Date happenedDate,
-            boolean alarming) {
-        this.key = key;
-        this.pointId = pointId;
-        this.index = index;
-        this.alarmMessage = alarmMessage;
-        this.alarmType = alarmType;
-        this.happenedDate = happenedDate;
-        this.alarming = alarming;
-    }
-
     public WebInputLongIdKey getKey() {
         return key;
     }
@@ -87,12 +76,12 @@ public class WebInputAlarmInfo implements Bean {
         this.key = key;
     }
 
-    public long getPointId() {
-        return pointId;
+    public WebInputLongIdKey getPointKey() {
+        return pointKey;
     }
 
-    public void setPointId(long pointId) {
-        this.pointId = pointId;
+    public void setPointKey(WebInputLongIdKey pointKey) {
+        this.pointKey = pointKey;
     }
 
     public int getIndex() {
@@ -139,7 +128,7 @@ public class WebInputAlarmInfo implements Bean {
     public String toString() {
         return "WebInputAlarmInfo{" +
                 "key=" + key +
-                ", pointId=" + pointId +
+                ", pointKey=" + pointKey +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

@@ -1,7 +1,6 @@
 package com.dwarfeng.bitalarm.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.subgrade.sdk.bean.key.JSFixedFastJsonLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
@@ -16,7 +15,7 @@ import java.util.Objects;
  */
 public class JSFixedFastJsonAlarmSetting implements Bean {
 
-    private static final long serialVersionUID = 8574218003809064096L;
+    private static final long serialVersionUID = -4806122005783497775L;
 
     public static JSFixedFastJsonAlarmSetting of(AlarmSetting alarmSetting) {
         if (Objects.isNull(alarmSetting)) {
@@ -24,7 +23,7 @@ public class JSFixedFastJsonAlarmSetting implements Bean {
         } else {
             return new JSFixedFastJsonAlarmSetting(
                     JSFixedFastJsonLongIdKey.of(alarmSetting.getKey()),
-                    alarmSetting.getPointId(),
+                    JSFixedFastJsonLongIdKey.of(alarmSetting.getPointKey()),
                     alarmSetting.isEnabled(),
                     alarmSetting.getIndex(),
                     alarmSetting.getAlarmMessage(),
@@ -37,8 +36,8 @@ public class JSFixedFastJsonAlarmSetting implements Bean {
     @JSONField(name = "key", ordinal = 1)
     private JSFixedFastJsonLongIdKey key;
 
-    @JSONField(name = "point_id", ordinal = 2, serializeUsing = ToStringSerializer.class)
-    private long pointId;
+    @JSONField(name = "point_key", ordinal = 2)
+    private JSFixedFastJsonLongIdKey pointKey;
 
     @JSONField(name = "enabled", ordinal = 3)
     private boolean enabled;
@@ -59,10 +58,11 @@ public class JSFixedFastJsonAlarmSetting implements Bean {
     }
 
     public JSFixedFastJsonAlarmSetting(
-            JSFixedFastJsonLongIdKey key, long pointId, boolean enabled, int index, String alarmMessage, byte alarmType,
-            String remark) {
+            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey pointKey, boolean enabled, int index,
+            String alarmMessage, byte alarmType, String remark
+    ) {
         this.key = key;
-        this.pointId = pointId;
+        this.pointKey = pointKey;
         this.enabled = enabled;
         this.index = index;
         this.alarmMessage = alarmMessage;
@@ -78,12 +78,12 @@ public class JSFixedFastJsonAlarmSetting implements Bean {
         this.key = key;
     }
 
-    public long getPointId() {
-        return pointId;
+    public JSFixedFastJsonLongIdKey getPointKey() {
+        return pointKey;
     }
 
-    public void setPointId(long pointId) {
-        this.pointId = pointId;
+    public void setPointKey(JSFixedFastJsonLongIdKey pointKey) {
+        this.pointKey = pointKey;
     }
 
     public boolean isEnabled() {
@@ -130,7 +130,7 @@ public class JSFixedFastJsonAlarmSetting implements Bean {
     public String toString() {
         return "JSFixedFastJsonAlarmSetting{" +
                 "key=" + key +
-                ", pointId=" + pointId +
+                ", pointKey=" + pointKey +
                 ", enabled=" + enabled +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +

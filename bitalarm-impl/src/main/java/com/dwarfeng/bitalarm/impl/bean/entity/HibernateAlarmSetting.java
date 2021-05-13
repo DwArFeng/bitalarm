@@ -19,10 +19,11 @@ public class HibernateAlarmSetting implements Bean {
     @Column(name = "id", nullable = false, unique = true)
     private Long longId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // -----------------------------------------------------------外键-----------------------------------------------------------
     @Column(name = "point_id")
-    private long pointId;
+    private Long pointLongId;
 
+    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -37,6 +38,13 @@ public class HibernateAlarmSetting implements Bean {
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
+
+    // -----------------------------------------------------------多对一-----------------------------------------------------------
+    @ManyToOne(targetEntity = HibernatePoint.class)
+    @JoinColumns({ //
+            @JoinColumn(name = "point_id", referencedColumnName = "id", insertable = false, updatable = false), //
+    })
+    private HibernatePoint point;
 
     public HibernateAlarmSetting() {
     }
@@ -57,12 +65,20 @@ public class HibernateAlarmSetting implements Bean {
         this.longId = longId;
     }
 
-    public long getPointId() {
-        return pointId;
+    public Long getPointLongId() {
+        return pointLongId;
     }
 
-    public void setPointId(long pointId) {
-        this.pointId = pointId;
+    public void setPointLongId(Long pointGuid) {
+        this.pointLongId = pointGuid;
+    }
+
+    public HibernateLongIdKey getPointKey() {
+        return Optional.ofNullable(pointLongId).map(HibernateLongIdKey::new).orElse(null);
+    }
+
+    public void setPointKey(HibernateLongIdKey parentKey) {
+        this.pointLongId = Optional.ofNullable(parentKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
     public boolean isEnabled() {
@@ -105,11 +121,19 @@ public class HibernateAlarmSetting implements Bean {
         this.remark = remark;
     }
 
+    public HibernatePoint getPoint() {
+        return point;
+    }
+
+    public void setPoint(HibernatePoint point) {
+        this.point = point;
+    }
+
     @Override
     public String toString() {
         return "HibernateAlarmSetting{" +
                 "longId=" + longId +
-                ", pointId=" + pointId +
+                ", pointLongId=" + pointLongId +
                 ", enabled=" + enabled +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +

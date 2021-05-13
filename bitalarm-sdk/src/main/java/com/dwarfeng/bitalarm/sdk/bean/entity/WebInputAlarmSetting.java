@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class WebInputAlarmSetting implements Bean {
 
-    private static final long serialVersionUID = -8990834706382227655L;
+    private static final long serialVersionUID = 8397320272621286656L;
 
     public static AlarmSetting toStackBean(WebInputAlarmSetting webInputAlarmSetting) {
         if (Objects.isNull(webInputAlarmSetting)) {
@@ -28,7 +28,7 @@ public class WebInputAlarmSetting implements Bean {
         } else {
             return new AlarmSetting(
                     WebInputLongIdKey.toStackBean(webInputAlarmSetting.getKey()),
-                    webInputAlarmSetting.getPointId(),
+                    WebInputLongIdKey.toStackBean(webInputAlarmSetting.getPointKey()),
                     webInputAlarmSetting.isEnabled(),
                     webInputAlarmSetting.getIndex(),
                     webInputAlarmSetting.getAlarmMessage(),
@@ -43,8 +43,9 @@ public class WebInputAlarmSetting implements Bean {
     @NotNull(groups = Default.class)
     private WebInputLongIdKey key;
 
-    @JSONField(name = "point_id")
-    private long pointId;
+    @JSONField(name = "point_key")
+    @Valid
+    private WebInputLongIdKey pointKey;
 
     @JSONField(name = "enabled")
     private boolean enabled;
@@ -66,18 +67,6 @@ public class WebInputAlarmSetting implements Bean {
     public WebInputAlarmSetting() {
     }
 
-    public WebInputAlarmSetting(
-            WebInputLongIdKey key, long pointId, boolean enabled, int index, String alarmMessage, byte alarmType,
-            String remark) {
-        this.key = key;
-        this.pointId = pointId;
-        this.enabled = enabled;
-        this.index = index;
-        this.alarmMessage = alarmMessage;
-        this.alarmType = alarmType;
-        this.remark = remark;
-    }
-
     public WebInputLongIdKey getKey() {
         return key;
     }
@@ -86,12 +75,12 @@ public class WebInputAlarmSetting implements Bean {
         this.key = key;
     }
 
-    public long getPointId() {
-        return pointId;
+    public WebInputLongIdKey getPointKey() {
+        return pointKey;
     }
 
-    public void setPointId(long pointId) {
-        this.pointId = pointId;
+    public void setPointKey(WebInputLongIdKey pointKey) {
+        this.pointKey = pointKey;
     }
 
     public boolean isEnabled() {
@@ -138,7 +127,7 @@ public class WebInputAlarmSetting implements Bean {
     public String toString() {
         return "WebInputAlarmSetting{" +
                 "key=" + key +
-                ", pointId=" + pointId +
+                ", pointKey=" + pointKey +
                 ", enabled=" + enabled +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +

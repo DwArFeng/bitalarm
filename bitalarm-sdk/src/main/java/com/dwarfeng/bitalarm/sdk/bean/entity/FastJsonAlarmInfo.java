@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class FastJsonAlarmInfo implements Bean {
 
-    private static final long serialVersionUID = 2971346584079143783L;
+    private static final long serialVersionUID = -525179915779511856L;
 
     public static FastJsonAlarmInfo of(AlarmInfo alarmInfo) {
         if (Objects.isNull(alarmInfo)) {
@@ -24,7 +24,7 @@ public class FastJsonAlarmInfo implements Bean {
         } else {
             return new FastJsonAlarmInfo(
                     FastJsonLongIdKey.of(alarmInfo.getKey()),
-                    alarmInfo.getPointId(),
+                    FastJsonLongIdKey.of(alarmInfo.getPointKey()),
                     alarmInfo.getIndex(),
                     alarmInfo.getAlarmMessage(),
                     alarmInfo.getAlarmType(),
@@ -37,8 +37,8 @@ public class FastJsonAlarmInfo implements Bean {
     @JSONField(name = "key", ordinal = 1)
     private FastJsonLongIdKey key;
 
-    @JSONField(name = "point_id", ordinal = 2)
-    private long pointId;
+    @JSONField(name = "point_key", ordinal = 2)
+    private FastJsonLongIdKey pointKey;
 
     @JSONField(name = "index", ordinal = 3)
     private int index;
@@ -59,10 +59,11 @@ public class FastJsonAlarmInfo implements Bean {
     }
 
     public FastJsonAlarmInfo(
-            FastJsonLongIdKey key, long pointId, int index, String alarmMessage, byte alarmType, Date happenedDate,
-            boolean alarming) {
+            FastJsonLongIdKey key, FastJsonLongIdKey pointKey, int index, String alarmMessage, byte alarmType,
+            Date happenedDate, boolean alarming
+    ) {
         this.key = key;
-        this.pointId = pointId;
+        this.pointKey = pointKey;
         this.index = index;
         this.alarmMessage = alarmMessage;
         this.alarmType = alarmType;
@@ -78,12 +79,12 @@ public class FastJsonAlarmInfo implements Bean {
         this.key = key;
     }
 
-    public long getPointId() {
-        return pointId;
+    public FastJsonLongIdKey getPointKey() {
+        return pointKey;
     }
 
-    public void setPointId(long pointId) {
-        this.pointId = pointId;
+    public void setPointKey(FastJsonLongIdKey pointKey) {
+        this.pointKey = pointKey;
     }
 
     public int getIndex() {
@@ -130,7 +131,7 @@ public class FastJsonAlarmInfo implements Bean {
     public String toString() {
         return "FastJsonAlarmInfo{" +
                 "key=" + key +
-                ", pointId=" + pointId +
+                ", pointKey=" + pointKey +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

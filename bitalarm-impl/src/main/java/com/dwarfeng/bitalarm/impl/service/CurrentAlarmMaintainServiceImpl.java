@@ -4,6 +4,7 @@ import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
 import com.dwarfeng.bitalarm.stack.service.CurrentAlarmMaintainService;
 import com.dwarfeng.subgrade.impl.service.CustomCrudService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
+import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
@@ -20,6 +21,8 @@ public class CurrentAlarmMaintainServiceImpl implements CurrentAlarmMaintainServ
     private CustomCrudService<LongIdKey, CurrentAlarm> crudService;
     @Autowired
     private DaoOnlyEntireLookupService<CurrentAlarm> entireLookupService;
+    @Autowired
+    private DaoOnlyPresetLookupService<CurrentAlarm> presetLookupService;
 
     @Override
     @BehaviorAnalyse
@@ -103,5 +106,19 @@ public class CurrentAlarmMaintainServiceImpl implements CurrentAlarmMaintainServ
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public PagedData<CurrentAlarm> lookup(PagingInfo pagingInfo) throws ServiceException {
         return entireLookupService.lookup(pagingInfo);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public PagedData<CurrentAlarm> lookup(String preset, Object[] objs) throws ServiceException {
+        return presetLookupService.lookup(preset, objs);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public PagedData<CurrentAlarm> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
+        return presetLookupService.lookup(preset, objs, pagingInfo);
     }
 }

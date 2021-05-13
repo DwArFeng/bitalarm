@@ -34,7 +34,9 @@ public class EnabledAlarmSettingLookupServiceImpl implements EnabledAlarmSetting
             if (cache.exists(pointKey)) {
                 return cache.get(pointKey);
             }
-            List<AlarmSetting> lookup = dao.lookup(AlarmSettingMaintainService.ENABLED_CHILD_FOR_POINT, new Object[]{pointKey});
+            List<AlarmSetting> lookup = dao.lookup(
+                    AlarmSettingMaintainService.ENABLED_CHILD_FOR_POINT, new Object[]{pointKey}
+            );
             cache.set(pointKey, lookup, timeout);
             return lookup;
         } catch (Exception e) {

@@ -34,13 +34,14 @@ public class AlarmSettingPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForPoint(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             if (Objects.isNull(objects[0])) {
-                detachedCriteria.add(Restrictions.isNull("pointId"));
+                detachedCriteria.add(Restrictions.isNull("pointLongId"));
             } else {
-                long pointId = (long) objects[0];
-                detachedCriteria.add(Restrictions.eqOrIsNull("pointId", pointId));
+                LongIdKey longIdKey = (LongIdKey) objects[0];
+                detachedCriteria.add(Restrictions.eqOrIsNull("pointLongId", longIdKey.getLongId()));
             }
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
@@ -51,11 +52,11 @@ public class AlarmSettingPresetCriteriaMaker implements PresetCriteriaMaker {
         try {
             if (Objects.isNull(objects[0])) {
                 detachedCriteria.add(Restrictions.eqOrIsNull("enabled", true));
-                detachedCriteria.add(Restrictions.isNull("pointId"));
+                detachedCriteria.add(Restrictions.isNull("pointLongId"));
             } else {
                 detachedCriteria.add(Restrictions.eqOrIsNull("enabled", true));
                 LongIdKey longIdKey = (LongIdKey) objects[0];
-                detachedCriteria.add(Restrictions.eqOrIsNull("pointId", longIdKey.getLongId()));
+                detachedCriteria.add(Restrictions.eqOrIsNull("pointLongId", longIdKey.getLongId()));
             }
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
@@ -71,6 +72,7 @@ public class AlarmSettingPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void alarmTypeEquals(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             byte alarmType;

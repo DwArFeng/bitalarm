@@ -43,11 +43,6 @@ public class WebInputAlarmTypeIndicator implements Bean {
     public WebInputAlarmTypeIndicator() {
     }
 
-    public WebInputAlarmTypeIndicator(WebInputByteIdKey key, String label) {
-        this.key = key;
-        this.label = label;
-    }
-
     public WebInputByteIdKey getKey() {
         return key;
     }

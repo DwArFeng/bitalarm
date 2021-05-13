@@ -3,8 +3,8 @@ package com.dwarfeng.bitalarm.node.maintain.configuration;
 import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmHistory;
 import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmSetting;
 import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmTypeIndicator;
-import com.dwarfeng.bitalarm.impl.dao.preset.AlarmHistoryPresetCriteriaMaker;
-import com.dwarfeng.bitalarm.impl.dao.preset.AlarmSettingPresetCriteriaMaker;
+import com.dwarfeng.bitalarm.impl.bean.entity.HibernatePoint;
+import com.dwarfeng.bitalarm.impl.dao.preset.*;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmInfo;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonCurrentAlarm;
 import com.dwarfeng.bitalarm.stack.bean.entity.*;
@@ -38,6 +38,14 @@ public class DaoConfiguration {
     private AlarmSettingPresetCriteriaMaker alarmSettingPresetCriteriaMaker;
     @Autowired
     private AlarmHistoryPresetCriteriaMaker alarmHistoryPresetCriteriaMaker;
+    @Autowired
+    private PointPresetCriteriaMaker pointPresetCriteriaMaker;
+
+    @Autowired
+    private CurrentAlarmPresetEntityFilter currentAlarmPresetEntityFilter;
+    @Autowired
+    private AlarmInfoPresetEntityFilter alarmInfoPresetEntityFilter;
+
 
     @Value("${redis.dbkey.current_alarm}")
     private String currentAlarmDbKey;
@@ -133,6 +141,18 @@ public class DaoConfiguration {
 
     @Bean
     @SuppressWarnings("unchecked")
+    public RedisPresetLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> currentAlarmRedisPresetLookupDao() {
+        return new RedisPresetLookupDao<>(
+                (RedisTemplate<String, FastJsonCurrentAlarm>) redisTemplate,
+                new LongIdStringKeyFormatter("key."),
+                new DozerBeanTransformer<>(CurrentAlarm.class, FastJsonCurrentAlarm.class, mapper),
+                currentAlarmPresetEntityFilter,
+                currentAlarmDbKey
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
     public RedisBatchBaseDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> alarmInfoRedisBatchBaseDao() {
         return new RedisBatchBaseDao<>(
                 (RedisTemplate<String, FastJsonAlarmInfo>) redisTemplate,
@@ -149,6 +169,18 @@ public class DaoConfiguration {
                 (RedisTemplate<String, FastJsonAlarmInfo>) redisTemplate,
                 new LongIdStringKeyFormatter("key."),
                 new DozerBeanTransformer<>(AlarmInfo.class, FastJsonAlarmInfo.class, mapper),
+                alarmInfoDbKey
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisPresetLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> alarmInfoRedisPresetLookupDao() {
+        return new RedisPresetLookupDao<>(
+                (RedisTemplate<String, FastJsonAlarmInfo>) redisTemplate,
+                new LongIdStringKeyFormatter("key."),
+                new DozerBeanTransformer<>(AlarmInfo.class, FastJsonAlarmInfo.class, mapper),
+                alarmInfoPresetEntityFilter,
                 alarmInfoDbKey
         );
     }
@@ -172,6 +204,37 @@ public class DaoConfiguration {
                 hibernateTemplate,
                 new DozerBeanTransformer<>(AlarmTypeIndicator.class, HibernateAlarmTypeIndicator.class, mapper),
                 HibernateAlarmTypeIndicator.class
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Point, HibernatePoint> pointHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
+                new DozerBeanTransformer<>(Point.class, HibernatePoint.class, mapper),
+                HibernatePoint.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<Point, HibernatePoint> pointHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(Point.class, HibernatePoint.class, mapper),
+                HibernatePoint.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<Point, HibernatePoint> pointHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                hibernateTemplate,
+                new DozerBeanTransformer<>(Point.class, HibernatePoint.class, mapper),
+                HibernatePoint.class,
+                pointPresetCriteriaMaker
         );
     }
 }

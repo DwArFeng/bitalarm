@@ -11,10 +11,10 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  */
 public class AlarmSetting implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -4649627152957048230L;
+    private static final long serialVersionUID = 6876242419231264613L;
 
     private LongIdKey key;
-    private long pointId;
+    private LongIdKey pointKey;
     private boolean enabled;
     private int index;
     private String alarmMessage;
@@ -25,10 +25,11 @@ public class AlarmSetting implements Entity<LongIdKey> {
     }
 
     public AlarmSetting(
-            LongIdKey key, long pointId, boolean enabled, int index, String alarmMessage, byte alarmType,
-            String remark) {
+            LongIdKey key, LongIdKey pointKey, boolean enabled, int index, String alarmMessage, byte alarmType,
+            String remark
+    ) {
         this.key = key;
-        this.pointId = pointId;
+        this.pointKey = pointKey;
         this.enabled = enabled;
         this.index = index;
         this.alarmMessage = alarmMessage;
@@ -46,12 +47,12 @@ public class AlarmSetting implements Entity<LongIdKey> {
         this.key = key;
     }
 
-    public long getPointId() {
-        return pointId;
+    public LongIdKey getPointKey() {
+        return pointKey;
     }
 
-    public void setPointId(long pointId) {
-        this.pointId = pointId;
+    public void setPointKey(LongIdKey pointKey) {
+        this.pointKey = pointKey;
     }
 
     public boolean isEnabled() {
@@ -98,7 +99,7 @@ public class AlarmSetting implements Entity<LongIdKey> {
     public String toString() {
         return "AlarmSetting{" +
                 "key=" + key +
-                ", pointId=" + pointId +
+                ", pointKey=" + pointKey +
                 ", enabled=" + enabled +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +

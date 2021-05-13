@@ -5,6 +5,15 @@
 #### 功能构建
 
 - 优化 `DctiKafkaSource`，使其支持布尔值数据。
+- 添加实体 `com.dwarfeng.bitalarm.stack.bean.entity.Point`
+  - 更改旧实体以与该实体相关联。
+    - com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting
+    - com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo
+    - com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm
+  - 优化关联实体的查询方法。
+- 更改实体服务，使其支持预设查询。
+  - com.dwarfeng.bitalarm.stack.service.AlarmInfoMaintainService
+  - com.dwarfeng.bitalarm.stack.service.CurrentAlarmMaintainService
 
 #### Bug修复
 

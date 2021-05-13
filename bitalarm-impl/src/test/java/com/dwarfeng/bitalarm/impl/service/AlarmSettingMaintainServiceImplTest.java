@@ -1,7 +1,10 @@
 package com.dwarfeng.bitalarm.impl.service;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
+import com.dwarfeng.bitalarm.stack.bean.entity.Point;
 import com.dwarfeng.bitalarm.stack.service.AlarmSettingMaintainService;
+import com.dwarfeng.bitalarm.stack.service.PointMaintainService;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -21,17 +24,25 @@ import static org.junit.Assert.assertEquals;
 public class AlarmSettingMaintainServiceImplTest {
 
     @Autowired
+    private PointMaintainService pointMaintainService;
+    @Autowired
     private AlarmSettingMaintainService alarmSettingMaintainService;
 
+    private Point parentPoint;
     private List<AlarmSetting> alarmSettings;
 
     @Before
     public void setUp() {
+        parentPoint = new Point(
+                new LongIdKey(1),
+                "test-point",
+                "test-point"
+        );
         alarmSettings = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             AlarmSetting alarmSetting = new AlarmSetting(
                     null,
-                    1L,
+                    parentPoint.getKey(),
                     true,
                     1,
                     "我是报警信息",
@@ -44,12 +55,14 @@ public class AlarmSettingMaintainServiceImplTest {
 
     @After
     public void tearDown() {
+        parentPoint = null;
         alarmSettings.clear();
     }
 
     @Test
     public void test() throws Exception {
         try {
+            pointMaintainService.insertOrUpdate(parentPoint);
             for (AlarmSetting alarmSetting : alarmSettings) {
                 alarmSetting.setKey(alarmSettingMaintainService.insert(alarmSetting));
                 alarmSettingMaintainService.update(alarmSetting);
@@ -57,6 +70,7 @@ public class AlarmSettingMaintainServiceImplTest {
                 assertEquals(BeanUtils.describe(alarmSetting), BeanUtils.describe(testAlarmSetting));
             }
         } finally {
+            pointMaintainService.deleteIfExists(parentPoint.getKey());
             for (AlarmSetting alarmSetting : alarmSettings) {
                 alarmSettingMaintainService.deleteIfExists(alarmSetting.getKey());
             }

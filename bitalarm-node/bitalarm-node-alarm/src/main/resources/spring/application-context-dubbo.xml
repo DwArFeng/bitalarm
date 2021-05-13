@@ -18,8 +18,7 @@
                     dispatcher="message" threadpool="fixed" threads="100"/>
 
     <!-- 向注册中心注册暴露服务地址,注册服务 -->
-    <dubbo:service interface="com.dwarfeng.bitalarm.stack.service.AlarmQosService"
-                   ref="alarmQosServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.bitalarm.stack.service.AlarmService" ref="alarmServiceImpl"/>
 
     <!-- 向注册中心注册暴露服务地址,注册消费者服务 -->
     <dubbo:reference id="longIdService" interface="com.dwarfeng.sfds.stack.service.LongIdService"/>

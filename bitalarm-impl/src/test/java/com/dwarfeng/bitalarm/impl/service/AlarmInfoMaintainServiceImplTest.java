@@ -2,8 +2,11 @@ package com.dwarfeng.bitalarm.impl.service;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
+import com.dwarfeng.bitalarm.stack.bean.entity.Point;
 import com.dwarfeng.bitalarm.stack.service.AlarmInfoMaintainService;
 import com.dwarfeng.bitalarm.stack.service.AlarmSettingMaintainService;
+import com.dwarfeng.bitalarm.stack.service.PointMaintainService;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -22,18 +25,26 @@ import static org.junit.Assert.assertEquals;
 public class AlarmInfoMaintainServiceImplTest {
 
     @Autowired
+    private PointMaintainService pointMaintainService;
+    @Autowired
     private AlarmSettingMaintainService alarmSettingMaintainService;
     @Autowired
     private AlarmInfoMaintainService alarmInfoMaintainService;
 
+    private Point parentPoint;
     private AlarmSetting parentAlarmSetting;
     private AlarmInfo alarmInfo;
 
     @Before
     public void setUp() {
+        parentPoint = new Point(
+                new LongIdKey(1),
+                "test-point",
+                "test-point"
+        );
         parentAlarmSetting = new AlarmSetting(
                 null,
-                1L,
+                parentPoint.getKey(),
                 true,
                 1,
                 "我是报警信息",
@@ -42,7 +53,7 @@ public class AlarmInfoMaintainServiceImplTest {
         );
         alarmInfo = new AlarmInfo(
                 null,
-                1L,
+                parentPoint.getKey(),
                 1,
                 "我是报警信息",
                 (byte) 0,
@@ -53,6 +64,7 @@ public class AlarmInfoMaintainServiceImplTest {
 
     @After
     public void tearDown() {
+        parentPoint = null;
         parentAlarmSetting = null;
         alarmInfo = null;
     }
@@ -60,12 +72,14 @@ public class AlarmInfoMaintainServiceImplTest {
     @Test
     public void test() throws Exception {
         try {
+            pointMaintainService.insertOrUpdate(parentPoint);
             parentAlarmSetting.setKey(alarmSettingMaintainService.insert(parentAlarmSetting));
             alarmInfo.setKey(parentAlarmSetting.getKey());
             alarmInfoMaintainService.insert(alarmInfo);
             AlarmInfo alarmInfo1 = alarmInfoMaintainService.get(this.alarmInfo.getKey());
             assertEquals(BeanUtils.describe(alarmInfo), BeanUtils.describe(alarmInfo1));
         } finally {
+            pointMaintainService.deleteIfExists(parentPoint.getKey());
             alarmInfoMaintainService.deleteIfExists(alarmInfo.getKey());
             alarmSettingMaintainService.deleteIfExists(parentAlarmSetting.getKey());
         }

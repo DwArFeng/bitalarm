@@ -1,5 +1,6 @@
 package com.dwarfeng.bitalarm.impl.service.operation;
 
+import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.bitalarm.stack.cache.AlarmSettingCache;
 import com.dwarfeng.bitalarm.stack.cache.EnabledAlarmSettingCache;
@@ -7,6 +8,7 @@ import com.dwarfeng.bitalarm.stack.dao.AlarmHistoryDao;
 import com.dwarfeng.bitalarm.stack.dao.AlarmInfoDao;
 import com.dwarfeng.bitalarm.stack.dao.AlarmSettingDao;
 import com.dwarfeng.bitalarm.stack.dao.CurrentAlarmDao;
+import com.dwarfeng.bitalarm.stack.service.AlarmHistoryMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -31,6 +33,7 @@ public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, 
 
     @Autowired
     private AlarmSettingCache alarmSettingCache;
+
     @Autowired
     private EnabledAlarmSettingCache enabledAlarmSettingCache;
 
@@ -58,7 +61,7 @@ public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, 
 
     @Override
     public LongIdKey insert(AlarmSetting alarmSetting) throws Exception {
-        LongIdKey pointKey = new LongIdKey(alarmSetting.getPointId());
+        LongIdKey pointKey = alarmSetting.getPointKey();
         enabledAlarmSettingCache.delete(pointKey);
 
         alarmSettingCache.push(alarmSetting, alarmSettingTimeout);
@@ -67,10 +70,10 @@ public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, 
 
     @Override
     public void update(AlarmSetting alarmSetting) throws Exception {
-        LongIdKey oldPointKey = new LongIdKey(get(alarmSetting.getKey()).getPointId());
+        LongIdKey oldPointKey = get(alarmSetting.getKey()).getPointKey();
         enabledAlarmSettingCache.delete(oldPointKey);
 
-        LongIdKey pointKey = new LongIdKey(alarmSetting.getPointId());
+        LongIdKey pointKey = alarmSetting.getPointKey();
         enabledAlarmSettingCache.delete(pointKey);
 
         alarmSettingCache.push(alarmSetting, alarmSettingTimeout);
@@ -80,21 +83,27 @@ public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, 
     @Override
     public void delete(LongIdKey key) throws Exception {
         //清除旧的报警信息的点位相关的使能报警信息缓存。
-        {
-            LongIdKey oldPointKey = new LongIdKey(get(key).getPointId());
-            enabledAlarmSettingCache.delete(oldPointKey);
-        }
+        LongIdKey oldPointKey = get(key).getPointKey();
+        enabledAlarmSettingCache.delete(oldPointKey);
 
         //如果存在当前报警和报警信息，则删除。
-        {
-            if (currentAlarmDao.exists(key)) {
-                currentAlarmDao.delete(key);
-            }
-            if (alarmInfoDao.exists(key)) {
-                alarmInfoDao.delete(key);
-            }
+        if (currentAlarmDao.exists(key)) {
+            currentAlarmDao.delete(key);
+        }
+        if (alarmInfoDao.exists(key)) {
+            alarmInfoDao.delete(key);
         }
 
+        //找到所有所属的报警历史，将报警信息主键设置为 null。
+        List<AlarmHistory> alarmHistories = alarmHistoryDao.lookup(
+                AlarmHistoryMaintainService.CHILD_FOR_ALARM_SETTING, new Object[]{key}
+        );
+        for (AlarmHistory alarmHistory : alarmHistories) {
+            alarmHistory.setAlarmSettingKey(null);
+        }
+        alarmHistoryDao.batchUpdate(alarmHistories);
+
+        //删除报警设置本身。
         alarmSettingDao.delete(key);
         alarmSettingCache.delete(key);
     }
@@ -126,7 +135,7 @@ public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, 
     @Override
     public List<LongIdKey> batchInsert(List<AlarmSetting> alarmSettings) throws Exception {
         for (AlarmSetting alarmSetting : alarmSettings) {
-            LongIdKey pointKey = new LongIdKey(alarmSetting.getPointId());
+            LongIdKey pointKey = alarmSetting.getPointKey();
             enabledAlarmSettingCache.delete(pointKey);
         }
 
@@ -137,10 +146,10 @@ public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, 
     @Override
     public void batchUpdate(List<AlarmSetting> alarmSettings) throws Exception {
         for (AlarmSetting alarmSetting : alarmSettings) {
-            LongIdKey oldPointKey = new LongIdKey(get(alarmSetting.getKey()).getPointId());
+            LongIdKey oldPointKey = get(alarmSetting.getKey()).getPointKey();
             enabledAlarmSettingCache.delete(oldPointKey);
 
-            LongIdKey pointKey = new LongIdKey(alarmSetting.getPointId());
+            LongIdKey pointKey = alarmSetting.getPointKey();
             enabledAlarmSettingCache.delete(pointKey);
         }
 

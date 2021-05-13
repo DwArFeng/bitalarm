@@ -5,6 +5,7 @@ import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
 import com.dwarfeng.bitalarm.stack.dao.CurrentAlarmDao;
 import com.dwarfeng.subgrade.impl.dao.RedisBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.RedisEntireLookupDao;
+import com.dwarfeng.subgrade.impl.dao.RedisPresetLookupDao;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -22,6 +23,8 @@ public class CurrentAlarmDaoImpl implements CurrentAlarmDao {
     private RedisBatchBaseDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> batchBaseDao;
     @Autowired
     private RedisEntireLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> entireLookupDao;
+    @Autowired
+    private RedisPresetLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> presetLookupDao;
 
     @Override
     @BehaviorAnalyse
@@ -119,5 +122,26 @@ public class CurrentAlarmDaoImpl implements CurrentAlarmDao {
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public int lookupCount() throws DaoException {
         return entireLookupDao.lookupCount();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public List<CurrentAlarm> lookup(String preset, Object[] objs) throws DaoException {
+        return presetLookupDao.lookup(preset, objs);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public List<CurrentAlarm> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
+        return presetLookupDao.lookup(preset, objs, pagingInfo);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public int lookupCount(String preset, Object[] objs) throws DaoException {
+        return presetLookupDao.lookupCount(preset, objs);
     }
 }

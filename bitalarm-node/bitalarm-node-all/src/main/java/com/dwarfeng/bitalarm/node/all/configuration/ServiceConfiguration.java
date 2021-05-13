@@ -1,9 +1,6 @@
 package com.dwarfeng.bitalarm.node.all.configuration;
 
-import com.dwarfeng.bitalarm.impl.service.operation.AlarmHistoryCrudOperation;
-import com.dwarfeng.bitalarm.impl.service.operation.AlarmInfoCrudOperation;
-import com.dwarfeng.bitalarm.impl.service.operation.AlarmSettingCrudOperation;
-import com.dwarfeng.bitalarm.impl.service.operation.CurrentAlarmCrudOperation;
+import com.dwarfeng.bitalarm.impl.service.operation.*;
 import com.dwarfeng.bitalarm.stack.bean.entity.*;
 import com.dwarfeng.bitalarm.stack.cache.AlarmTypeIndicatorCache;
 import com.dwarfeng.bitalarm.stack.dao.*;
@@ -50,6 +47,10 @@ public class ServiceConfiguration {
     private AlarmTypeIndicatorDao alarmTypeIndicatorDao;
     @Autowired
     private AlarmTypeIndicatorCache alarmTypeIndicatorCache;
+    @Autowired
+    private PointCrudOperation pointCrudOperation;
+    @Autowired
+    private PointDao pointDao;
 
     @Value("${cache.timeout.entity.alarm_type_indicator}")
     private long alarmTypeIndicatorTimeout;
@@ -130,6 +131,15 @@ public class ServiceConfiguration {
     }
 
     @Bean
+    public DaoOnlyPresetLookupService<CurrentAlarm> currentAlarmDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                currentAlarmDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
     public CustomCrudService<LongIdKey, AlarmInfo> alarmInfoCustomCrudService() {
         return new CustomCrudService<>(
                 alarmInfoCrudOperation,
@@ -142,6 +152,15 @@ public class ServiceConfiguration {
     @Bean
     public DaoOnlyEntireLookupService<AlarmInfo> alarmInfoDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
+                alarmInfoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<AlarmInfo> alarmInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
                 alarmInfoDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
@@ -164,6 +183,34 @@ public class ServiceConfiguration {
     public DaoOnlyEntireLookupService<AlarmTypeIndicator> alarmTypeIndicatorDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
                 alarmTypeIndicatorDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, Point> pointBatchCustomCrudService() {
+        return new CustomBatchCrudService<>(
+                pointCrudOperation,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Point> pointDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                pointDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Point> pointDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                pointDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

@@ -79,19 +79,6 @@ public class WebInputAlarmHistory implements Bean {
     public WebInputAlarmHistory() {
     }
 
-    public WebInputAlarmHistory(
-            WebInputLongIdKey key, WebInputLongIdKey alarmSettingKey, int index, String alarmMessage, byte alarmType,
-            Date startDate, Date endDate, Long duration) {
-        this.key = key;
-        this.alarmSettingKey = alarmSettingKey;
-        this.index = index;
-        this.alarmMessage = alarmMessage;
-        this.alarmType = alarmType;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.duration = duration;
-    }
-
     public WebInputLongIdKey getKey() {
         return key;
     }

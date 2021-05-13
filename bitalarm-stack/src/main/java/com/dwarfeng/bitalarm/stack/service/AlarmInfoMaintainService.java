@@ -13,4 +13,6 @@ import com.dwarfeng.subgrade.stack.service.EntireLookupService;
  */
 public interface AlarmInfoMaintainService extends CrudService<LongIdKey, AlarmInfo>,
         EntireLookupService<AlarmInfo> {
+
+    String CHILD_FOR_POINT = "child_for_point";
 }

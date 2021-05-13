@@ -1,9 +1,11 @@
 package com.dwarfeng.bitalarm.impl.service;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
+import com.dwarfeng.bitalarm.stack.bean.entity.Point;
 import com.dwarfeng.bitalarm.stack.cache.EnabledAlarmSettingCache;
 import com.dwarfeng.bitalarm.stack.service.AlarmSettingMaintainService;
 import com.dwarfeng.bitalarm.stack.service.EnabledAlarmSettingLookupService;
+import com.dwarfeng.bitalarm.stack.service.PointMaintainService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
@@ -25,21 +27,29 @@ import static org.junit.Assert.assertEquals;
 public class EnabledAlarmSettingLookupServiceImplTest {
 
     @Autowired
+    private PointMaintainService pointMaintainService;
+    @Autowired
     private AlarmSettingMaintainService alarmSettingMaintainService;
     @Autowired
     private EnabledAlarmSettingLookupService enabledAlarmSettingLookupService;
     @Autowired
     private EnabledAlarmSettingCache enabledAlarmSettingCache;
 
-    private final long pointId = 10086L;
-    private final List<AlarmSetting> alarmSettings = new ArrayList<>();
+    private Point parentPoint;
+    private List<AlarmSetting> alarmSettings;
 
     @Before
     public void setUp() {
+        parentPoint = new Point(
+                new LongIdKey(10086),
+                "test-point",
+                "test-point"
+        );
+        alarmSettings = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             AlarmSetting alarmSetting = new AlarmSetting(
                     null,
-                    pointId,
+                    parentPoint.getKey(),
                     true,
                     i,
                     "我是报警信息",
@@ -51,7 +61,7 @@ public class EnabledAlarmSettingLookupServiceImplTest {
         for (int i = 0; i < 5; i++) {
             AlarmSetting alarmSetting = new AlarmSetting(
                     null,
-                    pointId,
+                    parentPoint.getKey(),
                     false,
                     i + 100,
                     "我是报警信息",
@@ -64,29 +74,33 @@ public class EnabledAlarmSettingLookupServiceImplTest {
 
     @After
     public void tearDown() {
-        alarmSettings.clear();
+        parentPoint = null;
+        alarmSettings = null;
     }
 
     @Test
     public void test() throws ServiceException, CacheException {
-        LongIdKey pointIdKey = new LongIdKey(pointId);
+        LongIdKey pointKey = parentPoint.getKey();
+
         try {
+            pointMaintainService.insertOrUpdate(parentPoint);
             for (AlarmSetting alarmSetting : alarmSettings) {
                 alarmSetting.setKey(alarmSettingMaintainService.insertOrUpdate(alarmSetting));
                 alarmSettingMaintainService.update(alarmSetting);
             }
-            assertEquals(5, alarmSettingMaintainService.lookup(AlarmSettingMaintainService.ENABLED_CHILD_FOR_POINT, new Object[]{pointIdKey}).getCount());
-            assertEquals(5, enabledAlarmSettingLookupService.getEnabledAlarmSettings(pointIdKey).size());
-            assertEquals(5, enabledAlarmSettingCache.get(pointIdKey).size());
+            assertEquals(5, alarmSettingMaintainService.lookup(AlarmSettingMaintainService.ENABLED_CHILD_FOR_POINT, new Object[]{pointKey}).getCount());
+            assertEquals(5, enabledAlarmSettingLookupService.getEnabledAlarmSettings(pointKey).size());
+            assertEquals(5, enabledAlarmSettingCache.get(pointKey).size());
             AlarmSetting alarmSetting = alarmSettings.get(0);
             alarmSettingMaintainService.delete(alarmSetting.getKey());
-            assertEquals(0, enabledAlarmSettingCache.get(pointIdKey).size());
+            assertEquals(0, enabledAlarmSettingCache.get(pointKey).size());
             alarmSettingMaintainService.insert(alarmSetting);
-            assertEquals(0, enabledAlarmSettingCache.get(pointIdKey).size());
-            assertEquals(5, alarmSettingMaintainService.lookup(AlarmSettingMaintainService.ENABLED_CHILD_FOR_POINT, new Object[]{pointIdKey}).getCount());
-            assertEquals(5, enabledAlarmSettingLookupService.getEnabledAlarmSettings(pointIdKey).size());
-            assertEquals(5, enabledAlarmSettingCache.get(pointIdKey).size());
+            assertEquals(0, enabledAlarmSettingCache.get(pointKey).size());
+            assertEquals(5, alarmSettingMaintainService.lookup(AlarmSettingMaintainService.ENABLED_CHILD_FOR_POINT, new Object[]{pointKey}).getCount());
+            assertEquals(5, enabledAlarmSettingLookupService.getEnabledAlarmSettings(pointKey).size());
+            assertEquals(5, enabledAlarmSettingCache.get(pointKey).size());
         } finally {
+            pointMaintainService.deleteIfExists(pointKey);
             for (AlarmSetting alarmSetting : alarmSettings) {
                 alarmSettingMaintainService.deleteIfExists(alarmSetting.getKey());
             }
