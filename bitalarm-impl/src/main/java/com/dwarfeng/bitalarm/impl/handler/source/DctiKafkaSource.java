@@ -7,6 +7,7 @@ import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -129,8 +130,18 @@ public class DctiKafkaSource implements Source {
             try {
                 DataInfo dataInfo = DataInfoUtil.fromMessage(message);
                 long pointId = dataInfo.getPointLongId();
-                byte[] data = Base64.getDecoder().decode(dataInfo.getValue());
+                byte[] data = null;
                 Date happenedDate = dataInfo.getHappenedDate();
+                if (StringUtils.equalsIgnoreCase("T", dataInfo.getValue())
+                        || StringUtils.equalsIgnoreCase("F", dataInfo.getValue())) {
+                    if (StringUtils.equalsIgnoreCase("T", dataInfo.getValue())) {
+                        data = new byte[]{(byte) 1};
+                    } else {
+                        data = new byte[]{(byte) 0};
+                    }
+                } else {
+                    Base64.getDecoder().decode(dataInfo.getValue());
+                }
                 alarmService.processAlarm(pointId, data, happenedDate);
             } catch (ServiceException e) {
                 if (e.getCode().getCode() == ServiceExceptionCodes.ALARM_HANDLER_DISABLED.getCode()) {
