@@ -9,6 +9,7 @@ import com.dwarfeng.bitalarm.stack.exception.PointNotExistsException;
 import com.dwarfeng.bitalarm.stack.handler.AlarmHandler;
 import com.dwarfeng.bitalarm.stack.handler.AlarmLocalCacheHandler;
 import com.dwarfeng.bitalarm.stack.handler.ConsumeHandler;
+import com.dwarfeng.bitalarm.stack.service.AlarmHistoryMaintainService;
 import com.dwarfeng.bitalarm.stack.service.CurrentAlarmMaintainService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
@@ -32,6 +33,9 @@ public class AlarmHandlerImpl implements AlarmHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(AlarmHandlerImpl.class);
     private static final char[] hexCode = "0123456789ABCDEF".toCharArray();
     private static final int BIT_PER_BYTE = 8;
+
+    @Autowired
+    private AlarmHistoryMaintainService alarmHistoryMaintainService;
 
     @Autowired
     private AlarmLocalCacheHandler alarmLocalCacheHandler;
@@ -101,17 +105,21 @@ public class AlarmHandlerImpl implements AlarmHandler {
                 throw new AlarmDisabledException();
             }
 
-            // 0. 记录日志，准备工作。
+            // 记录日志，准备工作。
             LOGGER.debug("分析并记录数据点 " + pointId + " 的报警信息: " + toHexString(data));
+
+            // 获取数据点主键。
             LongIdKey pointKey = new LongIdKey(pointId);
-            // 1. 获取指定数据点的所有报警设置。
+
+            // 获取指定数据点的所有报警设置，同时判断数据点是否存在。
             List<AlarmSetting> alarmSettings = alarmLocalCacheHandler.getAlarmSetting(pointKey);
-            if (Objects.isNull(alarmSettings) || alarmSettings.isEmpty()) {
+            if (Objects.isNull(alarmSettings)) {
                 throw new PointNotExistsException(pointKey);
             }
-            // 2. 分析所有报警设置。
+
+            // 分析所有报警设置。
             for (AlarmSetting alarmSetting : alarmSettings) {
-                // 2.1 判断报警设置的index是否越界，如果越界，则中止。
+                // 判断报警设置的index是否越界，如果越界，则中止。
                 int index = alarmSetting.getIndex();
                 if (index < 0) {
                     LOGGER.warn("无效的报警配置 " + alarmSetting.getKey() + ": 报警配置的 index 为 " + index + ", 小于0");
@@ -122,55 +130,25 @@ public class AlarmHandlerImpl implements AlarmHandler {
                             ", 超过了报警数据的长度 " + data.length * BIT_PER_BYTE);
                     continue;
                 }
-                // 2.2 取出指定index上的报警的bit值，生成alarmInfo。
+                // 取出指定index上的报警的bit值，生成生成报警记录，记录并推送。
                 AlarmInfo alarmInfo = new AlarmInfo(
                         alarmSetting.getKey(),
-                        alarmSetting.getPointKey(),
+                        pointKey,
                         alarmSetting.getIndex(),
                         alarmSetting.getAlarmMessage(),
                         alarmSetting.getAlarmType(),
                         happenedDate,
                         checkAlarming(data, index)
                 );
-                // 2.3 如果报警信息alarming=true
-                if (alarmInfo.isAlarming()) {
-                    // 如果当前报警不存在报警信息，则新建报警信息。
-                    if (!currentAlarmMaintainService.exists(alarmInfo.getKey())) {
-                        CurrentAlarm currentAlarm = new CurrentAlarm(
-                                alarmInfo.getKey(),
-                                alarmInfo.getPointKey(),
-                                alarmInfo.getIndex(),
-                                alarmInfo.getAlarmMessage(),
-                                alarmInfo.getAlarmType(),
-                                alarmInfo.getHappenedDate()
-                        );
-                        currentAlarmMaintainService.insertOrUpdate(currentAlarm);
-                    }
-                }
-                // 2.4 否则。
-                else {
-                    // 如果当前报警存在报警信息，则消费者消费报警历史，撤下当前报警，消费者消费报警历史记录事件。
-                    if (currentAlarmMaintainService.exists(alarmInfo.getKey())) {
-                        CurrentAlarm currentAlarm = currentAlarmMaintainService.get(alarmInfo.getKey());
-                        currentAlarmMaintainService.deleteIfExists(alarmInfo.getKey());
-                        AlarmHistory alarmHistory = new AlarmHistory(
-                                null,
-                                currentAlarm.getKey(),
-                                pointId, currentAlarm.getIndex(),
-                                currentAlarm.getAlarmMessage(),
-                                currentAlarm.getAlarmType(),
-                                currentAlarm.getHappenedDate(),
-                                alarmInfo.getHappenedDate(),
-                                alarmInfo.getHappenedDate().getTime() - currentAlarm.getHappenedDate().getTime()
-                        );
-                        alarmHistoryValueConsumeHandler.accept(alarmHistory);
-                        historyRecordedEventConsumeHandler.accept(alarmHistory);
-                    }
-                }
-                // 消费者消费报警信息值。
                 alarmInfoValueConsumeHandler.accept(alarmInfo);
-                // 消费者消费报警信息更新事件。
                 alarmUpdatedEventConsumeHandler.accept(alarmInfo);
+
+                // 依据是否报警进行操作
+                if (alarmInfo.isAlarming()) {
+                    processAlarming(alarmInfo);
+                } else {
+                    processNotAlarming(alarmInfo);
+                }
             }
         } catch (HandlerException e) {
             throw e;
@@ -178,6 +156,53 @@ public class AlarmHandlerImpl implements AlarmHandler {
             throw new HandlerException(e);
         } finally {
             lock.unlock();
+        }
+    }
+
+    private void processAlarming(AlarmInfo alarmInfo) throws Exception {
+        // 如果当前报警不存在报警信息，则新建报警信息。
+        if (currentAlarmMaintainService.exists(alarmInfo.getKey())) {
+            return;
+        }
+        CurrentAlarm currentAlarm = new CurrentAlarm(
+                alarmInfo.getKey(),
+                alarmInfo.getPointKey(),
+                alarmInfo.getIndex(),
+                alarmInfo.getAlarmMessage(),
+                alarmInfo.getAlarmType(),
+                alarmInfo.getHappenedDate()
+        );
+        currentAlarmMaintainService.insertOrUpdate(currentAlarm);
+        AlarmHistory alarmHistory = new AlarmHistory(
+                null,
+                alarmInfo.getKey(),
+                alarmInfo.getPointKey().getLongId(),
+                alarmInfo.getIndex(),
+                alarmInfo.getAlarmMessage(),
+                alarmInfo.getAlarmType(),
+                alarmInfo.getHappenedDate(),
+                null,
+                0
+        );
+        alarmHistoryValueConsumeHandler.accept(alarmHistory);
+        historyRecordedEventConsumeHandler.accept(alarmHistory);
+    }
+
+    private void processNotAlarming(AlarmInfo alarmInfo) throws Exception {
+        // 如果当前报警存在报警信息，则消费者消费报警历史，撤下当前报警，消费者消费报警历史记录事件。
+        if (!currentAlarmMaintainService.exists(alarmInfo.getKey())) {
+            return;
+        }
+        CurrentAlarm currentAlarm = currentAlarmMaintainService.get(alarmInfo.getKey());
+        currentAlarmMaintainService.deleteIfExists(alarmInfo.getKey());
+        List<AlarmHistory> alarmHistories = alarmHistoryMaintainService.lookup(
+                AlarmHistoryMaintainService.CHILD_FOR_ALARM_SETTING_NOT_END, new Object[]{currentAlarm.getKey()}
+        ).getData();
+        for (AlarmHistory alarmHistory : alarmHistories) {
+            alarmHistory.setEndDate(alarmInfo.getHappenedDate());
+            alarmHistory.setDuration(alarmInfo.getHappenedDate().getTime() - currentAlarm.getHappenedDate().getTime());
+            alarmHistoryValueConsumeHandler.accept(alarmHistory);
+            historyRecordedEventConsumeHandler.accept(alarmHistory);
         }
     }
 

@@ -27,13 +27,6 @@ public class AlarmHistoryValueConsumer implements Consumer<AlarmHistory> {
         tm.start();
         try {
             try {
-                alarmHistoryMaintainService.batchInsert(alarmHistories);
-                return;
-            } catch (Exception e) {
-                LOGGER.warn("数据插入失败, 试图使用不同的策略进行插入: 插入或更新", e);
-            }
-
-            try {
                 alarmHistoryMaintainService.batchInsertOrUpdate(alarmHistories);
                 return;
             } catch (Exception e) {
