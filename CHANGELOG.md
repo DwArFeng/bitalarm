@@ -10,6 +10,7 @@
 #### Bug修复
 
 - 修正 HistoryRecordEventConsumer 的处理逻辑中的 bug。
+- 修正 ConsumeConfiguration 中的消费者配置 bug。
 
 #### 功能移除
 

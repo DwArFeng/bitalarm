@@ -82,7 +82,7 @@ public class ConsumeConfiguration {
     }
 
     @Autowired
-    private AlarmHistoryValueConsumer alarmHistoryValueConsumer;
+    private HistoryRecordEventConsumer historyRecordEventConsumer;
     @Value("${consume.history_recorded_event.consumer_thread}")
     private int historyRecordedEventConsumerThread;
     @Value("${consume.history_recorded_event.buffer_size}")
@@ -99,7 +99,7 @@ public class ConsumeConfiguration {
                 scheduler,
                 new ArrayList<>(),
                 new ArrayList<>(),
-                alarmHistoryValueConsumer,
+                historyRecordEventConsumer,
                 historyRecordedEventConsumerThread,
                 warnThreshold
         );
@@ -109,7 +109,7 @@ public class ConsumeConfiguration {
     }
 
     @Autowired
-    private HistoryRecordEventConsumer historyRecordEventConsumer;
+    private AlarmHistoryValueConsumer alarmHistoryValueConsumer;
     @Value("${consume.alarm_history_value.consumer_thread}")
     private int alarmHistoryValueConsumerThread;
     @Value("${consume.alarm_history_value.buffer_size}")
@@ -126,7 +126,7 @@ public class ConsumeConfiguration {
                 scheduler,
                 new ArrayList<>(),
                 new ArrayList<>(),
-                historyRecordEventConsumer,
+                alarmHistoryValueConsumer,
                 alarmHistoryValueConsumerThread,
                 warnThreshold
         );
