@@ -9,7 +9,7 @@
 
 #### Bug修复
 
-- (无)
+- 修正 HistoryRecordEventConsumer 的处理逻辑中的 bug。
 
 #### 功能移除
 

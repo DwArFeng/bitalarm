@@ -37,7 +37,7 @@ public class HistoryRecordEventConsumer implements Consumer<AlarmHistory> {
 
             for (AlarmHistory alarmHistory : alarmHistories) {
                 try {
-                    pushHandler.historyRecorded(alarmHistories);
+                    pushHandler.historyRecorded(alarmHistory);
                 } catch (Exception e) {
                     LOGGER.error("数据推送失败, 放弃对数据的推送: " + alarmHistory, e);
                     failedList.add(alarmHistory);
