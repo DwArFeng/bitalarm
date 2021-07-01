@@ -163,7 +163,7 @@ public class AlarmHandlerImpl implements AlarmHandler {
         CurrentAlarm currentAlarm = currentAlarmMaintainService.getIfExists(alarmInfo.getKey());
         currentAlarmMaintainService.deleteIfExists(alarmInfo.getKey());
 
-        if (!Objects.nonNull(currentAlarm)) {
+        if (Objects.isNull(currentAlarm)) {
             return;
         }
 
