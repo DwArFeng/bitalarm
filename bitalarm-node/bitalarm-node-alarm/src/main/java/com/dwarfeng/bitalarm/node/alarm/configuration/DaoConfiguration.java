@@ -46,7 +46,6 @@ public class DaoConfiguration {
     @Autowired
     private AlarmInfoPresetEntityFilter alarmInfoPresetEntityFilter;
 
-
     @Value("${redis.dbkey.current_alarm}")
     private String currentAlarmDbKey;
     @Value("${redis.dbkey.alarm_info}")
