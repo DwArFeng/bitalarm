@@ -3,6 +3,7 @@ package com.dwarfeng.bitalarm.impl.handler;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.bitalarm.stack.handler.AlarmLocalCacheHandler;
 import com.dwarfeng.bitalarm.stack.service.EnabledAlarmSettingLookupService;
+import com.dwarfeng.bitalarm.stack.service.PointMaintainService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -76,17 +77,17 @@ public class AlarmLocalCacheHandlerImpl implements AlarmLocalCacheHandler {
     public static class AlarmSettingFetcher {
 
         @Autowired
+        private PointMaintainService pointMaintainService;
+        @Autowired
         private EnabledAlarmSettingLookupService enabledAlarmSettingLookupService;
 
         @BehaviorAnalyse
         @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
         public List<AlarmSetting> fetchAlarmSettings(LongIdKey pointKey) throws Exception {
-            List<AlarmSetting> enabledAlarmSettings =
-                    enabledAlarmSettingLookupService.getEnabledAlarmSettings(pointKey);
-            if (Objects.nonNull(enabledAlarmSettings) && enabledAlarmSettings.isEmpty()) {
+            if (!pointMaintainService.exists(pointKey)) {
                 return null;
             }
-            return enabledAlarmSettings;
+            return enabledAlarmSettingLookupService.getEnabledAlarmSettings(pointKey);
         }
     }
 }

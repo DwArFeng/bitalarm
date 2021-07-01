@@ -76,7 +76,6 @@ public interface AlarmQosService extends Service {
     enum ConsumerId {
 
         EVENT_ALARM("event", "alarm"),
-        VALUE_ALARM("value", "alarm"),
         EVENT_HISTORY("event", "history"),
         VALUE_HISTORY("value", "history"),
 

@@ -52,9 +52,6 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
             case AlarmHistoryMaintainService.CHILD_FOR_ALARM_SETTING_DURATION_LT:
                 childForAlarmSettingDurationLt(detachedCriteria, objects);
                 break;
-            case AlarmHistoryMaintainService.CHILD_FOR_ALARM_SETTING_NOT_END:
-                childForAlarmSettingNotEnd(detachedCriteria, objects);
-                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
@@ -201,20 +198,6 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
             }
             long duration = (long) objects[1];
             detachedCriteria.add(Restrictions.lt("duration", duration));
-        } catch (Exception e) {
-            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
-        }
-    }
-
-    private void childForAlarmSettingNotEnd(DetachedCriteria detachedCriteria, Object[] objects) {
-        try {
-            if (Objects.isNull(objects[0])) {
-                detachedCriteria.add(Restrictions.isNull("alarmSettingLongId"));
-            } else {
-                LongIdKey longIdKey = (LongIdKey) objects[0];
-                detachedCriteria.add(Restrictions.eqOrIsNull("alarmSettingLongId", longIdKey.getLongId()));
-            }
-            detachedCriteria.add(Restrictions.isNull("endDate"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
         }

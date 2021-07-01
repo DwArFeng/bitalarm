@@ -4,14 +4,13 @@
 
 #### 功能构建
 
-- 调整报警的处理逻辑。
-  - 当报警发生时，向报警历史中立即插入不包含结束时间的报警历史；报警结束后，更新之前插入的报警信息。
 - 完善 DctiKafkaSource 的 null 值处理逻辑。
 
 #### Bug修复
 
 - 修正 HistoryRecordEventConsumer 的处理逻辑中的 bug。
 - 修正 ConsumeConfiguration 中的消费者配置 bug。
+- 修正报警处理逻辑在处理大量数据时可能产生的 bug。
 
 #### 功能移除
 

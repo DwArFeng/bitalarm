@@ -26,5 +26,4 @@ public interface AlarmHistoryMaintainService extends BatchCrudService<LongIdKey,
     String DURATION_LT = "duration_lt";
     String CHILD_FOR_ALARM_SETTING_DURATION_GT = "child_for_alarm_setting_duration_gt";
     String CHILD_FOR_ALARM_SETTING_DURATION_LT = "child_for_alarm_setting_duration_lt";
-    String CHILD_FOR_ALARM_SETTING_NOT_END = "child_for_alarm_setting_not_end";
 }
