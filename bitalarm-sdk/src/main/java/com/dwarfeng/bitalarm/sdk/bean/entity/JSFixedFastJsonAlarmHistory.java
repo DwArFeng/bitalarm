@@ -1,7 +1,6 @@
 package com.dwarfeng.bitalarm.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.subgrade.sdk.bean.key.JSFixedFastJsonLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
@@ -26,7 +25,7 @@ public class JSFixedFastJsonAlarmHistory implements Bean {
             return new JSFixedFastJsonAlarmHistory(
                     JSFixedFastJsonLongIdKey.of(alarmHistory.getKey()),
                     JSFixedFastJsonLongIdKey.of(alarmHistory.getAlarmSettingKey()),
-                    alarmHistory.getPointId(),
+                    JSFixedFastJsonLongIdKey.of(alarmHistory.getPointKey()),
                     alarmHistory.getIndex(),
                     alarmHistory.getAlarmMessage(),
                     alarmHistory.getAlarmType(),
@@ -43,8 +42,8 @@ public class JSFixedFastJsonAlarmHistory implements Bean {
     @JSONField(name = "alarm_setting_key", ordinal = 2)
     private JSFixedFastJsonLongIdKey alarmSettingKey;
 
-    @JSONField(name = "point_id", ordinal = 3, serializeUsing = ToStringSerializer.class)
-    private long pointId;
+    @JSONField(name = "point_key", ordinal = 3)
+    private JSFixedFastJsonLongIdKey pointKey;
 
     @JSONField(name = "index", ordinal = 4)
     private int index;
@@ -68,11 +67,11 @@ public class JSFixedFastJsonAlarmHistory implements Bean {
     }
 
     public JSFixedFastJsonAlarmHistory(
-            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey alarmSettingKey, long pointId, int index,
-            String alarmMessage, byte alarmType, Date startDate, Date endDate, long duration) {
+            JSFixedFastJsonLongIdKey key, JSFixedFastJsonLongIdKey alarmSettingKey, JSFixedFastJsonLongIdKey pointKey,
+            int index, String alarmMessage, byte alarmType, Date startDate, Date endDate, long duration) {
         this.key = key;
         this.alarmSettingKey = alarmSettingKey;
-        this.pointId = pointId;
+        this.pointKey = pointKey;
         this.index = index;
         this.alarmMessage = alarmMessage;
         this.alarmType = alarmType;
@@ -97,12 +96,12 @@ public class JSFixedFastJsonAlarmHistory implements Bean {
         this.alarmSettingKey = alarmSettingKey;
     }
 
-    public long getPointId() {
-        return pointId;
+    public JSFixedFastJsonLongIdKey getPointKey() {
+        return pointKey;
     }
 
-    public void setPointId(long pointId) {
-        this.pointId = pointId;
+    public void setPointKey(JSFixedFastJsonLongIdKey pointKey) {
+        this.pointKey = pointKey;
     }
 
     public int getIndex() {
@@ -158,7 +157,7 @@ public class JSFixedFastJsonAlarmHistory implements Bean {
         return "JSFixedFastJsonAlarmHistory{" +
                 "key=" + key +
                 ", alarmSettingKey=" + alarmSettingKey +
-                ", pointId=" + pointId +
+                ", pointKey=" + pointKey +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

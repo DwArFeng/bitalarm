@@ -17,7 +17,7 @@ public class AlarmHistory implements Entity<LongIdKey> {
 
     private LongIdKey key;
     private LongIdKey alarmSettingKey;
-    private long pointId;
+    private LongIdKey pointKey;
     private int index;
     private String alarmMessage;
     private byte alarmType;
@@ -29,11 +29,11 @@ public class AlarmHistory implements Entity<LongIdKey> {
     }
 
     public AlarmHistory(
-            LongIdKey key, LongIdKey alarmSettingKey, long pointId, int index, String alarmMessage, byte alarmType,
+            LongIdKey key, LongIdKey alarmSettingKey, LongIdKey pointKey, int index, String alarmMessage, byte alarmType,
             Date startDate, Date endDate, long duration) {
         this.key = key;
         this.alarmSettingKey = alarmSettingKey;
-        this.pointId = pointId;
+        this.pointKey = pointKey;
         this.index = index;
         this.alarmMessage = alarmMessage;
         this.alarmType = alarmType;
@@ -60,12 +60,12 @@ public class AlarmHistory implements Entity<LongIdKey> {
         this.alarmSettingKey = alarmSettingKey;
     }
 
-    public long getPointId() {
-        return pointId;
+    public LongIdKey getPointKey() {
+        return pointKey;
     }
 
-    public void setPointId(long pointId) {
-        this.pointId = pointId;
+    public void setPointKey(LongIdKey pointKey) {
+        this.pointKey = pointKey;
     }
 
     public int getIndex() {
@@ -121,7 +121,7 @@ public class AlarmHistory implements Entity<LongIdKey> {
         return "AlarmHistory{" +
                 "key=" + key +
                 ", alarmSettingKey=" + alarmSettingKey +
-                ", pointId=" + pointId +
+                ", pointKey=" + pointKey +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

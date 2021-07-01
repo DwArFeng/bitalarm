@@ -25,7 +25,7 @@ public class HibernateAlarmHistory implements Bean {
     private Long alarmSettingLongId;
 
     @Column(name = "point_id")
-    private Long pointId;
+    private Long pointLongId;
 
     @Column(name = "column_index")
     private int index;
@@ -70,8 +70,8 @@ public class HibernateAlarmHistory implements Bean {
         return Optional.ofNullable(alarmSettingLongId).map(HibernateLongIdKey::new).orElse(null);
     }
 
-    public void setAlarmSettingKey(HibernateLongIdKey idKey) {
-        this.alarmSettingLongId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
+    public void setAlarmSettingKey(HibernateLongIdKey key) {
+        this.alarmSettingLongId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
     public Long getAlarmSettingLongId() {
@@ -82,12 +82,20 @@ public class HibernateAlarmHistory implements Bean {
         this.alarmSettingLongId = alarmSettingLongId;
     }
 
-    public Long getPointId() {
-        return pointId;
+    public HibernateLongIdKey getPointKey() {
+        return Optional.ofNullable(pointLongId).map(HibernateLongIdKey::new).orElse(null);
     }
 
-    public void setPointId(Long pointId) {
-        this.pointId = pointId;
+    public void setPointKey(HibernateLongIdKey key) {
+        this.pointLongId = Optional.ofNullable(key).map(HibernateLongIdKey::getLongId).orElse(null);
+    }
+
+    public Long getPointLongId() {
+        return pointLongId;
+    }
+
+    public void setPointLongId(Long pointLongId) {
+        this.pointLongId = pointLongId;
     }
 
     public int getIndex() {
@@ -143,7 +151,7 @@ public class HibernateAlarmHistory implements Bean {
         return "HibernateAlarmHistory{" +
                 "longId=" + longId +
                 ", alarmSettingLongId=" + alarmSettingLongId +
-                ", pointId=" + pointId +
+                ", pointLongId=" + pointLongId +
                 ", index=" + index +
                 ", alarmMessage='" + alarmMessage + '\'' +
                 ", alarmType=" + alarmType +

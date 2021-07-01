@@ -5,6 +5,7 @@
 #### 功能构建
 
 - 完善 DctiKafkaSource 的 null 值处理逻辑。
+- 调整实体字段: com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory.pointKey。
 
 #### Bug修复
 
@@ -65,7 +66,7 @@
 
 - 为 AlarmHandlerImpl.processAlarm 方法增加性能分析增强。
 - 添加实体属性。
-  - com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory.pointId
+  - com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory.pointKeyy
 
 #### Bug修复
 

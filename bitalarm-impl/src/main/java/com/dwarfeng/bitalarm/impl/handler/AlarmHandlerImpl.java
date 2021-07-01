@@ -141,7 +141,7 @@ public class AlarmHandlerImpl implements AlarmHandler {
                 if (alarmInfo.isAlarming()) {
                     processAlarming(alarmInfo);
                 } else {
-                    processNotAlarming(alarmInfo, pointId);
+                    processNotAlarming(alarmInfo, pointKey);
                 }
             }
         } catch (HandlerException e) {
@@ -159,7 +159,7 @@ public class AlarmHandlerImpl implements AlarmHandler {
         currentAlarmMaintainService.insertOrUpdate(currentAlarm);
     }
 
-    private void processNotAlarming(AlarmInfo alarmInfo, long pointId) throws Exception {
+    private void processNotAlarming(AlarmInfo alarmInfo, LongIdKey pointKey) throws Exception {
         CurrentAlarm currentAlarm = currentAlarmMaintainService.getIfExists(alarmInfo.getKey());
         currentAlarmMaintainService.deleteIfExists(alarmInfo.getKey());
 
@@ -167,7 +167,7 @@ public class AlarmHandlerImpl implements AlarmHandler {
             return;
         }
 
-        AlarmHistory alarmHistory = new AlarmHistory(null, currentAlarm.getKey(), pointId, currentAlarm.getIndex(),
+        AlarmHistory alarmHistory = new AlarmHistory(null, currentAlarm.getKey(), pointKey, currentAlarm.getIndex(),
                 currentAlarm.getAlarmMessage(), currentAlarm.getAlarmType(), currentAlarm.getHappenedDate(),
                 alarmInfo.getHappenedDate(),
                 alarmInfo.getHappenedDate().getTime() - currentAlarm.getHappenedDate().getTime());
