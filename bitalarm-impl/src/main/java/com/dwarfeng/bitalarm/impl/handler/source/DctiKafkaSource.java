@@ -129,6 +129,12 @@ public class DctiKafkaSource implements Source {
             String message = consumerRecord.value();
             try {
                 DataInfo dataInfo = DataInfoUtil.fromMessage(message);
+
+                // 如果从消息队列里接到了 null 值的标识，则忽略本次数据。
+                if (StringUtils.equals(dataInfo.getValue(), "!null")) {
+                    break;
+                }
+
                 long pointId = dataInfo.getPointLongId();
                 byte[] data = null;
                 Date happenedDate = dataInfo.getHappenedDate();
@@ -155,6 +161,8 @@ public class DctiKafkaSource implements Source {
                 } else {
                     LOGGER.warn("记录处理器无法处理, 消息 " + message + " 将会被忽略", e);
                 }
+            } catch (Exception e) {
+                LOGGER.warn("记录处理器无法处理, 消息 " + message + " 将会被忽略", e);
             }
         }
         ack.acknowledge();
