@@ -6,7 +6,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>bitalarm</artifactId>
-    <version>1.5.2.a-SNAPSHOT</version>
+    <version>1.5.2.a</version>
 
     <packaging>pom</packaging>
 
@@ -401,32 +401,32 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-stack</artifactId>
-                <version>1.5.2.a-SNAPSHOT</version>
+                <version>1.5.2.a</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-sdk</artifactId>
-                <version>1.5.2.a-SNAPSHOT</version>
+                <version>1.5.2.a</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-impl</artifactId>
-                <version>1.5.2.a-SNAPSHOT</version>
+                <version>1.5.2.a</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-node-alarm</artifactId>
-                <version>1.5.2.a-SNAPSHOT</version>
+                <version>1.5.2.a</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-node-maintain</artifactId>
-                <version>1.5.2.a-SNAPSHOT</version>
+                <version>1.5.2.a</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>bitalarm-node-all</artifactId>
-                <version>1.5.2.a-SNAPSHOT</version>
+                <version>1.5.2.a</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
