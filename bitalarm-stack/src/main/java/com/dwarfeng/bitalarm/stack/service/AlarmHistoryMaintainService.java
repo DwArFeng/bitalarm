@@ -26,4 +26,8 @@ public interface AlarmHistoryMaintainService extends BatchCrudService<LongIdKey,
     String DURATION_LT = "duration_lt";
     String CHILD_FOR_ALARM_SETTING_DURATION_GT = "child_for_alarm_setting_duration_gt";
     String CHILD_FOR_ALARM_SETTING_DURATION_LT = "child_for_alarm_setting_duration_lt";
+    String START_DATE_BETWEEN_RECENT = "start_date_between_recent";
+    String END_DATE_BETWEEN_RECENT = "end_date_between_recent";
+    String CHILD_FOR_ALARM_SETTING_START_DATE_BETWEEN_RECENT = "child_for_alarm_setting_start_date_between_recent";
+    String CHILD_FOR_ALARM_SETTING_END_DATE_BETWEEN_RECENT = "child_for_alarm_setting_end_date_between_recent";
 }

@@ -52,6 +52,18 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
             case AlarmHistoryMaintainService.CHILD_FOR_ALARM_SETTING_DURATION_LT:
                 childForAlarmSettingDurationLt(detachedCriteria, objects);
                 break;
+            case AlarmHistoryMaintainService.START_DATE_BETWEEN_RECENT:
+                startDateBetweenRecent(detachedCriteria, objects);
+                break;
+            case AlarmHistoryMaintainService.END_DATE_BETWEEN_RECENT:
+                endDateBetweenRecent(detachedCriteria, objects);
+                break;
+            case AlarmHistoryMaintainService.CHILD_FOR_ALARM_SETTING_START_DATE_BETWEEN_RECENT:
+                childForAlarmSettingStartDateBetweenRecent(detachedCriteria, objects);
+                break;
+            case AlarmHistoryMaintainService.CHILD_FOR_ALARM_SETTING_END_DATE_BETWEEN_RECENT:
+                childForAlarmSettingEndDateBetweenRecent(detachedCriteria, objects);
+                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
@@ -79,6 +91,7 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void alarmTypeEquals(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             byte alarmType;
@@ -117,6 +130,7 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForAlarmSettingStartDateBetween(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             if (Objects.isNull(objects[0])) {
@@ -136,6 +150,7 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private void childForAlarmSettingEndDateBetween(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             if (Objects.isNull(objects[0])) {
@@ -198,6 +213,70 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
             }
             long duration = (long) objects[1];
             detachedCriteria.add(Restrictions.lt("duration", duration));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    private void startDateBetweenRecent(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            Date startDate = (Date) objects[0];
+            Date endDate = (Date) objects[1];
+            detachedCriteria.add(Restrictions.ge("startDate", startDate));
+            detachedCriteria.add(Restrictions.lt("startDate", endDate));
+            detachedCriteria.addOrder(Order.desc("startDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    private void endDateBetweenRecent(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            Date startDate = (Date) objects[0];
+            Date endDate = (Date) objects[1];
+            detachedCriteria.add(Restrictions.ge("endDate", startDate));
+            detachedCriteria.add(Restrictions.lt("endDate", endDate));
+            detachedCriteria.addOrder(Order.desc("endDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForAlarmSettingStartDateBetweenRecent(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("alarmSettingLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objects[0];
+                detachedCriteria.add(Restrictions.eqOrIsNull("alarmSettingLongId",
+                        longIdKey.getLongId()));
+            }
+            Date startDate = (Date) objects[1];
+            Date endDate = (Date) objects[2];
+            detachedCriteria.add(Restrictions.ge("startDate", startDate));
+            detachedCriteria.add(Restrictions.lt("startDate", endDate));
+            detachedCriteria.addOrder(Order.desc("startDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForAlarmSettingEndDateBetweenRecent(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("alarmSettingLongId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objects[0];
+                detachedCriteria.add(Restrictions.eqOrIsNull("alarmSettingLongId",
+                        longIdKey.getLongId()));
+            }
+            Date startDate = (Date) objects[1];
+            Date endDate = (Date) objects[2];
+            detachedCriteria.add(Restrictions.ge("endDate", startDate));
+            detachedCriteria.add(Restrictions.lt("endDate", endDate));
+            detachedCriteria.addOrder(Order.desc("endDate"));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
         }

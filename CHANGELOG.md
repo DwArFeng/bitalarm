@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- AlarmHistoryMaintainService 增加以时间倒序的预设查询。
 
 #### Bug修复
 
