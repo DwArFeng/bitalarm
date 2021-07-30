@@ -5,6 +5,7 @@
 #### 功能构建
 
 - AlarmHistoryMaintainService 增加以时间倒序的预设查询。
+- 优化 AlarmHandlerImpl 中的逻辑判断代码。
 
 #### Bug修复
 
