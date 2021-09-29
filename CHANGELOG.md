@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 对推送器进行抽象，形成 com.dwarfeng.bitalarm.impl.handler.pusher.AbstractPusher。
 
 #### Bug修复
 

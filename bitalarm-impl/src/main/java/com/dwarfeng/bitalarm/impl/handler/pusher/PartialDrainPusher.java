@@ -10,16 +10,15 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author DwArFeng
  * @since 1.0.0
  */
 @Component
-public class PartialDrainPusher implements Pusher {
+public class PartialDrainPusher extends AbstractPusher {
 
-    public static final String SUPPORT_TYPE = "partial_drain";
+    public static final String PUSHER_TYPE = "partial_drain";
 
     @Autowired
     private List<Pusher> pushers;
@@ -33,15 +32,14 @@ public class PartialDrainPusher implements Pusher {
 
     private Pusher delegate;
 
+    public PartialDrainPusher() {
+        super(PUSHER_TYPE);
+    }
+
     @PostConstruct
     public void init() throws HandlerException {
         this.delegate = pushers.stream().filter(p -> p.supportType(delegateType)).findAny()
                 .orElseThrow(() -> new HandlerException("未知的 pusher 类型: " + delegateType));
-    }
-
-    @Override
-    public boolean supportType(String type) {
-        return Objects.equals(SUPPORT_TYPE, type);
     }
 
     @Override

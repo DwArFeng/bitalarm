@@ -1,7 +1,6 @@
 package com.dwarfeng.bitalarm.impl.handler.pusher;
 
 import com.alibaba.fastjson.JSON;
-import com.dwarfeng.bitalarm.impl.handler.Pusher;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmHistory;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
@@ -27,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 标准数据接口Kafka推送器。
@@ -36,9 +34,9 @@ import java.util.Objects;
  * @since 1.0.0
  */
 @Component
-public class DctiKafkaPusher implements Pusher {
+public class DctiKafkaPusher extends AbstractPusher {
 
-    public static final String SUPPORT_TYPE = "dcti.kafka";
+    public static final String PUSHER_TYPE = "dcti.kafka";
 
     @Autowired
     @Qualifier("dctiKafkaPusher.kafkaTemplate")
@@ -49,9 +47,8 @@ public class DctiKafkaPusher implements Pusher {
     @Value("${pusher.dcti.kafka.topic.history_recorded}")
     private String historyRecordedTopic;
 
-    @Override
-    public boolean supportType(String type) {
-        return Objects.equals(SUPPORT_TYPE, type);
+    public DctiKafkaPusher() {
+        super(PUSHER_TYPE);
     }
 
     @Override
