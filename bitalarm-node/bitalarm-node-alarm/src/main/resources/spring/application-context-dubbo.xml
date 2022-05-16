@@ -11,7 +11,7 @@
     </dubbo:application>
 
     <!-- zookeeper注册中心 -->
-    <dubbo:registry address="${dubbo.registry.zookeeper.address}"/>
+    <dubbo:registry address="${dubbo.registry.zookeeper.address}"  timeout="${dubbo.registry.zookeeper.timeout}"/>
 
     <!-- dubbo协议 -->
     <dubbo:protocol name="dubbo" port="${dubbo.protocol.dubbo.port}" host="${dubbo.protocol.dubbo.host}"
