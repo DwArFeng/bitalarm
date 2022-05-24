@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class FastJsonAlarmTypeIndicator implements Bean {
 
-    private static final long serialVersionUID = 8003802017782813925L;
+    private static final long serialVersionUID = 8205812981741271080L;
 
     public static FastJsonAlarmTypeIndicator of(AlarmTypeIndicator alarmTypeIndicator) {
         if (Objects.isNull(alarmTypeIndicator)) {
@@ -23,7 +23,7 @@ public class FastJsonAlarmTypeIndicator implements Bean {
         } else {
             return new FastJsonAlarmTypeIndicator(
                     FastJsonStringIdKey.of(alarmTypeIndicator.getKey()),
-                    alarmTypeIndicator.getLabel()
+                    alarmTypeIndicator.getLabel(), alarmTypeIndicator.getRemark()
             );
         }
     }
@@ -34,12 +34,16 @@ public class FastJsonAlarmTypeIndicator implements Bean {
     @JSONField(name = "label", ordinal = 2)
     private String label;
 
+    @JSONField(name = "remark", ordinal = 3)
+    private String remark;
+
     public FastJsonAlarmTypeIndicator() {
     }
 
-    public FastJsonAlarmTypeIndicator(FastJsonStringIdKey key, String label) {
+    public FastJsonAlarmTypeIndicator(FastJsonStringIdKey key, String label, String remark) {
         this.key = key;
         this.label = label;
+        this.remark = remark;
     }
 
     public FastJsonStringIdKey getKey() {
@@ -58,11 +62,20 @@ public class FastJsonAlarmTypeIndicator implements Bean {
         this.label = label;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     @Override
     public String toString() {
         return "FastJsonAlarmTypeIndicator{" +
                 "key=" + key +
                 ", label='" + label + '\'' +
+                ", remark='" + remark + '\'' +
                 '}';
     }
 }

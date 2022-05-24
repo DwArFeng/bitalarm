@@ -15,7 +15,7 @@ import java.util.Optional;
 @Table(name = "tbl_alarm_type_indicator")
 public class HibernateAlarmTypeIndicator implements Bean {
 
-    private static final long serialVersionUID = 2569433709575306913L;
+    private static final long serialVersionUID = -7381358854229853218L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -25,6 +25,9 @@ public class HibernateAlarmTypeIndicator implements Bean {
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "label", length = Constraints.LENGTH_LABEL)
     private String label;
+
+    @Column(name = "remark", length = Constraints.LENGTH_REMARK)
+    private String remark;
 
     public HibernateAlarmTypeIndicator() {
     }
@@ -55,10 +58,19 @@ public class HibernateAlarmTypeIndicator implements Bean {
         this.label = label;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "stringId = " + stringId + ", " +
-                "label = " + label + ")";
+                "label = " + label + ", " +
+                "remark = " + remark + ")";
     }
 }

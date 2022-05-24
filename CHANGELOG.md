@@ -18,6 +18,9 @@
 
 - 改进部分内部配置文件的格式。
 
+- 增加实体字段。
+  - com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator.remark。
+
 #### Bug修复
 
 - (无)

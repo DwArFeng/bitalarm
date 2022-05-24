@@ -32,7 +32,7 @@ public class AlarmTypeIndicatorMaintainServiceImplTest {
         for (int i = 0; i < 5; i++) {
             AlarmTypeIndicator alarmTypeIndicator = new AlarmTypeIndicator(
                     new StringIdKey("test.alarm_type_indicator." + i),
-                    "测试 " + i
+                    "测试 " + i, "remark"
             );
             alarmTypeIndicators.add(alarmTypeIndicator);
         }
