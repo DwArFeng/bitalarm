@@ -7,9 +7,9 @@ import com.dwarfeng.bitalarm.stack.dao.*;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
 import com.dwarfeng.subgrade.impl.service.*;
-import com.dwarfeng.subgrade.stack.bean.key.ByteIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -168,7 +168,7 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public GeneralBatchCrudService<ByteIdKey, AlarmTypeIndicator> alarmTypeIndicatorGeneralBatchCrudService() {
+    public GeneralBatchCrudService<StringIdKey, AlarmTypeIndicator> alarmTypeIndicatorGeneralBatchCrudService() {
         return new GeneralBatchCrudService<>(
                 alarmTypeIndicatorDao,
                 alarmTypeIndicatorCache,

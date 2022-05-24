@@ -1,7 +1,7 @@
 package com.dwarfeng.bitalarm.impl.bean.entity;
 
 import com.dwarfeng.bitalarm.sdk.util.Constraints;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateByteIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.Column;
@@ -11,16 +11,16 @@ import javax.persistence.Table;
 import java.util.Optional;
 
 @javax.persistence.Entity
-@IdClass(HibernateByteIdKey.class)
+@IdClass(HibernateStringIdKey.class)
 @Table(name = "tbl_alarm_type_indicator")
 public class HibernateAlarmTypeIndicator implements Bean {
 
-    private static final long serialVersionUID = -2632920534789464995L;
+    private static final long serialVersionUID = 2569433709575306913L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
     @Column(name = "id", nullable = false, unique = true)
-    private Byte byteId;
+    private String stringId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "label", length = Constraints.LENGTH_LABEL)
@@ -29,20 +29,22 @@ public class HibernateAlarmTypeIndicator implements Bean {
     public HibernateAlarmTypeIndicator() {
     }
 
-    public HibernateByteIdKey getKey() {
-        return Optional.ofNullable(byteId).map(HibernateByteIdKey::new).orElse(null);
+    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    public HibernateStringIdKey getKey() {
+        return Optional.ofNullable(stringId).map(HibernateStringIdKey::new).orElse(null);
     }
 
-    public void setKey(HibernateByteIdKey idKey) {
-        this.byteId = Optional.ofNullable(idKey).map(HibernateByteIdKey::getByteId).orElse(null);
+    public void setKey(HibernateStringIdKey idKey) {
+        this.stringId = Optional.ofNullable(idKey).map(HibernateStringIdKey::getStringId).orElse(null);
     }
 
-    public Byte getByteId() {
-        return byteId;
+    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    public String getStringId() {
+        return stringId;
     }
 
-    public void setByteId(Byte byteId) {
-        this.byteId = byteId;
+    public void setStringId(String stringId) {
+        this.stringId = stringId;
     }
 
     public String getLabel() {
@@ -55,9 +57,8 @@ public class HibernateAlarmTypeIndicator implements Bean {
 
     @Override
     public String toString() {
-        return "HibernateTypeIndicator{" +
-                "byteId=" + byteId +
-                ", label='" + label + '\'' +
-                '}';
+        return getClass().getSimpleName() + "(" +
+                "stringId = " + stringId + ", " +
+                "label = " + label + ")";
     }
 }

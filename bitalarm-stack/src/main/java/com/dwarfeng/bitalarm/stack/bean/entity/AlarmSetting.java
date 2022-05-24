@@ -11,21 +11,21 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  */
 public class AlarmSetting implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = 6876242419231264613L;
+    private static final long serialVersionUID = 7156904455833347856L;
 
     private LongIdKey key;
     private LongIdKey pointKey;
     private boolean enabled;
     private int index;
     private String alarmMessage;
-    private byte alarmType;
+    private String alarmType;
     private String remark;
 
     public AlarmSetting() {
     }
 
     public AlarmSetting(
-            LongIdKey key, LongIdKey pointKey, boolean enabled, int index, String alarmMessage, byte alarmType,
+            LongIdKey key, LongIdKey pointKey, boolean enabled, int index, String alarmMessage, String alarmType,
             String remark
     ) {
         this.key = key;
@@ -79,11 +79,11 @@ public class AlarmSetting implements Entity<LongIdKey> {
         this.alarmMessage = alarmMessage;
     }
 
-    public byte getAlarmType() {
+    public String getAlarmType() {
         return alarmType;
     }
 
-    public void setAlarmType(byte alarmType) {
+    public void setAlarmType(String alarmType) {
         this.alarmType = alarmType;
     }
 

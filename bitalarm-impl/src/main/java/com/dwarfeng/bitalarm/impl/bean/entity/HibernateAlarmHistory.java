@@ -13,7 +13,7 @@ import java.util.Optional;
 @Table(name = "tbl_alarm_history")
 public class HibernateAlarmHistory implements Bean {
 
-    private static final long serialVersionUID = -3771822009780091113L;
+    private static final long serialVersionUID = -9202719167406169615L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -33,8 +33,8 @@ public class HibernateAlarmHistory implements Bean {
     @Column(name = "alarm_message", length = Constraints.LENGTH_MESSAGE)
     private String alarmMessage;
 
-    @Column(name = "alarm_type")
-    private byte alarmType;
+    @Column(name = "alarm_type", length = Constraints.LENGTH_TYPE)
+    private String alarmType;
 
     @Column(name = "start_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,6 +50,7 @@ public class HibernateAlarmHistory implements Bean {
     public HibernateAlarmHistory() {
     }
 
+    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -58,6 +59,7 @@ public class HibernateAlarmHistory implements Bean {
         this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
+    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
     public Long getLongId() {
         return longId;
     }
@@ -114,11 +116,11 @@ public class HibernateAlarmHistory implements Bean {
         this.alarmMessage = alarmMessage;
     }
 
-    public byte getAlarmType() {
+    public String getAlarmType() {
         return alarmType;
     }
 
-    public void setAlarmType(byte alarmType) {
+    public void setAlarmType(String alarmType) {
         this.alarmType = alarmType;
     }
 
@@ -148,16 +150,15 @@ public class HibernateAlarmHistory implements Bean {
 
     @Override
     public String toString() {
-        return "HibernateAlarmHistory{" +
-                "longId=" + longId +
-                ", alarmSettingLongId=" + alarmSettingLongId +
-                ", pointLongId=" + pointLongId +
-                ", index=" + index +
-                ", alarmMessage='" + alarmMessage + '\'' +
-                ", alarmType=" + alarmType +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", duration=" + duration +
-                '}';
+        return getClass().getSimpleName() + "(" +
+                "longId = " + longId + ", " +
+                "alarmSettingLongId = " + alarmSettingLongId + ", " +
+                "pointLongId = " + pointLongId + ", " +
+                "index = " + index + ", " +
+                "alarmMessage = " + alarmMessage + ", " +
+                "alarmType = " + alarmType + ", " +
+                "startDate = " + startDate + ", " +
+                "endDate = " + endDate + ", " +
+                "duration = " + duration + ")";
     }
 }

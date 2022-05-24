@@ -35,6 +35,7 @@ public class HibernatePoint implements Bean {
     public HibernatePoint() {
     }
 
+    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -43,6 +44,7 @@ public class HibernatePoint implements Bean {
         this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
+    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
     public Long getLongId() {
         return longId;
     }
@@ -77,10 +79,9 @@ public class HibernatePoint implements Bean {
 
     @Override
     public String toString() {
-        return "HibernatePoint{" +
-                "longId=" + longId +
-                ", name='" + name + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
+        return getClass().getSimpleName() + "(" +
+                "longId = " + longId + ", " +
+                "name = " + name + ", " +
+                "remark = " + remark + ")";
     }
 }

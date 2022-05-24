@@ -1,7 +1,7 @@
 package com.dwarfeng.bitalarm.stack.service;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator;
-import com.dwarfeng.subgrade.stack.bean.key.ByteIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.service.CrudService;
 import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 
@@ -11,6 +11,6 @@ import com.dwarfeng.subgrade.stack.service.EntireLookupService;
  * @author DwArFeng
  * @since 1.1.0
  */
-public interface AlarmTypeIndicatorMaintainService extends CrudService<ByteIdKey, AlarmTypeIndicator>,
+public interface AlarmTypeIndicatorMaintainService extends CrudService<StringIdKey, AlarmTypeIndicator>,
         EntireLookupService<AlarmTypeIndicator> {
 }

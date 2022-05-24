@@ -52,7 +52,7 @@ public class AlarmHistoryMaintainServiceImplTest {
                 true,
                 1,
                 "我是报警信息",
-                (byte) 0,
+                "alarmType",
                 "测试用报警设置"
         );
         alarmHistories = new ArrayList<>();
@@ -63,7 +63,7 @@ public class AlarmHistoryMaintainServiceImplTest {
                     null,
                     1,
                     "我是报警信息",
-                    (byte) 0,
+                    "alarmType",
                     date,
                     date,
                     0L

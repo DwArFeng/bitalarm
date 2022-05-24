@@ -46,7 +46,7 @@ public class AlarmSettingMaintainServiceImplTest {
                     true,
                     1,
                     "我是报警信息",
-                    (byte) 0,
+                    "alarmType",
                     "测试用报警设置"
             );
             alarmSettings.add(alarmSetting);

@@ -48,7 +48,7 @@ public class CurrentAlarmMaintainServiceImplTest {
                 true,
                 1,
                 "我是报警信息",
-                (byte) 0,
+                "alarmType",
                 "测试用报警设置"
         );
         currentAlarm = new CurrentAlarm(
@@ -56,7 +56,7 @@ public class CurrentAlarmMaintainServiceImplTest {
                 parentPoint.getKey(),
                 1,
                 "我是报警信息",
-                (byte) 0,
+                "alarmType",
                 new Date()
         );
     }

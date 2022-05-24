@@ -11,10 +11,10 @@ import com.dwarfeng.bitalarm.stack.bean.entity.Point;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.impl.cache.RedisKeyListCache;
-import com.dwarfeng.subgrade.sdk.redis.formatter.ByteIdStringKeyFormatter;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
-import com.dwarfeng.subgrade.stack.bean.key.ByteIdKey;
+import com.dwarfeng.subgrade.sdk.redis.formatter.StringIdStringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,10 +73,11 @@ public class CacheConfiguration {
 
     @Bean
     @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<ByteIdKey, AlarmTypeIndicator, FastJsonAlarmTypeIndicator> alarmTypeIndicatorRedisBatchBaseCache() {
+    public RedisBatchBaseCache<StringIdKey, AlarmTypeIndicator, FastJsonAlarmTypeIndicator>
+    alarmTypeIndicatorRedisBatchBaseCache() {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonAlarmTypeIndicator>) template,
-                new ByteIdStringKeyFormatter(alarmTypeIndicatorPrefix),
+                new StringIdStringKeyFormatter(alarmTypeIndicatorPrefix),
                 new DozerBeanTransformer<>(AlarmTypeIndicator.class, FastJsonAlarmTypeIndicator.class, mapper)
         );
     }

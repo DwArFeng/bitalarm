@@ -7,7 +7,7 @@ import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
-import com.dwarfeng.subgrade.stack.bean.key.ByteIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,28 +17,28 @@ import org.springframework.transaction.annotation.Transactional;
 public class AlarmTypeIndicatorMaintainServiceImpl implements AlarmTypeIndicatorMaintainService {
 
     @Autowired
-    private GeneralBatchCrudService<ByteIdKey, AlarmTypeIndicator> crudService;
+    private GeneralBatchCrudService<StringIdKey, AlarmTypeIndicator> crudService;
     @Autowired
     private DaoOnlyEntireLookupService<AlarmTypeIndicator> entireLookupService;
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean exists(ByteIdKey key) throws ServiceException {
+    public boolean exists(StringIdKey key) throws ServiceException {
         return crudService.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public AlarmTypeIndicator get(ByteIdKey key) throws ServiceException {
+    public AlarmTypeIndicator get(StringIdKey key) throws ServiceException {
         return crudService.get(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public ByteIdKey insert(AlarmTypeIndicator element) throws ServiceException {
+    public StringIdKey insert(AlarmTypeIndicator element) throws ServiceException {
         return crudService.insert(element);
     }
 
@@ -52,21 +52,21 @@ public class AlarmTypeIndicatorMaintainServiceImpl implements AlarmTypeIndicator
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void delete(ByteIdKey key) throws ServiceException {
+    public void delete(StringIdKey key) throws ServiceException {
         crudService.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public AlarmTypeIndicator getIfExists(ByteIdKey key) throws ServiceException {
+    public AlarmTypeIndicator getIfExists(StringIdKey key) throws ServiceException {
         return crudService.getIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public ByteIdKey insertIfNotExists(AlarmTypeIndicator element) throws ServiceException {
+    public StringIdKey insertIfNotExists(AlarmTypeIndicator element) throws ServiceException {
         return crudService.insertIfNotExists(element);
     }
 
@@ -80,14 +80,14 @@ public class AlarmTypeIndicatorMaintainServiceImpl implements AlarmTypeIndicator
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void deleteIfExists(ByteIdKey key) throws ServiceException {
+    public void deleteIfExists(StringIdKey key) throws ServiceException {
         crudService.deleteIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public ByteIdKey insertOrUpdate(AlarmTypeIndicator element) throws ServiceException {
+    public StringIdKey insertOrUpdate(AlarmTypeIndicator element) throws ServiceException {
         return crudService.insertOrUpdate(element);
     }
 

@@ -1,9 +1,11 @@
 package com.dwarfeng.bitalarm.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.bitalarm.sdk.util.Constraints;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.subgrade.sdk.bean.key.WebInputLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -20,7 +22,7 @@ import java.util.Objects;
  */
 public class WebInputAlarmInfo implements Bean {
 
-    private static final long serialVersionUID = 4726073174343772484L;
+    private static final long serialVersionUID = 3316841418139008304L;
 
     public static AlarmInfo toStackBean(WebInputAlarmInfo webInputAlarmInfo) {
         if (Objects.isNull(webInputAlarmInfo)) {
@@ -52,11 +54,14 @@ public class WebInputAlarmInfo implements Bean {
     private int index;
 
     @JSONField(name = "alarm_message")
+    @NotNull
     @NotEmpty
+    @Length(max = Constraints.LENGTH_MESSAGE)
     private String alarmMessage;
 
     @JSONField(name = "alarm_type")
-    private byte alarmType;
+    @Length(max = Constraints.LENGTH_TYPE)
+    private String alarmType;
 
     @JSONField(name = "happened_date")
     @NotNull
@@ -100,11 +105,11 @@ public class WebInputAlarmInfo implements Bean {
         this.alarmMessage = alarmMessage;
     }
 
-    public byte getAlarmType() {
+    public String getAlarmType() {
         return alarmType;
     }
 
-    public void setAlarmType(byte alarmType) {
+    public void setAlarmType(String alarmType) {
         this.alarmType = alarmType;
     }
 

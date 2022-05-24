@@ -13,14 +13,14 @@ import java.util.Date;
  */
 public class AlarmHistory implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = -7499532084553393464L;
+    private static final long serialVersionUID = -5682829213831120832L;
 
     private LongIdKey key;
     private LongIdKey alarmSettingKey;
     private LongIdKey pointKey;
     private int index;
     private String alarmMessage;
-    private byte alarmType;
+    private String alarmType;
     private Date startDate;
     private Date endDate;
     private long duration;
@@ -29,7 +29,7 @@ public class AlarmHistory implements Entity<LongIdKey> {
     }
 
     public AlarmHistory(
-            LongIdKey key, LongIdKey alarmSettingKey, LongIdKey pointKey, int index, String alarmMessage, byte alarmType,
+            LongIdKey key, LongIdKey alarmSettingKey, LongIdKey pointKey, int index, String alarmMessage, String alarmType,
             Date startDate, Date endDate, long duration) {
         this.key = key;
         this.alarmSettingKey = alarmSettingKey;
@@ -84,11 +84,11 @@ public class AlarmHistory implements Entity<LongIdKey> {
         this.alarmMessage = alarmMessage;
     }
 
-    public byte getAlarmType() {
+    public String getAlarmType() {
         return alarmType;
     }
 
-    public void setAlarmType(byte alarmType) {
+    public void setAlarmType(String alarmType) {
         this.alarmType = alarmType;
     }
 

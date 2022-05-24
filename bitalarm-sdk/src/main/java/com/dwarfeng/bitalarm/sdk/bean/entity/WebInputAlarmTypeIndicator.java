@@ -2,7 +2,7 @@ package com.dwarfeng.bitalarm.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator;
-import com.dwarfeng.subgrade.sdk.bean.key.WebInputByteIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.WebInputStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.validation.Valid;
@@ -18,14 +18,14 @@ import java.util.Objects;
  */
 public class WebInputAlarmTypeIndicator implements Bean {
 
-    private static final long serialVersionUID = 630678365048826333L;
+    private static final long serialVersionUID = -7204862938932762917L;
 
     public static AlarmTypeIndicator toStackBean(WebInputAlarmTypeIndicator webInputAlarmTypeIndicator) {
         if (Objects.isNull(webInputAlarmTypeIndicator)) {
             return null;
         } else {
             return new AlarmTypeIndicator(
-                    WebInputByteIdKey.toStackBean(webInputAlarmTypeIndicator.getKey()),
+                    WebInputStringIdKey.toStackBean(webInputAlarmTypeIndicator.getKey()),
                     webInputAlarmTypeIndicator.getLabel()
             );
         }
@@ -34,7 +34,7 @@ public class WebInputAlarmTypeIndicator implements Bean {
     @JSONField(name = "key")
     @Valid
     @NotNull
-    private WebInputByteIdKey key;
+    private WebInputStringIdKey key;
 
     @JSONField(name = "label")
     @NotEmpty
@@ -43,11 +43,11 @@ public class WebInputAlarmTypeIndicator implements Bean {
     public WebInputAlarmTypeIndicator() {
     }
 
-    public WebInputByteIdKey getKey() {
+    public WebInputStringIdKey getKey() {
         return key;
     }
 
-    public void setKey(WebInputByteIdKey key) {
+    public void setKey(WebInputStringIdKey key) {
         this.key = key;
     }
 

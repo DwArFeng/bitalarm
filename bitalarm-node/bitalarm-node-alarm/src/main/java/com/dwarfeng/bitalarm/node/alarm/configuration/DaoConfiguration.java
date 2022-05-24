@@ -10,12 +10,12 @@ import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonCurrentAlarm;
 import com.dwarfeng.bitalarm.stack.bean.entity.*;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.*;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateByteIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletionMod;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
-import com.dwarfeng.subgrade.stack.bean.key.ByteIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -185,11 +185,11 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<ByteIdKey, HibernateByteIdKey, AlarmTypeIndicator, HibernateAlarmTypeIndicator>
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AlarmTypeIndicator, HibernateAlarmTypeIndicator>
     alarmTypeIndicatorHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(ByteIdKey.class, HibernateByteIdKey.class, mapper),
+                new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
                 new DozerBeanTransformer<>(AlarmTypeIndicator.class, HibernateAlarmTypeIndicator.class, mapper),
                 HibernateAlarmTypeIndicator.class,
                 new DefaultDeletionMod<>(),

@@ -1,7 +1,7 @@
 package com.dwarfeng.bitalarm.stack.dao;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator;
-import com.dwarfeng.subgrade.stack.bean.key.ByteIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
 import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
 
@@ -11,6 +11,6 @@ import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
  * @author DwArFeng
  * @since 1.1.0
  */
-public interface AlarmTypeIndicatorDao extends BatchBaseDao<ByteIdKey, AlarmTypeIndicator>,
+public interface AlarmTypeIndicatorDao extends BatchBaseDao<StringIdKey, AlarmTypeIndicator>,
         EntireLookupDao<AlarmTypeIndicator> {
 }

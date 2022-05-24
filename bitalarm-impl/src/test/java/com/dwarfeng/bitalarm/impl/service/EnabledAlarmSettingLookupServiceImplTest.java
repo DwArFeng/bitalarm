@@ -53,7 +53,7 @@ public class EnabledAlarmSettingLookupServiceImplTest {
                     true,
                     i,
                     "我是报警信息",
-                    (byte) 0,
+                    "alarmType",
                     "测试用报警设置"
             );
             alarmSettings.add(alarmSetting);
@@ -65,7 +65,7 @@ public class EnabledAlarmSettingLookupServiceImplTest {
                     false,
                     i + 100,
                     "我是报警信息",
-                    (byte) 0,
+                    "alarmType",
                     "测试用报警设置"
             );
             alarmSettings.add(alarmSetting);

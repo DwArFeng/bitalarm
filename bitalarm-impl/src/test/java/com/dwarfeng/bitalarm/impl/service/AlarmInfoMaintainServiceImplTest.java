@@ -48,7 +48,7 @@ public class AlarmInfoMaintainServiceImplTest {
                 true,
                 1,
                 "我是报警信息",
-                (byte) 0,
+                "alarmType",
                 "测试用报警设置"
         );
         alarmInfo = new AlarmInfo(
@@ -56,7 +56,7 @@ public class AlarmInfoMaintainServiceImplTest {
                 parentPoint.getKey(),
                 1,
                 "我是报警信息",
-                (byte) 0,
+                "alarmType",
                 new Date(),
                 true
         );

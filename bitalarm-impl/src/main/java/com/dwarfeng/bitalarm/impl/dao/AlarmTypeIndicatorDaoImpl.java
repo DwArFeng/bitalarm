@@ -5,10 +5,10 @@ import com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator;
 import com.dwarfeng.bitalarm.stack.dao.AlarmTypeIndicatorDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateByteIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
-import com.dwarfeng.subgrade.stack.bean.key.ByteIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,14 +20,14 @@ import java.util.List;
 public class AlarmTypeIndicatorDaoImpl implements AlarmTypeIndicatorDao {
 
     @Autowired
-    private HibernateBatchBaseDao<ByteIdKey, HibernateByteIdKey, AlarmTypeIndicator, HibernateAlarmTypeIndicator> batchBaseDao;
+    private HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AlarmTypeIndicator, HibernateAlarmTypeIndicator> batchBaseDao;
     @Autowired
     private HibernateEntireLookupDao<AlarmTypeIndicator, HibernateAlarmTypeIndicator> entireLookupDao;
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public ByteIdKey insert(AlarmTypeIndicator element) throws DaoException {
+    public StringIdKey insert(AlarmTypeIndicator element) throws DaoException {
         return batchBaseDao.insert(element);
     }
 
@@ -41,28 +41,28 @@ public class AlarmTypeIndicatorDaoImpl implements AlarmTypeIndicatorDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void delete(ByteIdKey key) throws DaoException {
+    public void delete(StringIdKey key) throws DaoException {
         batchBaseDao.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean exists(ByteIdKey key) throws DaoException {
+    public boolean exists(StringIdKey key) throws DaoException {
         return batchBaseDao.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public AlarmTypeIndicator get(ByteIdKey key) throws DaoException {
+    public AlarmTypeIndicator get(StringIdKey key) throws DaoException {
         return batchBaseDao.get(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<ByteIdKey> batchInsert(List<AlarmTypeIndicator> elements) throws DaoException {
+    public List<StringIdKey> batchInsert(List<AlarmTypeIndicator> elements) throws DaoException {
         return batchBaseDao.batchInsert(elements);
     }
 
@@ -76,28 +76,28 @@ public class AlarmTypeIndicatorDaoImpl implements AlarmTypeIndicatorDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDelete(List<ByteIdKey> keys) throws DaoException {
+    public void batchDelete(List<StringIdKey> keys) throws DaoException {
         batchBaseDao.batchDelete(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(List<ByteIdKey> keys) throws DaoException {
+    public boolean allExists(List<StringIdKey> keys) throws DaoException {
         return batchBaseDao.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean nonExists(List<ByteIdKey> keys) throws DaoException {
+    public boolean nonExists(List<StringIdKey> keys) throws DaoException {
         return batchBaseDao.nonExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<AlarmTypeIndicator> batchGet(List<ByteIdKey> keys) throws DaoException {
+    public List<AlarmTypeIndicator> batchGet(List<StringIdKey> keys) throws DaoException {
         return batchBaseDao.batchGet(keys);
     }
 

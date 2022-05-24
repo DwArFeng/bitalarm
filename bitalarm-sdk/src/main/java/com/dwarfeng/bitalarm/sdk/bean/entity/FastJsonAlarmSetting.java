@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class FastJsonAlarmSetting implements Bean {
 
-    private static final long serialVersionUID = 8389670122006406629L;
+    private static final long serialVersionUID = -1670929819614491259L;
 
     public static FastJsonAlarmSetting of(AlarmSetting alarmSetting) {
         if (Objects.isNull(alarmSetting)) {
@@ -49,7 +49,7 @@ public class FastJsonAlarmSetting implements Bean {
     private String alarmMessage;
 
     @JSONField(name = "alarm_type", ordinal = 6)
-    private byte alarmType;
+    private String alarmType;
 
     @JSONField(name = "remark", ordinal = 7)
     private String remark;
@@ -59,7 +59,7 @@ public class FastJsonAlarmSetting implements Bean {
 
     public FastJsonAlarmSetting(
             FastJsonLongIdKey key, FastJsonLongIdKey pointKey, boolean enabled, int index, String alarmMessage,
-            byte alarmType, String remark
+            String alarmType, String remark
     ) {
         this.key = key;
         this.pointKey = pointKey;
@@ -110,11 +110,11 @@ public class FastJsonAlarmSetting implements Bean {
         this.alarmMessage = alarmMessage;
     }
 
-    public byte getAlarmType() {
+    public String getAlarmType() {
         return alarmType;
     }
 
-    public void setAlarmType(byte alarmType) {
+    public void setAlarmType(String alarmType) {
         this.alarmType = alarmType;
     }
 

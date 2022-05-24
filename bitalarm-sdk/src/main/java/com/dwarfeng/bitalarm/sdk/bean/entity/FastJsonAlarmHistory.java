@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class FastJsonAlarmHistory implements Bean {
 
-    private static final long serialVersionUID = -3120733818089613898L;
+    private static final long serialVersionUID = 1570143245368465158L;
 
     public static FastJsonAlarmHistory of(AlarmHistory alarmHistory) {
         if (Objects.isNull(alarmHistory)) {
@@ -52,7 +52,7 @@ public class FastJsonAlarmHistory implements Bean {
     private String alarmMessage;
 
     @JSONField(name = "alarm_type", ordinal = 6)
-    private byte alarmType;
+    private String alarmType;
 
     @JSONField(name = "start_date", ordinal = 7)
     private Date startDate;
@@ -68,7 +68,7 @@ public class FastJsonAlarmHistory implements Bean {
 
     public FastJsonAlarmHistory(
             FastJsonLongIdKey key, FastJsonLongIdKey alarmSettingKey, FastJsonLongIdKey pointKey, int index,
-            String alarmMessage, byte alarmType, Date startDate, Date endDate, long duration) {
+            String alarmMessage, String alarmType, Date startDate, Date endDate, long duration) {
         this.key = key;
         this.alarmSettingKey = alarmSettingKey;
         this.pointKey = pointKey;
@@ -120,11 +120,11 @@ public class FastJsonAlarmHistory implements Bean {
         this.alarmMessage = alarmMessage;
     }
 
-    public byte getAlarmType() {
+    public String getAlarmType() {
         return alarmType;
     }
 
-    public void setAlarmType(byte alarmType) {
+    public void setAlarmType(String alarmType) {
         this.alarmType = alarmType;
     }
 

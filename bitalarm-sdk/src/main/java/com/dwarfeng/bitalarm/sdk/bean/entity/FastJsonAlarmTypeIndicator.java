@@ -2,7 +2,7 @@ package com.dwarfeng.bitalarm.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator;
-import com.dwarfeng.subgrade.sdk.bean.key.FastJsonByteIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.FastJsonStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import java.util.Objects;
@@ -15,21 +15,21 @@ import java.util.Objects;
  */
 public class FastJsonAlarmTypeIndicator implements Bean {
 
-    private static final long serialVersionUID = -1267814690336158589L;
+    private static final long serialVersionUID = 8003802017782813925L;
 
     public static FastJsonAlarmTypeIndicator of(AlarmTypeIndicator alarmTypeIndicator) {
         if (Objects.isNull(alarmTypeIndicator)) {
             return null;
         } else {
             return new FastJsonAlarmTypeIndicator(
-                    FastJsonByteIdKey.of(alarmTypeIndicator.getKey()),
+                    FastJsonStringIdKey.of(alarmTypeIndicator.getKey()),
                     alarmTypeIndicator.getLabel()
             );
         }
     }
 
     @JSONField(name = "key", ordinal = 1)
-    private FastJsonByteIdKey key;
+    private FastJsonStringIdKey key;
 
     @JSONField(name = "label", ordinal = 2)
     private String label;
@@ -37,16 +37,16 @@ public class FastJsonAlarmTypeIndicator implements Bean {
     public FastJsonAlarmTypeIndicator() {
     }
 
-    public FastJsonAlarmTypeIndicator(FastJsonByteIdKey key, String label) {
+    public FastJsonAlarmTypeIndicator(FastJsonStringIdKey key, String label) {
         this.key = key;
         this.label = label;
     }
 
-    public FastJsonByteIdKey getKey() {
+    public FastJsonStringIdKey getKey() {
         return key;
     }
 
-    public void setKey(FastJsonByteIdKey key) {
+    public void setKey(FastJsonStringIdKey key) {
         this.key = key;
     }
 

@@ -2,7 +2,7 @@ package com.dwarfeng.bitalarm.impl.service;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator;
 import com.dwarfeng.bitalarm.stack.service.AlarmTypeIndicatorMaintainService;
-import com.dwarfeng.subgrade.stack.bean.key.ByteIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -31,7 +31,7 @@ public class AlarmTypeIndicatorMaintainServiceImplTest {
         alarmTypeIndicators = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             AlarmTypeIndicator alarmTypeIndicator = new AlarmTypeIndicator(
-                    new ByteIdKey((byte) i),
+                    new StringIdKey("test.alarm_type_indicator." + i),
                     "测试 " + i
             );
             alarmTypeIndicators.add(alarmTypeIndicator);

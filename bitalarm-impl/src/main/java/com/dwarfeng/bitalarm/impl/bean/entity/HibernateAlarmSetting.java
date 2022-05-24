@@ -33,8 +33,8 @@ public class HibernateAlarmSetting implements Bean {
     @Column(name = "alarm_message", length = Constraints.LENGTH_MESSAGE)
     private String alarmMessage;
 
-    @Column(name = "alarm_type")
-    private byte alarmType;
+    @Column(name = "alarm_type", length = Constraints.LENGTH_TYPE)
+    private String alarmType;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
@@ -49,6 +49,7 @@ public class HibernateAlarmSetting implements Bean {
     public HibernateAlarmSetting() {
     }
 
+    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -57,6 +58,7 @@ public class HibernateAlarmSetting implements Bean {
         this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
+    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
     public Long getLongId() {
         return longId;
     }
@@ -105,11 +107,11 @@ public class HibernateAlarmSetting implements Bean {
         this.alarmMessage = alarmMessage;
     }
 
-    public byte getAlarmType() {
+    public String getAlarmType() {
         return alarmType;
     }
 
-    public void setAlarmType(byte alarmType) {
+    public void setAlarmType(String alarmType) {
         this.alarmType = alarmType;
     }
 
@@ -131,14 +133,14 @@ public class HibernateAlarmSetting implements Bean {
 
     @Override
     public String toString() {
-        return "HibernateAlarmSetting{" +
-                "longId=" + longId +
-                ", pointLongId=" + pointLongId +
-                ", enabled=" + enabled +
-                ", index=" + index +
-                ", alarmMessage='" + alarmMessage + '\'' +
-                ", alarmType=" + alarmType +
-                ", remark='" + remark + '\'' +
-                '}';
+        return getClass().getSimpleName() + "(" +
+                "longId = " + longId + ", " +
+                "pointLongId = " + pointLongId + ", " +
+                "enabled = " + enabled + ", " +
+                "index = " + index + ", " +
+                "alarmMessage = " + alarmMessage + ", " +
+                "alarmType = " + alarmType + ", " +
+                "remark = " + remark + ", " +
+                "point = " + point + ")";
     }
 }
