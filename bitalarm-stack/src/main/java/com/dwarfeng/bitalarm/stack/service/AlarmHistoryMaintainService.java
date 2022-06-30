@@ -30,4 +30,8 @@ public interface AlarmHistoryMaintainService extends BatchCrudService<LongIdKey,
     String END_DATE_BETWEEN_RECENT = "end_date_between_recent";
     String CHILD_FOR_ALARM_SETTING_START_DATE_BETWEEN_RECENT = "child_for_alarm_setting_start_date_between_recent";
     String CHILD_FOR_ALARM_SETTING_END_DATE_BETWEEN_RECENT = "child_for_alarm_setting_end_date_between_recent";
+
+    String SEARCH_CONDITION = "search_condition";
+
+
 }

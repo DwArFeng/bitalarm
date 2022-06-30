@@ -64,6 +64,9 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
             case AlarmHistoryMaintainService.CHILD_FOR_ALARM_SETTING_END_DATE_BETWEEN_RECENT:
                 childForAlarmSettingEndDateBetweenRecent(detachedCriteria, objects);
                 break;
+            case AlarmHistoryMaintainService.SEARCH_CONDITION:
+                searchCondition(detachedCriteria, objects);
+                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
@@ -280,5 +283,28 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
         }
+    }
+
+    private void searchCondition(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.nonNull(objects[0])) {
+                String alarmMessage = (String) objects[0];
+                detachedCriteria.add(Restrictions.like("alarmMessage", alarmMessage, MatchMode.ANYWHERE));
+            }
+            if (Objects.nonNull(objects[1])) {
+                String alarmType = (String) objects[1];
+                detachedCriteria.add(Restrictions.eq("alarmType", alarmType));
+            }
+            if (Objects.nonNull(objects[2]) && Objects.nonNull(objects[3])) {
+                Date startDate = (Date) objects[2];
+                Date endDate = (Date) objects[3];
+                detachedCriteria.add(Restrictions.ge("startDate", startDate));
+                detachedCriteria.add(Restrictions.lt("startDate", endDate));
+            }
+            detachedCriteria.addOrder(Order.desc("startDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+
     }
 }
