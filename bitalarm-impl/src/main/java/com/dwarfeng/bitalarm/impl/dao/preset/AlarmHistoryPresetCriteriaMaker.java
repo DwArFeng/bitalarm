@@ -296,8 +296,10 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
                 detachedCriteria.add(Restrictions.eq("alarmType", alarmType));
             }
             if (Objects.nonNull(objects[2]) && Objects.nonNull(objects[3])) {
-                Date startDate = (Date) objects[2];
-                Date endDate = (Date) objects[3];
+                Long startDateLong  = (Long)objects[2];
+                Long endDateLong = (Long) objects[3];
+                Date startDate = new Date(startDateLong);
+                Date endDate = new Date(endDateLong);
                 detachedCriteria.add(Restrictions.ge("startDate", startDate));
                 detachedCriteria.add(Restrictions.lt("startDate", endDate));
             }
