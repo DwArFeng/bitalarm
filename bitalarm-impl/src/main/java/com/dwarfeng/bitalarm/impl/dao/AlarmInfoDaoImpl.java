@@ -114,6 +114,9 @@ public class AlarmInfoDaoImpl implements AlarmInfoDao {
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<AlarmInfo> lookup(PagingInfo pagingInfo) throws DaoException {
+        if (pagingInfo.getRows() < 0) {
+            return entireLookupDao.lookup();
+        }
         return entireLookupDao.lookup(pagingInfo);
     }
 
@@ -135,6 +138,9 @@ public class AlarmInfoDaoImpl implements AlarmInfoDao {
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<AlarmInfo> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
+        if (pagingInfo.getRows() < 0) {
+            return presetLookupDao.lookup(preset, objs);
+        }
         return presetLookupDao.lookup(preset, objs, pagingInfo);
     }
 

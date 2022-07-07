@@ -115,6 +115,9 @@ public class AlarmHistoryDaoImpl implements AlarmHistoryDao {
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<AlarmHistory> lookup(PagingInfo pagingInfo) throws DaoException {
+        if (pagingInfo.getRows() < 0) {
+            return entireLookupDao.lookup();
+        }
         return entireLookupDao.lookup(pagingInfo);
     }
 
@@ -136,6 +139,9 @@ public class AlarmHistoryDaoImpl implements AlarmHistoryDao {
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<AlarmHistory> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws DaoException {
+        if (pagingInfo.getRows() < 0) {
+            return presetLookupDao.lookup(preset, objs);
+        }
         return presetLookupDao.lookup(preset, objs, pagingInfo);
     }
 

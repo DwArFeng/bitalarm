@@ -112,6 +112,9 @@ public class AlarmTypeIndicatorDaoImpl implements AlarmTypeIndicatorDao {
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<AlarmTypeIndicator> lookup(PagingInfo pagingInfo) throws DaoException {
+        if (pagingInfo.getRows() < 0) {
+            return entireLookupDao.lookup();
+        }
         return entireLookupDao.lookup(pagingInfo);
     }
 
