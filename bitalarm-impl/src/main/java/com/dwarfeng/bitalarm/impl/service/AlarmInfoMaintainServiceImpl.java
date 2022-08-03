@@ -2,9 +2,10 @@ package com.dwarfeng.bitalarm.impl.service;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.service.AlarmInfoMaintainService;
-import com.dwarfeng.subgrade.impl.service.CustomCrudService;
+import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -13,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class AlarmInfoMaintainServiceImpl implements AlarmInfoMaintainService {
 
     @Autowired
-    private CustomCrudService<LongIdKey, AlarmInfo> crudService;
+    private CustomBatchCrudService<LongIdKey, AlarmInfo> crudService;
     @Autowired
     private DaoOnlyEntireLookupService<AlarmInfo> entireLookupService;
 
@@ -93,6 +96,89 @@ public class AlarmInfoMaintainServiceImpl implements AlarmInfoMaintainService {
 
     @Override
     @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public boolean allExists(@SkipRecord List<LongIdKey> keys) throws ServiceException {
+        return crudService.allExists(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public boolean nonExists(@SkipRecord List<LongIdKey> keys) throws ServiceException {
+        return crudService.nonExists(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public List<AlarmInfo> batchGet(@SkipRecord List<LongIdKey> keys) throws ServiceException {
+        return crudService.batchGet(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public List<LongIdKey> batchInsert(@SkipRecord List<AlarmInfo> elements) throws ServiceException {
+        return crudService.batchInsert(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public void batchUpdate(@SkipRecord List<AlarmInfo> elements) throws ServiceException {
+        crudService.batchUpdate(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public void batchDelete(@SkipRecord List<LongIdKey> keys) throws ServiceException {
+        crudService.batchDelete(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public List<AlarmInfo> batchGetIfExists(@SkipRecord List<LongIdKey> keys) throws ServiceException {
+        return crudService.batchGetIfExists(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public List<LongIdKey> batchInsertIfExists(@SkipRecord List<AlarmInfo> elements) throws ServiceException {
+        return crudService.batchInsertIfExists(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public void batchUpdateIfExists(@SkipRecord List<AlarmInfo> elements) throws ServiceException {
+        crudService.batchUpdateIfExists(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public void batchDeleteIfExists(@SkipRecord List<LongIdKey> keys) throws ServiceException {
+        crudService.batchDeleteIfExists(keys);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public List<LongIdKey> batchInsertOrUpdate(@SkipRecord List<AlarmInfo> elements) throws ServiceException {
+        return crudService.batchInsertOrUpdate(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public PagedData<AlarmInfo> lookup() throws ServiceException {
         return entireLookupService.lookup();
@@ -100,6 +186,7 @@ public class AlarmInfoMaintainServiceImpl implements AlarmInfoMaintainService {
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public PagedData<AlarmInfo> lookup(PagingInfo pagingInfo) throws ServiceException {
         return entireLookupService.lookup(pagingInfo);

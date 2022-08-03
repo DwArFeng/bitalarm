@@ -140,8 +140,8 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public CustomCrudService<LongIdKey, AlarmInfo> alarmInfoCustomCrudService() {
-        return new CustomCrudService<>(
+    public CustomBatchCrudService<LongIdKey, AlarmInfo> alarmInfoCustomBatchCrudService() {
+        return new CustomBatchCrudService<>(
                 alarmInfoCrudOperation,
                 longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),

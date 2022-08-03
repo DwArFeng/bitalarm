@@ -3,43 +3,80 @@ package com.dwarfeng.bitalarm.impl.service.operation;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.dao.AlarmInfoDao;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
-import com.dwarfeng.subgrade.sdk.service.custom.operation.CrudOperation;
+import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
-public class AlarmInfoCrudOperation implements CrudOperation<LongIdKey, AlarmInfo> {
+public class AlarmInfoCrudOperation implements BatchCrudOperation<LongIdKey, AlarmInfo> {
 
     @Autowired
-    private AlarmInfoDao alarmInfoDao;
+    private AlarmInfoDao AlarmInfoDao;
 
     @Override
     public boolean exists(LongIdKey key) throws Exception {
-        return alarmInfoDao.exists(key);
+        return AlarmInfoDao.exists(key);
     }
 
     @Override
     public AlarmInfo get(LongIdKey key) throws Exception {
-        if (!alarmInfoDao.exists(key)) {
+        if (!AlarmInfoDao.exists(key)) {
             throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
         }
-        return alarmInfoDao.get(key);
+        return AlarmInfoDao.get(key);
     }
 
     @Override
-    public LongIdKey insert(AlarmInfo alarmInfo) throws Exception {
-        return alarmInfoDao.insert(alarmInfo);
+    public LongIdKey insert(AlarmInfo AlarmInfo) throws Exception {
+        return AlarmInfoDao.insert(AlarmInfo);
     }
 
     @Override
-    public void update(AlarmInfo alarmInfo) throws Exception {
-        alarmInfoDao.update(alarmInfo);
+    public void update(AlarmInfo AlarmInfo) throws Exception {
+        AlarmInfoDao.update(AlarmInfo);
     }
 
     @Override
     public void delete(LongIdKey key) throws Exception {
-        alarmInfoDao.delete(key);
+        AlarmInfoDao.delete(key);
+    }
+
+    @Override
+    public boolean allExists(List<LongIdKey> keys) throws Exception {
+        return AlarmInfoDao.allExists(keys);
+    }
+
+    @Override
+    public boolean nonExists(List<LongIdKey> keys) throws Exception {
+        return AlarmInfoDao.nonExists(keys);
+    }
+
+    @Override
+    public List<AlarmInfo> batchGet(List<LongIdKey> keys) throws Exception {
+        if (!AlarmInfoDao.allExists(keys)) {
+            throw new ServiceException(ServiceExceptionCodes.ENTITY_NOT_EXIST);
+        }
+        return AlarmInfoDao.batchGet(keys);
+    }
+
+    @Override
+    public List<LongIdKey> batchInsert(List<AlarmInfo> AlarmInfoDetailCategories) throws Exception {
+        return AlarmInfoDao.batchInsert(AlarmInfoDetailCategories);
+    }
+
+    @Override
+    public void batchUpdate(List<AlarmInfo> AlarmInfoDetailCategories) throws Exception {
+        AlarmInfoDao.batchUpdate(AlarmInfoDetailCategories);
+    }
+
+    @Override
+    public void batchDelete(List<LongIdKey> keys) throws Exception {
+        for (LongIdKey key : keys) {
+            delete(key);
+        }
     }
 }
