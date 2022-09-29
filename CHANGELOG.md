@@ -4,7 +4,18 @@
 
 #### 功能构建
 
-- (无)
+- 依赖升级。
+  - 升级 `junit` 依赖版本为 `4.13.2` 以规避漏洞。
+  - 升级 `spring` 依赖版本为 `5.3.20` 以规避漏洞。
+  - 升级 `mysql` 依赖版本为 `8.0.28` 以规避漏洞。
+  - 升级 `hibernate` 依赖版本为 `5.3.20.Final` 以规避漏洞。
+  - 升级 `log4j2` 依赖版本为 `2.17.2` 以规避漏洞。
+  - 升级 `dutil` 依赖版本为 `beta-0.3.1.a` 以规避漏洞。
+  - 升级 `snowflake` 依赖版本为 `1.4.9.a` 以规避漏洞。
+  - 升级 `subgrade` 依赖版本为 `1.2.10.a` 以规避漏洞。
+  - 升级 `spring-terminator` 依赖版本为 `1.0.9.a` 以规避漏洞。
+  - 升级 `spring-telqos` 依赖版本为 `1.1.4.a` 以规避漏洞。
+  - 升级 `dcti` 依赖版本为 `1.1.3.a` 以规避漏洞。
 
 #### Bug修复
 
@@ -12,7 +23,15 @@
 
 #### 功能移除
 
-- (无)
+- 删除不需要的依赖。
+  - 删除 `joda-time` 依赖。
+  - 删除 `commons-lang3` 依赖。
+  - 删除 `commons-io` 依赖。
+  - 删除 `commons-beanutils` 依赖。
+  - 删除 `pagehelper` 依赖。
+  - 删除 `jsqlparser` 依赖。
+  - 删除 `commons-fileupload` 依赖。
+  - 删除 `httpcomponents` 依赖。
 
 ---
 
