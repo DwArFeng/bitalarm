@@ -49,7 +49,7 @@
         <dutil.version>beta-0.3.1.a</dutil.version>
         <kafka.version>2.4.0</kafka.version>
         <snowflake.version>1.4.9.a</snowflake.version>
-        <subgrade.version>1.2.10.a</subgrade.version>
+        <subgrade.version>1.2.13.b</subgrade.version>
         <spring-terminator.version>1.0.9.a</spring-terminator.version>
         <spring-telqos.version>1.1.4.a</spring-telqos.version>
         <dcti.version>1.1.3.a</dcti.version>
