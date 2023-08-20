@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
+<beans
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+    <!--扫描handler的实现包。 -->
+    <context:component-scan base-package="com.dwarfeng.bitalarm.impl.handler.resetter" use-default-filters="false">
+        <!-- 加载 NeverResetter -->
+        <!--
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.bitalarm.impl.handler.resetter.NeverResetter"
+        />
+        -->
+
+        <!-- 加载 CronResetter -->
+        <!--
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.bitalarm.impl.handler.resetter.CronResetter"
+        />
+        -->
+
+        <!-- 加载 DubboResetter -->
+        <!--
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.bitalarm.impl.handler.resetter.DubboResetter"
+        />
+        -->
+
+        <!-- 加载 FixedDelayResetter -->
+        <!--
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.bitalarm.impl.handler.resetter.FixedDelayResetter"
+        />
+        -->
+
+        <!-- 加载 FixedRateResetter -->
+        <!--
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.bitalarm.impl.handler.resetter.FixedRateResetter"
+        />
+        -->
+    </context:component-scan>
+</beans>

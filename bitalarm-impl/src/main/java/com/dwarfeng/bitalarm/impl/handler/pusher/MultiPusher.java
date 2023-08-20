@@ -94,4 +94,15 @@ public class MultiPusher extends AbstractPusher {
             }
         }
     }
+
+    @Override
+    public void alarmReset() {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.alarmReset();
+            } catch (Exception e) {
+                LOGGER.warn("代理推送器推送数据失败，异常信息如下: ", e);
+            }
+        }
+    }
 }

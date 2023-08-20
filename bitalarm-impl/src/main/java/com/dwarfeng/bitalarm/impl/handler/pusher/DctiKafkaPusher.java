@@ -7,6 +7,7 @@ import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
@@ -43,6 +44,8 @@ public class DctiKafkaPusher extends AbstractPusher {
     private String alarmUpdatedTopic;
     @Value("${pusher.dcti.kafka.topic.history_recorded}")
     private String historyRecordedTopic;
+    @Value("${pusher.dcti.kafka.topic.alarm_reset}")
+    private String alarmResetTopic;
 
     public DctiKafkaPusher(
             @Qualifier("dctiKafkaPusher.kafkaTemplate")
@@ -82,6 +85,12 @@ public class DctiKafkaPusher extends AbstractPusher {
         alarmHistories.forEach(this::historyRecorded);
     }
 
+    @Transactional(transactionManager = "dctiKafkaPusher.kafkaTransactionManager")
+    @Override
+    public void alarmReset() {
+        kafkaTemplate.send(alarmResetTopic, StringUtils.EMPTY);
+    }
+
     @Configuration
     public static class KafkaPusherConfiguration {
 
@@ -102,6 +111,7 @@ public class DctiKafkaPusher extends AbstractPusher {
         @Value("${pusher.dcti.kafka.transaction_prefix}")
         private String transactionPrefix;
 
+        @SuppressWarnings("DuplicatedCode")
         @Bean("dctiKafkaPusher.producerProperties")
         public Map<String, Object> producerProperties() {
             LOGGER.info("配置Kafka生产者属性...");
@@ -116,6 +126,7 @@ public class DctiKafkaPusher extends AbstractPusher {
             return props;
         }
 
+        @SuppressWarnings("DuplicatedCode")
         @Bean("dctiKafkaPusher.producerFactory")
         public ProducerFactory<String, String> producerFactory() {
             LOGGER.info("配置Kafka生产者工厂...");

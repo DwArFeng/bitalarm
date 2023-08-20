@@ -6,6 +6,7 @@ import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmHistory;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
@@ -42,6 +43,8 @@ public class NativeKafkaPusher extends AbstractPusher {
     private String alarmUpdatedTopic;
     @Value("${pusher.native.kafka.topic.history_recorded}")
     private String historyRecordedTopic;
+    @Value("${pusher.native.kafka.topic.alarm_reset}")
+    private String alarmResetTopic;
 
     public NativeKafkaPusher(
             @Qualifier("nativeKafkaPusher.kafkaTemplate")
@@ -77,6 +80,12 @@ public class NativeKafkaPusher extends AbstractPusher {
         alarmHistories.forEach(this::historyRecorded);
     }
 
+    @Override
+    @Transactional(transactionManager = "nativeKafkaPusher.kafkaTransactionManager")
+    public void alarmReset() {
+        kafkaTemplate.send(alarmResetTopic, StringUtils.EMPTY);
+    }
+
     @Configuration
     public static class KafkaPusherConfiguration {
 
@@ -97,6 +106,7 @@ public class NativeKafkaPusher extends AbstractPusher {
         @Value("${pusher.native.kafka.transaction_prefix}")
         private String transactionPrefix;
 
+        @SuppressWarnings("DuplicatedCode")
         @Bean("nativeKafkaPusher.producerProperties")
         public Map<String, Object> producerProperties() {
             LOGGER.info("配置Kafka生产者属性...");
@@ -111,6 +121,7 @@ public class NativeKafkaPusher extends AbstractPusher {
             return props;
         }
 
+        @SuppressWarnings("DuplicatedCode")
         @Bean("nativeKafkaPusher.producerFactory")
         public ProducerFactory<String, String> producerFactory() {
             LOGGER.info("配置Kafka生产者工厂...");

@@ -36,4 +36,8 @@ public class DrainPusher extends AbstractPusher {
     @Override
     public void historyRecorded(List<AlarmHistory> alarmHistories) {
     }
+
+    @Override
+    public void alarmReset() {
+    }
 }

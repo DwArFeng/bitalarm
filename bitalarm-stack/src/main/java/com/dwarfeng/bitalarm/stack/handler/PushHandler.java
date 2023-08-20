@@ -46,4 +46,12 @@ public interface PushHandler extends Handler {
      * @throws HandlerException 处理器异常。
      */
     void historyRecorded(List<AlarmHistory> alarmHistories) throws HandlerException;
+
+    /**
+     * 报警功能重置时执行的广播操作。
+     *
+     * @throws HandlerException 处理器异常。
+     * @since 1.7.0
+     */
+    void alarmReset() throws HandlerException;
 }

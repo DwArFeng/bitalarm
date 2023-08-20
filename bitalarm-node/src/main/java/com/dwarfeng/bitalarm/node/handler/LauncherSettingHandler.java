@@ -9,8 +9,14 @@ public class LauncherSettingHandler implements Handler {
 
     @Value("${launcher.start_alarm_delay}")
     private long startAlarmDelay;
+    @Value("${launcher.start_reset_delay}")
+    private long startResetDelay;
 
     public long getStartAlarmDelay() {
         return startAlarmDelay;
+    }
+
+    public long getStartResetDelay() {
+        return startResetDelay;
     }
 }

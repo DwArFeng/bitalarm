@@ -51,4 +51,9 @@ public class PushHandlerImpl implements PushHandler {
     public void historyRecorded(List<AlarmHistory> alarmHistories) throws HandlerException {
         pusher.historyRecorded(alarmHistories);
     }
+
+    @Override
+    public void alarmReset() throws HandlerException {
+        pusher.alarmReset();
+    }
 }

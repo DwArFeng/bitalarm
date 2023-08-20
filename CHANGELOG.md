@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- 增加重置机制，实现报警功能的重置。
+
 - 使用 `ApplicationUtil` 重构 `Launcher`。
 
 - Dubbo 微服务增加分组配置。
