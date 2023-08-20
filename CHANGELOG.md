@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- 优化 `source.properties` 配置文件有关 Kafka 部分的注释。
+
 - 优化 `DctiKafkaPusher` 的配置键的命名。
   - **这将导致配置不兼容，需要在部署时修改旧的配置。**
 

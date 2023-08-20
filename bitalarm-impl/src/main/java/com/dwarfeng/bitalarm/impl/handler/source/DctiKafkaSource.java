@@ -134,8 +134,6 @@ public class DctiKafkaSource extends AbstractSource {
         private String consumerBootstrapServers;
         @Value("${source.dcti.kafka.session_timeout_ms}")
         private int sessionTimeoutMs;
-        @Value("${source.dcti.kafka.group}")
-        private String group;
         @Value("${source.dcti.kafka.auto_offset_reset}")
         private String autoOffsetReset;
         @Value("${source.dcti.kafka.concurrency}")
@@ -155,7 +153,6 @@ public class DctiKafkaSource extends AbstractSource {
             // 本实例使用ack手动提交，因此禁止自动提交的功能。
             props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
             props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, sessionTimeoutMs);
-            props.put(ConsumerConfig.GROUP_ID_CONFIG, group);
             props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetReset);
             props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, maxPollRecords);
             props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, maxPollIntervalMs);
