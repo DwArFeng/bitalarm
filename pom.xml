@@ -415,17 +415,7 @@
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>bitalarm-node-alarm</artifactId>
-                <version>1.7.0.a-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.dwarfeng</groupId>
-                <artifactId>bitalarm-node-maintain</artifactId>
-                <version>1.7.0.a-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.dwarfeng</groupId>
-                <artifactId>bitalarm-node-all</artifactId>
+                <artifactId>bitalarm-node</artifactId>
                 <version>1.7.0.a-SNAPSHOT</version>
             </dependency>
         </dependencies>
