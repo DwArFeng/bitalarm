@@ -89,6 +89,9 @@ public class AlarmHistoryMaintainServiceImplTest {
                 alarmHistory.setAlarmSettingKey(parentAlarmSetting.getKey());
                 alarmHistoryMaintainService.update(alarmHistory);
                 AlarmHistory testAlarmHistory = alarmHistoryMaintainService.get(alarmHistory.getKey());
+                // 由于 alarmHistory 无缓存，因此处理与日期有关的字段，保证 toString 一致。
+                testAlarmHistory.setStartDate(new Date(testAlarmHistory.getStartDate().getTime()));
+                testAlarmHistory.setEndDate(new Date(testAlarmHistory.getEndDate().getTime()));
                 assertEquals(BeanUtils.describe(alarmHistory), BeanUtils.describe(testAlarmHistory));
             }
             PagedData<AlarmHistory> lookup = alarmHistoryMaintainService.lookup(

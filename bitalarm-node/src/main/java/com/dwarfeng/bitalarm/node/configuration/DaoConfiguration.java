@@ -1,14 +1,16 @@
 package com.dwarfeng.bitalarm.node.configuration;
 
+import com.dwarfeng.bitalarm.impl.bean.HibernateMapper;
 import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmHistory;
 import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmSetting;
 import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmTypeIndicator;
 import com.dwarfeng.bitalarm.impl.bean.entity.HibernatePoint;
 import com.dwarfeng.bitalarm.impl.dao.preset.*;
+import com.dwarfeng.bitalarm.sdk.bean.FastJsonMapper;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmInfo;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonCurrentAlarm;
 import com.dwarfeng.bitalarm.stack.bean.entity.*;
-import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
+import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.*;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
@@ -16,7 +18,6 @@ import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletionMod;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +32,6 @@ public class DaoConfiguration {
     private HibernateTemplate hibernateTemplate;
     @Autowired
     private RedisTemplate<String, ?> redisTemplate;
-    @Autowired
-    private Mapper mapper;
 
     @Autowired
     private AlarmSettingPresetCriteriaMaker alarmSettingPresetCriteriaMaker;
@@ -55,11 +54,12 @@ public class DaoConfiguration {
     private int batchSize;
 
     @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmSetting, HibernateAlarmSetting> alarmSettingHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmSetting, HibernateAlarmSetting>
+    alarmSettingHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
-                new DozerBeanTransformer<>(AlarmSetting.class, HibernateAlarmSetting.class, mapper),
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(AlarmSetting.class, HibernateAlarmSetting.class, HibernateMapper.class),
                 HibernateAlarmSetting.class,
                 new DefaultDeletionMod<>(),
                 batchSize
@@ -70,7 +70,7 @@ public class DaoConfiguration {
     public HibernateEntireLookupDao<AlarmSetting, HibernateAlarmSetting> alarmSettingHibernateEntireLookupDao() {
         return new HibernateEntireLookupDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(AlarmSetting.class, HibernateAlarmSetting.class, mapper),
+                new MapStructBeanTransformer<>(AlarmSetting.class, HibernateAlarmSetting.class, HibernateMapper.class),
                 HibernateAlarmSetting.class
         );
     }
@@ -79,18 +79,19 @@ public class DaoConfiguration {
     public HibernatePresetLookupDao<AlarmSetting, HibernateAlarmSetting> alarmSettingHibernatePresetLookupDao() {
         return new HibernatePresetLookupDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(AlarmSetting.class, HibernateAlarmSetting.class, mapper),
+                new MapStructBeanTransformer<>(AlarmSetting.class, HibernateAlarmSetting.class, HibernateMapper.class),
                 HibernateAlarmSetting.class,
                 alarmSettingPresetCriteriaMaker
         );
     }
 
     @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmHistory, HibernateAlarmHistory> alarmHistoryHibernateBatchBaseDao() {
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmHistory, HibernateAlarmHistory>
+    alarmHistoryHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
-                new DozerBeanTransformer<>(AlarmHistory.class, HibernateAlarmHistory.class, mapper),
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(AlarmHistory.class, HibernateAlarmHistory.class, HibernateMapper.class),
                 HibernateAlarmHistory.class,
                 new DefaultDeletionMod<>(),
                 batchSize
@@ -101,7 +102,7 @@ public class DaoConfiguration {
     public HibernateEntireLookupDao<AlarmHistory, HibernateAlarmHistory> alarmHistoryHibernateEntireLookupDao() {
         return new HibernateEntireLookupDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(AlarmHistory.class, HibernateAlarmHistory.class, mapper),
+                new MapStructBeanTransformer<>(AlarmHistory.class, HibernateAlarmHistory.class, HibernateMapper.class),
                 HibernateAlarmHistory.class
         );
     }
@@ -110,7 +111,7 @@ public class DaoConfiguration {
     public HibernatePresetLookupDao<AlarmHistory, HibernateAlarmHistory> alarmHistoryHibernatePresetLookupDao() {
         return new HibernatePresetLookupDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(AlarmHistory.class, HibernateAlarmHistory.class, mapper),
+                new MapStructBeanTransformer<>(AlarmHistory.class, HibernateAlarmHistory.class, HibernateMapper.class),
                 HibernateAlarmHistory.class,
                 alarmHistoryPresetCriteriaMaker
         );
@@ -122,7 +123,7 @@ public class DaoConfiguration {
         return new RedisBatchBaseDao<>(
                 (RedisTemplate<String, FastJsonCurrentAlarm>) redisTemplate,
                 new LongIdStringKeyFormatter("key."),
-                new DozerBeanTransformer<>(CurrentAlarm.class, FastJsonCurrentAlarm.class, mapper),
+                new MapStructBeanTransformer<>(CurrentAlarm.class, FastJsonCurrentAlarm.class, FastJsonMapper.class),
                 currentAlarmDbKey
         );
     }
@@ -133,7 +134,7 @@ public class DaoConfiguration {
         return new RedisEntireLookupDao<>(
                 (RedisTemplate<String, FastJsonCurrentAlarm>) redisTemplate,
                 new LongIdStringKeyFormatter("key."),
-                new DozerBeanTransformer<>(CurrentAlarm.class, FastJsonCurrentAlarm.class, mapper),
+                new MapStructBeanTransformer<>(CurrentAlarm.class, FastJsonCurrentAlarm.class, FastJsonMapper.class),
                 currentAlarmDbKey
         );
     }
@@ -144,7 +145,7 @@ public class DaoConfiguration {
         return new RedisPresetLookupDao<>(
                 (RedisTemplate<String, FastJsonCurrentAlarm>) redisTemplate,
                 new LongIdStringKeyFormatter("key."),
-                new DozerBeanTransformer<>(CurrentAlarm.class, FastJsonCurrentAlarm.class, mapper),
+                new MapStructBeanTransformer<>(CurrentAlarm.class, FastJsonCurrentAlarm.class, FastJsonMapper.class),
                 currentAlarmPresetEntityFilter,
                 currentAlarmDbKey
         );
@@ -156,7 +157,7 @@ public class DaoConfiguration {
         return new RedisBatchBaseDao<>(
                 (RedisTemplate<String, FastJsonAlarmInfo>) redisTemplate,
                 new LongIdStringKeyFormatter("key."),
-                new DozerBeanTransformer<>(AlarmInfo.class, FastJsonAlarmInfo.class, mapper),
+                new MapStructBeanTransformer<>(AlarmInfo.class, FastJsonAlarmInfo.class, FastJsonMapper.class),
                 alarmInfoDbKey
         );
     }
@@ -167,7 +168,7 @@ public class DaoConfiguration {
         return new RedisEntireLookupDao<>(
                 (RedisTemplate<String, FastJsonAlarmInfo>) redisTemplate,
                 new LongIdStringKeyFormatter("key."),
-                new DozerBeanTransformer<>(AlarmInfo.class, FastJsonAlarmInfo.class, mapper),
+                new MapStructBeanTransformer<>(AlarmInfo.class, FastJsonAlarmInfo.class, FastJsonMapper.class),
                 alarmInfoDbKey
         );
     }
@@ -178,7 +179,7 @@ public class DaoConfiguration {
         return new RedisPresetLookupDao<>(
                 (RedisTemplate<String, FastJsonAlarmInfo>) redisTemplate,
                 new LongIdStringKeyFormatter("key."),
-                new DozerBeanTransformer<>(AlarmInfo.class, FastJsonAlarmInfo.class, mapper),
+                new MapStructBeanTransformer<>(AlarmInfo.class, FastJsonAlarmInfo.class, FastJsonMapper.class),
                 alarmInfoPresetEntityFilter,
                 alarmInfoDbKey
         );
@@ -189,8 +190,10 @@ public class DaoConfiguration {
     alarmTypeIndicatorHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
-                new DozerBeanTransformer<>(AlarmTypeIndicator.class, HibernateAlarmTypeIndicator.class, mapper),
+                new MapStructBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(
+                        AlarmTypeIndicator.class, HibernateAlarmTypeIndicator.class, HibernateMapper.class
+                ),
                 HibernateAlarmTypeIndicator.class,
                 new DefaultDeletionMod<>(),
                 batchSize
@@ -198,10 +201,13 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateEntireLookupDao<AlarmTypeIndicator, HibernateAlarmTypeIndicator> alarmTypeIndicatorHibernateEntireLookupDao() {
+    public HibernateEntireLookupDao<AlarmTypeIndicator, HibernateAlarmTypeIndicator>
+    alarmTypeIndicatorHibernateEntireLookupDao() {
         return new HibernateEntireLookupDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(AlarmTypeIndicator.class, HibernateAlarmTypeIndicator.class, mapper),
+                new MapStructBeanTransformer<>(
+                        AlarmTypeIndicator.class, HibernateAlarmTypeIndicator.class, HibernateMapper.class
+                ),
                 HibernateAlarmTypeIndicator.class
         );
     }
@@ -210,8 +216,8 @@ public class DaoConfiguration {
     public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Point, HibernatePoint> pointHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
-                new DozerBeanTransformer<>(Point.class, HibernatePoint.class, mapper),
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(Point.class, HibernatePoint.class, HibernateMapper.class),
                 HibernatePoint.class,
                 new DefaultDeletionMod<>(),
                 batchSize
@@ -222,7 +228,7 @@ public class DaoConfiguration {
     public HibernateEntireLookupDao<Point, HibernatePoint> pointHibernateEntireLookupDao() {
         return new HibernateEntireLookupDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(Point.class, HibernatePoint.class, mapper),
+                new MapStructBeanTransformer<>(Point.class, HibernatePoint.class, HibernateMapper.class),
                 HibernatePoint.class
         );
     }
@@ -231,7 +237,7 @@ public class DaoConfiguration {
     public HibernatePresetLookupDao<Point, HibernatePoint> pointHibernatePresetLookupDao() {
         return new HibernatePresetLookupDao<>(
                 hibernateTemplate,
-                new DozerBeanTransformer<>(Point.class, HibernatePoint.class, mapper),
+                new MapStructBeanTransformer<>(Point.class, HibernatePoint.class, HibernateMapper.class),
                 HibernatePoint.class,
                 pointPresetCriteriaMaker
         );
