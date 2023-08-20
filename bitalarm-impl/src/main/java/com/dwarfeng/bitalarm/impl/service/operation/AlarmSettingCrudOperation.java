@@ -50,7 +50,6 @@ public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, 
         this.enabledAlarmSettingCache = enabledAlarmSettingCache;
     }
 
-
     @Override
     public boolean exists(LongIdKey key) throws Exception {
         return alarmSettingCache.exists(key) || alarmSettingDao.exists(key);
