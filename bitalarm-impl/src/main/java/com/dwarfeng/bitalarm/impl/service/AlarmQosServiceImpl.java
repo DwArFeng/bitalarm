@@ -93,7 +93,7 @@ public class AlarmQosServiceImpl implements AlarmQosService {
     public List<AlarmSetting> getAlarmSetting(LongIdKey pointKey) throws ServiceException {
         lock.lock();
         try {
-            return alarmLocalCacheHandler.getAlarmSetting(pointKey);
+            return alarmLocalCacheHandler.get(pointKey);
         } catch (HandlerException e) {
             throw ServiceExceptionHelper.logAndThrow("从本地缓存中获取记录上下文时发生异常",
                     LogLevel.WARN, sem, e

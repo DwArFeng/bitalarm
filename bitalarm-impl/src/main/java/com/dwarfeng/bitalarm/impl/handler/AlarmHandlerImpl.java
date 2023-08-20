@@ -30,6 +30,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class AlarmHandlerImpl implements AlarmHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AlarmHandlerImpl.class);
+    @SuppressWarnings("SpellCheckingInspection")
     private static final char[] hexCode = "0123456789ABCDEF".toCharArray();
     private static final int BIT_PER_BYTE = 8;
 
@@ -118,10 +119,10 @@ public class AlarmHandlerImpl implements AlarmHandler {
             LongIdKey pointKey = new LongIdKey(pointId);
 
             // 获取指定数据点的所有报警设置，同时判断数据点是否存在。
-            List<AlarmSetting> alarmSettings = alarmLocalCacheHandler.getAlarmSetting(pointKey);
-            if (Objects.isNull(alarmSettings)) {
+            if (!alarmLocalCacheHandler.exists(pointKey)) {
                 throw new PointNotExistsException(pointKey);
             }
+            List<AlarmSetting> alarmSettings = alarmLocalCacheHandler.get(pointKey);
 
             // 分析所有报警设置。
             for (AlarmSetting alarmSetting : alarmSettings) {
