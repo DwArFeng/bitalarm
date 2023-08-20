@@ -1,20 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--suppress SpringFacetInspection -->
-<beans xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd"
+>
 
     <!--扫描handler的实现包。 -->
-    <context:component-scan base-package="com.dwarfeng.bitalarm.impl.handler.pusher">
-        <context:exclude-filter type="regex"
-                                expression="^com\.dwarfeng\.bitalarm\.impl\.handler\.pusher\.NativeKafkaPusher.*$"/>
-        <context:exclude-filter type="regex"
-                                expression="^com\.dwarfeng\.bitalarm\.impl\.handler\.pusher\.PartialDrainPusher.*$"/>
-        <context:exclude-filter type="regex"
-                                expression="^com\.dwarfeng\.bitalarm\.impl\.handler\.pusher\.MultiPusher.*$"/>
+    <context:component-scan base-package="com.dwarfeng.bitalarm.impl.handler.pusher" use-default-filters="false">
+        <!-- 加载 DctiKafkaPusher -->
+        <!--
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.bitalarm.impl.handler.pusher.DctiKafkaPusher"
+        />
+        -->
+
+        <!-- 加载 DrainPusher -->
+        <!--
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.bitalarm.impl.handler.pusher.DrainPusher"
+        />
+        -->
+
+        <!-- 加载 LogPusher -->
+        <!--
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.bitalarm.impl.handler.pusher.LogPusher"
+        />
+        -->
+
+        <!-- 加载 MultiPusher -->
+        <!--
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.bitalarm.impl.handler.pusher.MultiPusher"
+        />
+        -->
+
+        <!-- 加载 NativeKafkaPusher -->
+        <!--
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.bitalarm.impl.handler.pusher.NativeKafkaPusher"
+        />
+        -->
+
+        <!-- 加载 PartialDrainPusher -->
+        <!--
+        <context:include-filter
+                type="assignable" expression="com.dwarfeng.bitalarm.impl.handler.pusher.PartialDrainPusher"
+        />
+        -->
     </context:component-scan>
 </beans>
