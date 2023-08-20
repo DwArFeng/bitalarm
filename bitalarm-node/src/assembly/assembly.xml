@@ -88,6 +88,15 @@
             </includes>
             <fileMode>0644</fileMode>
         </fileSet>
+        <fileSet>
+            <outputDirectory>confext</outputDirectory>
+            <directory>src/main/resources/confext</directory>
+            <includes>
+                <include>README.md</include>
+                <include>*.properties</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
     </fileSets>
 
     <files>

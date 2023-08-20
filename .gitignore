@@ -75,3 +75,8 @@ buildNumber.properties
 ## Optext Files
 #################
 /bitalarm-node/optext/
+
+#################
+## Confext Files
+#################
+/bitalarm-node/confext/

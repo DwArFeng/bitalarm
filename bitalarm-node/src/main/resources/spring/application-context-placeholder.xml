@@ -34,6 +34,8 @@
                 <value>file:conf/redis/*.properties</value>
                 <!--suppress SpringXmlModelInspection -->
                 <value>file:conf/telqos/*.properties</value>
+                <!--suppress SpringXmlModelInspection -->
+                <value>file:confext/*.properties</value>
             </list>
         </property>
     </bean>
