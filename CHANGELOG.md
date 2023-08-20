@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 优化 `push.properties` 配置文件有关 Kafka 部分的注释。
 
 #### Bug修复
 
