@@ -3,6 +3,7 @@ package com.dwarfeng.bitalarm.impl.service.telqos;
 import com.dwarfeng.bitalarm.stack.service.AlarmQosService;
 import com.dwarfeng.bitalarm.stack.service.AlarmQosService.ConsumerId;
 import com.dwarfeng.bitalarm.stack.service.AlarmQosService.ConsumerStatus;
+import com.dwarfeng.springtelqos.node.config.TelqosCommand;
 import com.dwarfeng.springtelqos.sdk.command.CliCommand;
 import com.dwarfeng.springtelqos.stack.command.Context;
 import com.dwarfeng.springtelqos.stack.exception.TelqosException;
@@ -12,41 +13,75 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import java.util.*;
+import java.util.concurrent.ScheduledFuture;
 import java.util.stream.Collectors;
 
-@Component
+@TelqosCommand
 public class ConsumerCommand extends CliCommand {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsumerCommand.class);
 
+    private static final String COMMAND_OPTION_L = "l";
+    private static final String COMMAND_OPTION_S = "s";
+    private static final String COMMAND_OPTION_LC = "lc";
+    private static final String COMMAND_OPTION_LN = "ln";
+
+    private static final String[] COMMAND_OPTION_ARRAY = new String[]{
+            COMMAND_OPTION_L,
+            COMMAND_OPTION_S,
+            COMMAND_OPTION_LC,
+            COMMAND_OPTION_LN
+    };
+
+    private static final String COMMAND_OPTION_H = "h";
+
     private static final String IDENTITY = "csu";
     private static final String DESCRIPTION = "消费者操作";
-    private static final String CMD_LINE_SYNTAX_L = "csu -l [-c classes] [-n names]";
-    private static final String CMD_LINE_SYNTAX_S = "csu -s [-c classes] [-n names] [-b val] [-a val] [-m val] [-t val]";
-    private static final String CMD_LINE_SYNTAX_LC = "csu -lc";
-    private static final String CMD_LINE_SYNTAX_LN = "cus -ln";
-    private static final String CMD_LINE_SYNTAX = CMD_LINE_SYNTAX_L + System.lineSeparator() +
-            CMD_LINE_SYNTAX_S + System.lineSeparator() + CMD_LINE_SYNTAX_LC + System.lineSeparator() +
-            CMD_LINE_SYNTAX_LN;
+    private static final String CMD_LINE_SYNTAX_L = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_L) + " [-c classes] [-n names] [" +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_H) + "]";
+    private static final String CMD_LINE_SYNTAX_S = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_S) +
+            " [-c classes] [-n names] [-b val] [-a val] [-m val] [-t val]";
+    private static final String CMD_LINE_SYNTAX_LC = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_LC);
+    private static final String CMD_LINE_SYNTAX_LN = IDENTITY + " " +
+            CommandUtil.concatOptionPrefix(COMMAND_OPTION_LN);
 
-    public ConsumerCommand(AlarmQosService alarmQosService) {
-        super(IDENTITY, DESCRIPTION, CMD_LINE_SYNTAX);
-        this.alarmQosService = alarmQosService;
-    }
+    private static final String[] CMD_LINE_ARRAY = new String[]{
+            CMD_LINE_SYNTAX_L,
+            CMD_LINE_SYNTAX_S,
+            CMD_LINE_SYNTAX_LC,
+            CMD_LINE_SYNTAX_LN
+    };
+
+    private static final String CMD_LINE_SYNTAX = CommandUtil.syntax(CMD_LINE_ARRAY);
 
     private final AlarmQosService alarmQosService;
+
+    private final ThreadPoolTaskScheduler scheduler;
+
+    public ConsumerCommand(
+            AlarmQosService alarmQosService,
+            ThreadPoolTaskScheduler scheduler
+    ) {
+        super(IDENTITY, DESCRIPTION, CMD_LINE_SYNTAX);
+        this.alarmQosService = alarmQosService;
+        this.scheduler = scheduler;
+    }
 
     @Override
     protected List<Option> buildOptions() {
         List<Option> list = new ArrayList<>();
-        list.add(Option.builder("l").optionalArg(true).hasArg(false).desc("查看消费者状态").build());
-        list.add(Option.builder("s").optionalArg(true).hasArg(false).desc("设置消费者参数").build());
-        list.add(Option.builder("lc").longOpt("list-classes").optionalArg(true).hasArg(false)
+        list.add(Option.builder(COMMAND_OPTION_L).optionalArg(true).hasArg(false).desc("查看消费者状态").build());
+        list.add(Option.builder(COMMAND_OPTION_H).desc("持续输出").build());
+        list.add(Option.builder(COMMAND_OPTION_S).optionalArg(true).hasArg(false).desc("设置消费者参数").build());
+        list.add(Option.builder(COMMAND_OPTION_LC).longOpt("list-classes").optionalArg(true).hasArg(false)
                 .desc("列出所有消费者类型").build());
-        list.add(Option.builder("ln").longOpt("list-names").optionalArg(true).hasArg(false)
+        list.add(Option.builder(COMMAND_OPTION_LN).longOpt("list-names").optionalArg(true).hasArg(false)
                 .desc("列出所有消费者名称").build());
         list.add(Option.builder("c").optionalArg(true).hasArg(true).argName("classes").desc("消费者类型").build());
         list.add(Option.builder("n").optionalArg(true).hasArg(true).argName("names").desc("消费者名称").build());
@@ -64,23 +99,23 @@ public class ConsumerCommand extends CliCommand {
     @Override
     protected void executeWithCmd(Context context, CommandLine cmd) throws TelqosException {
         try {
-            Pair<String, Integer> pair = analyseCommand(cmd);
+            Pair<String, Integer> pair = CommandUtil.analyseCommand(cmd, COMMAND_OPTION_ARRAY);
             if (pair.getRight() != 1) {
-                context.sendMessage("下列选项必须且只能含有一个: -l -s -lc -ln");
+                context.sendMessage(CommandUtil.optionMismatchMessage(COMMAND_OPTION_ARRAY));
                 context.sendMessage(CMD_LINE_SYNTAX);
                 return;
             }
             switch (pair.getLeft()) {
-                case "l":
+                case COMMAND_OPTION_L:
                     handleL(context, cmd);
                     break;
-                case "s":
+                case COMMAND_OPTION_S:
                     handleS(context, cmd);
                     break;
-                case "lc":
+                case COMMAND_OPTION_LC:
                     handleLc(context);
                     break;
-                case "ln":
+                case COMMAND_OPTION_LN:
                     handleLn(context);
                     break;
             }
@@ -91,7 +126,30 @@ public class ConsumerCommand extends CliCommand {
 
     private void handleL(Context context, CommandLine cmd) throws Exception {
         List<ConsumerId> consumerIds = parserConsumerIds(cmd);
-        printConsumerStatus(context, consumerIds);
+
+        // 如果命令行中包含 COMMAND_OPTION_H 选项，则持续输出。
+        if (cmd.hasOption(COMMAND_OPTION_H)) {
+            ScheduledFuture<?> future = scheduler.scheduleWithFixedDelay(
+                    () -> {
+                        try {
+                            printConsumerStatus(context, consumerIds);
+                            // 如果打印的内容多于 1 行，则输出一个空行。
+                            if (consumerIds.size() > 1) {
+                                context.sendMessage("");
+                            }
+                        } catch (Exception e) {
+                            LOGGER.warn("持续输出消费者状态时发生异常, 异常信息如下: ", e);
+                        }
+                    },
+                    1000
+            );
+            // 等待用户输入任意字符，然后停止持续输出。
+            context.sendMessage("输入任意字符停止持续输出");
+            context.receiveMessage();
+            future.cancel(true);
+        } else {
+            printConsumerStatus(context, consumerIds);
+        }
     }
 
     private void handleS(Context context, CommandLine cmd) throws Exception {
@@ -142,7 +200,8 @@ public class ConsumerCommand extends CliCommand {
         ).collect(Collectors.toList());
     }
 
-    private void printConsumerStatus(Context context, List<ConsumerId> consumerIds) throws ServiceException, TelqosException {
+    private void printConsumerStatus(Context context, List<ConsumerId> consumerIds)
+            throws ServiceException, TelqosException {
         int index = 0;
         for (ConsumerId consumerId : consumerIds) {
             ConsumerStatus consumerStatus = alarmQosService.getConsumerStatus(consumerId);
@@ -165,28 +224,5 @@ public class ConsumerCommand extends CliCommand {
     private void handleLn(Context context) throws Exception {
         context.sendMessage("1.\talarm\t报警信息消费者");
         context.sendMessage("2.\thistory\t报警历史消费者");
-    }
-
-    @SuppressWarnings("DuplicatedCode")
-    private Pair<String, Integer> analyseCommand(CommandLine cmd) {
-        int i = 0;
-        String subCmd = null;
-        if (cmd.hasOption("l")) {
-            i++;
-            subCmd = "l";
-        }
-        if (cmd.hasOption("s")) {
-            i++;
-            subCmd = "s";
-        }
-        if (cmd.hasOption("lc")) {
-            i++;
-            subCmd = "lc";
-        }
-        if (cmd.hasOption("ln")) {
-            i++;
-            subCmd = "ln";
-        }
-        return Pair.of(subCmd, i);
     }
 }

@@ -18,9 +18,7 @@
             <telqos:command-impl ref="shutdownCommand"/>
             <telqos:command-impl ref="dubboCommand"/>
             <telqos:command-impl ref="memoryCommand"/>
-            <telqos:command-impl ref="alarmCommand"/>
-            <telqos:command-impl ref="alarmLocalCacheCommand"/>
-            <telqos:command-impl ref="consumerCommand"/>
+            <telqos:command-impl package-scan="com.dwarfeng.bitalarm.impl.service.telqos"/>
         </telqos:command>
     </telqos:config>
 

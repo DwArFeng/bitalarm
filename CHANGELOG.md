@@ -37,7 +37,7 @@
   - 升级 `subgrade` 依赖版本为 `1.3.3.a` 以规避漏洞。
   - 升级 `dwarfeng-ftp` 依赖版本为 `1.1.10.a` 以规避漏洞。
   - 升级 `spring-terminator` 依赖版本为 `1.0.11.a` 以规避漏洞。
-  - 升级 `spring-telqos` 依赖版本为 `1.1.6.a` 以规避漏洞。
+  - 升级 `spring-telqos` 依赖版本为 `1.1.7.a` 以规避漏洞。
 
 - 插件升级
   - 升级 `maven-compiler-plugin` 插件版本为 `3.1.0`。

@@ -55,7 +55,7 @@
         <snowflake.version>1.4.11.a</snowflake.version>
         <subgrade.version>1.3.3.a</subgrade.version>
         <spring-terminator.version>1.0.11.a</spring-terminator.version>
-        <spring-telqos.version>1.1.6.a</spring-telqos.version>
+        <spring-telqos.version>1.1.7.a</spring-telqos.version>
         <dcti.version>1.1.5.a</dcti.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
