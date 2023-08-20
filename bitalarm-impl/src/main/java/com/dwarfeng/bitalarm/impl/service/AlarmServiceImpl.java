@@ -3,6 +3,7 @@ package com.dwarfeng.bitalarm.impl.service;
 import com.dwarfeng.bitalarm.stack.handler.AlarmHandler;
 import com.dwarfeng.bitalarm.stack.service.AlarmService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -22,12 +23,12 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     @Override
-    public void processAlarm(long pointId, byte[] data, Date happenedDate) throws ServiceException {
+    public void processAlarm(LongIdKey pointKey, byte[] data, Date happenedDate) throws ServiceException {
         try {
-            alarmHandler.processAlarm(pointId, data, happenedDate);
+            alarmHandler.processAlarm(pointKey, data, happenedDate);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("处理报警信息时发生异常",
-                    LogLevel.WARN, sem, e
+            throw ServiceExceptionHelper.logAndThrow(
+                    "处理报警信息时发生异常", LogLevel.WARN, sem, e
             );
         }
     }

@@ -1,12 +1,10 @@
 package com.dwarfeng.bitalarm.impl.handler.source;
 
-import com.dwarfeng.bitalarm.impl.handler.Source;
-import com.dwarfeng.bitalarm.sdk.util.ServiceExceptionCodes;
-import com.dwarfeng.bitalarm.stack.service.AlarmService;
+import com.dwarfeng.bitalarm.stack.exception.AlarmDisabledException;
 import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -32,8 +30,6 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 接收 Dcti 标准采集数据的 Kafka 数据源。
@@ -42,94 +38,52 @@ import java.util.concurrent.locks.ReentrantLock;
  * @since 1.0.0
  */
 @Component
-public class DctiKafkaSource implements Source {
+public class DctiKafkaSource extends AbstractSource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DctiKafkaSource.class);
 
     private final KafkaListenerEndpointRegistry registry;
-    private final AlarmService alarmService;
 
     @Value("${source.dcti.kafka.listener_id}")
     private String listenerId;
 
-    private final Lock lock = new ReentrantLock();
-
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public DctiKafkaSource(
-            KafkaListenerEndpointRegistry registry,
-            AlarmService alarmService
-    ) {
+    public DctiKafkaSource(KafkaListenerEndpointRegistry registry) {
         this.registry = registry;
-        this.alarmService = alarmService;
     }
 
     @Override
-    public boolean isOnline() throws HandlerException {
-        lock.lock();
-        try {
-            MessageListenerContainer listenerContainer = registry.getListenerContainer(listenerId);
-            if (Objects.isNull(listenerContainer)) {
-                throw new HandlerException("找不到 kafka listener container " + listenerId);
-            }
-            if (!listenerContainer.isRunning()) {
-                return false;
-            }
-            return !listenerContainer.isContainerPaused();
-        } catch (HandlerException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new HandlerException(e);
-        } finally {
-            lock.unlock();
+    protected void doOnline() throws Exception {
+        LOGGER.info("Kafka source 上线...");
+        MessageListenerContainer listenerContainer = registry.getListenerContainer(listenerId);
+        if (Objects.isNull(listenerContainer)) {
+            throw new HandlerException("找不到 kafka listener container " + listenerId);
         }
+        //判断监听容器是否启动，未启动则将其启动
+        if (!listenerContainer.isRunning()) {
+            listenerContainer.start();
+        }
+        listenerContainer.resume();
     }
 
     @Override
-    public void online() throws HandlerException {
-        lock.lock();
-        try {
-            LOGGER.info("Kafka source 上线...");
-            MessageListenerContainer listenerContainer = registry.getListenerContainer(listenerId);
-            if (Objects.isNull(listenerContainer)) {
-                throw new HandlerException("找不到 kafka listener container " + listenerId);
-            }
-            //判断监听容器是否启动，未启动则将其启动
-            if (!listenerContainer.isRunning()) {
-                listenerContainer.start();
-            }
-            listenerContainer.resume();
-        } catch (HandlerException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new HandlerException(e);
-        } finally {
-            lock.unlock();
+    protected void doOffline() throws Exception {
+        LOGGER.info("Kafka source 下线...");
+        MessageListenerContainer listenerContainer = registry.getListenerContainer(listenerId);
+        if (Objects.isNull(listenerContainer)) {
+            throw new HandlerException("找不到 kafka listener container " + listenerId);
         }
+        listenerContainer.pause();
     }
 
-    @Override
-    public void offline() throws HandlerException {
-        lock.lock();
-        try {
-            LOGGER.info("Kafka source 下线...");
-            MessageListenerContainer listenerContainer = registry.getListenerContainer(listenerId);
-            if (Objects.isNull(listenerContainer)) {
-                throw new HandlerException("找不到 kafka listener container " + listenerId);
-            }
-            listenerContainer.pause();
-        } catch (HandlerException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new HandlerException(e);
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    @KafkaListener(id = "${source.dcti.kafka.listener_id}", containerFactory = "dctiKafkaSource.kafkaListenerContainerFactory",
-            topics = "${source.dcti.kafka.listener_topic}")
+    @KafkaListener(
+            id = "${source.dcti.kafka.listener_id}",
+            containerFactory = "dctiKafkaSource.kafkaListenerContainerFactory",
+            topics = "${source.dcti.kafka.listener_topic}"
+    )
     public void handleDataInfo(
-            List<ConsumerRecord<String, String>> consumerRecords, Consumer<String, String> consumer, Acknowledgment ack) {
+            List<ConsumerRecord<String, String>> consumerRecords, Consumer<String, String> consumer, Acknowledgment ack
+    ) {
         for (ConsumerRecord<String, String> consumerRecord : consumerRecords) {
             String message = consumerRecord.value();
             try {
@@ -141,6 +95,7 @@ public class DctiKafkaSource implements Source {
                 }
 
                 long pointId = dataInfo.getPointLongId();
+                LongIdKey pointKey = new LongIdKey(pointId);
                 byte[] data = null;
                 Date happenedDate = dataInfo.getHappenedDate();
                 if (StringUtils.equalsIgnoreCase("T", dataInfo.getValue())
@@ -153,19 +108,15 @@ public class DctiKafkaSource implements Source {
                 } else {
                     Base64.getDecoder().decode(dataInfo.getValue());
                 }
-                alarmService.processAlarm(pointId, data, happenedDate);
-            } catch (ServiceException e) {
-                if (e.getCode().getCode() == ServiceExceptionCodes.ALARM_HANDLER_DISABLED.getCode()) {
-                    LOGGER.warn("记录处理器被禁用， 消息 " + message + " 以及其后同一批次的消息均不会被提交", e);
-                    // 如果记录处理器被禁用，则放弃其后同一批次的消息记录，并且妥善处理offset的提交。
-                    // Offset 精确设置到没有提交成功的最后一条信息上。
-                    consumer.seek(new TopicPartition(consumerRecord.topic(), consumerRecord.partition()),
-                            consumerRecord.offset());
-                    ack.acknowledge();
-                    return;
-                } else {
-                    LOGGER.warn("记录处理器无法处理, 消息 " + message + " 将会被忽略", e);
-                }
+                context.processAlarm(pointKey, data, happenedDate);
+            } catch (AlarmDisabledException e) {
+                LOGGER.warn("记录处理器被禁用， 消息 " + message + " 以及其后同一批次的消息均不会被提交", e);
+                // 如果记录处理器被禁用，则放弃其后同一批次的消息记录，并且妥善处理offset的提交。
+                // Offset 精确设置到没有提交成功的最后一条信息上。
+                consumer.seek(new TopicPartition(consumerRecord.topic(), consumerRecord.partition()),
+                        consumerRecord.offset());
+                ack.acknowledge();
+                return;
             } catch (Exception e) {
                 LOGGER.warn("记录处理器无法处理, 消息 " + message + " 将会被忽略", e);
             }

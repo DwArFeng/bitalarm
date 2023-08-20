@@ -1,224 +1,102 @@
 package com.dwarfeng.bitalarm.impl.service;
 
-import com.dwarfeng.bitalarm.impl.handler.Source;
-import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
-import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.bitalarm.stack.handler.AlarmHandler;
-import com.dwarfeng.bitalarm.stack.handler.AlarmLocalCacheHandler;
-import com.dwarfeng.bitalarm.stack.handler.ConsumeHandler;
 import com.dwarfeng.bitalarm.stack.service.AlarmQosService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
-import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
-import com.dwarfeng.subgrade.stack.bean.Bean;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.*;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.List;
 
 @Service
 public class AlarmQosServiceImpl implements AlarmQosService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AlarmQosServiceImpl.class);
-
-    private final AlarmLocalCacheHandler alarmLocalCacheHandler;
     private final AlarmHandler alarmHandler;
-
-    private final List<Source> sources;
-
-    private final ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler;
-    private final ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler;
-    private final ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler;
-
     private final ServiceExceptionMapper sem;
 
-    private final Lock lock = new ReentrantLock();
-    private final Map<ConsumerId, ConsumeHandler<? extends Bean>> consumeHandlerMap = new EnumMap<>(ConsumerId.class);
-
-    public AlarmQosServiceImpl(
-            AlarmLocalCacheHandler alarmLocalCacheHandler,
-            AlarmHandler alarmHandler,
-            List<Source> sources,
-            @Qualifier("alarmUpdatedEventConsumeHandler")
-            ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler,
-            @Qualifier("historyRecordedEventConsumeHandler")
-            ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler,
-            @Qualifier("alarmHistoryValueConsumeHandler")
-            ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler,
-            ServiceExceptionMapper sem
-    ) {
-        this.alarmLocalCacheHandler = alarmLocalCacheHandler;
+    public AlarmQosServiceImpl(AlarmHandler alarmHandler, ServiceExceptionMapper sem) {
         this.alarmHandler = alarmHandler;
-        this.sources = Optional.ofNullable(sources).orElse(Collections.emptyList());
-        this.alarmUpdatedEventConsumeHandler = alarmUpdatedEventConsumeHandler;
-        this.historyRecordedEventConsumeHandler = historyRecordedEventConsumeHandler;
-        this.alarmHistoryValueConsumeHandler = alarmHistoryValueConsumeHandler;
         this.sem = sem;
-    }
-
-    @PostConstruct
-    public void init() {
-        lock.lock();
-        try {
-            consumeHandlerMap.put(ConsumerId.EVENT_ALARM, alarmUpdatedEventConsumeHandler);
-            consumeHandlerMap.put(ConsumerId.EVENT_HISTORY, historyRecordedEventConsumeHandler);
-            consumeHandlerMap.put(ConsumerId.VALUE_HISTORY, alarmHistoryValueConsumeHandler);
-        } finally {
-            lock.unlock();
-        }
     }
 
     @PreDestroy
     public void dispose() throws Exception {
-        lock.lock();
-        try {
-            internalStopAlarm();
-        } finally {
-            lock.unlock();
-        }
+        internalStopAlarm();
     }
 
     @Override
     public List<AlarmSetting> getAlarmSetting(LongIdKey pointKey) throws ServiceException {
-        lock.lock();
         try {
-            return alarmLocalCacheHandler.get(pointKey);
-        } catch (HandlerException e) {
-            throw ServiceExceptionHelper.logAndThrow("从本地缓存中获取记录上下文时发生异常",
-                    LogLevel.WARN, sem, e
+            return alarmHandler.getAlarmSetting(pointKey);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow(
+                    "获取指定的数据点对应的所有报警设置时发生异常", LogLevel.WARN, sem, e
             );
-        } finally {
-            lock.unlock();
         }
     }
 
     @Override
-    @BehaviorAnalyse
     public void clearLocalCache() throws ServiceException {
-        lock.lock();
         try {
-            alarmLocalCacheHandler.clear();
+            alarmHandler.clearLocalCache();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("清除本地缓存时发生异常",
-                    LogLevel.WARN, sem, e
+            throw ServiceExceptionHelper.logAndThrow(
+                    "清除本地缓存时发生异常", LogLevel.WARN, sem, e
             );
-        } finally {
-            lock.unlock();
         }
     }
 
     @Override
-    @BehaviorAnalyse
     public ConsumerStatus getConsumerStatus(ConsumerId consumerId) throws ServiceException {
-        lock.lock();
         try {
-            ConsumeHandler<? extends Bean> consumeHandler = consumeHandlerMap.get(consumerId);
-            return new ConsumerStatus(
-                    consumeHandler.bufferedSize(),
-                    consumeHandler.getBufferSize(),
-                    consumeHandler.getBatchSize(),
-                    consumeHandler.getMaxIdleTime(),
-                    consumeHandler.getThread(),
-                    consumeHandler.isIdle()
-            );
+            return alarmHandler.getConsumerStatus(consumerId);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("获取消费者状态时发生异常",
-                    LogLevel.WARN, sem, e
+            throw ServiceExceptionHelper.logAndThrow(
+                    "获取指定消费者的消费者状态时发生异常", LogLevel.WARN, sem, e
             );
-        } finally {
-            lock.unlock();
         }
     }
 
     @Override
-    @BehaviorAnalyse
-    public void setConsumerParameters(
-            ConsumerId consumerId, Integer bufferSize, Integer batchSize, Long maxIdleTime, Integer thread)
-            throws ServiceException {
-        lock.lock();
+    public void setConsumerParameters(ConsumerId consumerId, Integer bufferSize, Integer batchSize, Long maxIdleTime, Integer thread) throws ServiceException {
         try {
-            ConsumeHandler<? extends Bean> consumeHandler = consumeHandlerMap.get(consumerId);
-            consumeHandler.setBufferParameters(
-                    Objects.isNull(bufferSize) ? consumeHandler.getBufferSize() : bufferSize,
-                    Objects.isNull(batchSize) ? consumeHandler.getBatchSize() : batchSize,
-                    Objects.isNull(maxIdleTime) ? consumeHandler.getMaxIdleTime() : maxIdleTime
-            );
-            consumeHandler.setThread(
-                    Objects.isNull(thread) ? consumeHandler.getThread() : thread
-            );
+            alarmHandler.setConsumerParameters(consumerId, bufferSize, batchSize, maxIdleTime, thread);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("设置消费者参数时发生异常",
-                    LogLevel.WARN, sem, e
+            throw ServiceExceptionHelper.logAndThrow(
+                    "设置指定消费者的参数时发生异常", LogLevel.WARN, sem, e
             );
-        } finally {
-            lock.unlock();
         }
     }
 
     @Override
-    @BehaviorAnalyse
     public void startAlarm() throws ServiceException {
-        lock.lock();
         try {
-            LOGGER.info("开启记录服务...");
-            alarmUpdatedEventConsumeHandler.start();
-            historyRecordedEventConsumeHandler.start();
-            alarmHistoryValueConsumeHandler.start();
-
             alarmHandler.start();
-
-            for (Source source : sources) {
-                source.online();
-            }
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("开启记录服务时发生异常",
-                    LogLevel.WARN, sem, e
+            throw ServiceExceptionHelper.logAndThrow(
+                    "开启记录服务时发生异常", LogLevel.WARN, sem, e
             );
-        } finally {
-            lock.unlock();
         }
     }
 
     @Override
-    @BehaviorAnalyse
     public void stopAlarm() throws ServiceException {
-        lock.lock();
         try {
             internalStopAlarm();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("关闭记录服务时发生异常",
-                    LogLevel.WARN, sem, e
+            throw ServiceExceptionHelper.logAndThrow(
+                    "停止记录服务时发生异常", LogLevel.WARN, sem, e
             );
-        } finally {
-            lock.unlock();
         }
     }
 
     private void internalStopAlarm() throws HandlerException {
-        LOGGER.info("关闭记录服务...");
-        for (Source source : sources) {
-            source.offline();
-        }
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ignored) {
-        }
         alarmHandler.stop();
-
-        alarmUpdatedEventConsumeHandler.stop();
-        historyRecordedEventConsumeHandler.stop();
-        alarmHistoryValueConsumeHandler.stop();
     }
 }
