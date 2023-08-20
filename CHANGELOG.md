@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- 使用 `ApplicationUtil` 重构 `Launcher`。
+
 - Dubbo 微服务增加分组配置。
 
 - 优化 `opt-*.xml` 文件的格式。
