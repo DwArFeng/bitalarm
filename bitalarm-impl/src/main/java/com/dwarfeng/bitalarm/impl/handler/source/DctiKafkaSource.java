@@ -44,7 +44,7 @@ public class DctiKafkaSource extends AbstractSource {
 
     private final KafkaListenerEndpointRegistry registry;
 
-    @Value("${source.dcti.kafka.listener_id}")
+    @Value("${source.kafka.dcti.listener_id}")
     private String listenerId;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -77,9 +77,9 @@ public class DctiKafkaSource extends AbstractSource {
     }
 
     @KafkaListener(
-            id = "${source.dcti.kafka.listener_id}",
+            id = "${source.kafka.dcti.listener_id}",
             containerFactory = "dctiKafkaSource.kafkaListenerContainerFactory",
-            topics = "${source.dcti.kafka.listener_topic}"
+            topics = "${source.kafka.dcti.listener_topic}"
     )
     public void handleDataInfo(
             List<ConsumerRecord<String, String>> consumerRecords, Consumer<String, String> consumer, Acknowledgment ack
@@ -130,19 +130,19 @@ public class DctiKafkaSource extends AbstractSource {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(KafkaSourceConfiguration.class);
 
-        @Value("${source.dcti.kafka.bootstrap_servers}")
+        @Value("${source.kafka.dcti.bootstrap_servers}")
         private String consumerBootstrapServers;
-        @Value("${source.dcti.kafka.session_timeout_ms}")
+        @Value("${source.kafka.dcti.session_timeout_ms}")
         private int sessionTimeoutMs;
-        @Value("${source.dcti.kafka.auto_offset_reset}")
+        @Value("${source.kafka.dcti.auto_offset_reset}")
         private String autoOffsetReset;
-        @Value("${source.dcti.kafka.concurrency}")
+        @Value("${source.kafka.dcti.concurrency}")
         private int concurrency;
-        @Value("${source.dcti.kafka.poll_timeout}")
+        @Value("${source.kafka.dcti.poll_timeout}")
         private int pollTimeout;
-        @Value("${source.dcti.kafka.max_poll_records}")
+        @Value("${source.kafka.dcti.max_poll_records}")
         private int maxPollRecords;
-        @Value("${source.dcti.kafka.max_poll_interval_ms}")
+        @Value("${source.kafka.dcti.max_poll_interval_ms}")
         private int maxPollIntervalMs;
 
         @Bean("dctiKafkaSource.consumerProperties")
