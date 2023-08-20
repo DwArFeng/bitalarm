@@ -36,15 +36,15 @@ import java.util.Map;
 @Component
 public class DctiKafkaPusher extends AbstractPusher {
 
-    public static final String PUSHER_TYPE = "dcti.kafka";
+    public static final String PUSHER_TYPE = "kafka.dcti";
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    @Value("${pusher.dcti.kafka.topic.alarm_updated}")
+    @Value("${pusher.kafka.dcti.topic.alarm_updated}")
     private String alarmUpdatedTopic;
-    @Value("${pusher.dcti.kafka.topic.history_recorded}")
+    @Value("${pusher.kafka.dcti.topic.history_recorded}")
     private String historyRecordedTopic;
-    @Value("${pusher.dcti.kafka.topic.alarm_reset}")
+    @Value("${pusher.kafka.dcti.topic.alarm_reset}")
     private String alarmResetTopic;
 
     public DctiKafkaPusher(
@@ -96,19 +96,19 @@ public class DctiKafkaPusher extends AbstractPusher {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(KafkaPusherConfiguration.class);
 
-        @Value("${pusher.dcti.kafka.bootstrap_servers}")
+        @Value("${pusher.kafka.dcti.bootstrap_servers}")
         private String producerBootstrapServers;
-        @Value("${pusher.dcti.kafka.retries}")
+        @Value("${pusher.kafka.dcti.retries}")
         private int retries;
-        @Value("${pusher.dcti.kafka.linger}")
+        @Value("${pusher.kafka.dcti.linger}")
         private long linger;
-        @Value("${pusher.dcti.kafka.buffer_memory}")
+        @Value("${pusher.kafka.dcti.buffer_memory}")
         private long bufferMemory;
-        @Value("${pusher.dcti.kafka.batch_size}")
+        @Value("${pusher.kafka.dcti.batch_size}")
         private int batchSize;
-        @Value("${pusher.dcti.kafka.acks}")
+        @Value("${pusher.kafka.dcti.acks}")
         private String acks;
-        @Value("${pusher.dcti.kafka.transaction_prefix}")
+        @Value("${pusher.kafka.dcti.transaction_prefix}")
         private String transactionPrefix;
 
         @SuppressWarnings("DuplicatedCode")
