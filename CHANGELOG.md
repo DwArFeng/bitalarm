@@ -319,8 +319,9 @@
 #### 功能构建
 
 - 为 AlarmHandlerImpl.processAlarm 方法增加性能分析增强。
+
 - 添加实体属性。
-  - com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory.pointKeyy
+  - com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory.pointKey。
 
 #### Bug修复
 
