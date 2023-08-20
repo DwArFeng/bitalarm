@@ -7,7 +7,6 @@ import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +15,13 @@ import java.util.List;
 @Repository
 public class AlarmSettingCacheImpl implements AlarmSettingCache {
 
-    @Autowired
-    private RedisBatchBaseCache<LongIdKey, AlarmSetting, FastJsonAlarmSetting> alarmSettingBatchBaseDelegate;
+    private final RedisBatchBaseCache<LongIdKey, AlarmSetting, FastJsonAlarmSetting> alarmSettingBatchBaseDelegate;
+
+    public AlarmSettingCacheImpl(
+            RedisBatchBaseCache<LongIdKey, AlarmSetting, FastJsonAlarmSetting> alarmSettingBatchBaseDelegate
+    ) {
+        this.alarmSettingBatchBaseDelegate = alarmSettingBatchBaseDelegate;
+    }
 
     @Override
     @BehaviorAnalyse

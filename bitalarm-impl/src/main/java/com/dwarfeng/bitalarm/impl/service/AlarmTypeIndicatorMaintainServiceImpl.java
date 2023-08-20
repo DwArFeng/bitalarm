@@ -9,17 +9,22 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AlarmTypeIndicatorMaintainServiceImpl implements AlarmTypeIndicatorMaintainService {
 
-    @Autowired
-    private GeneralBatchCrudService<StringIdKey, AlarmTypeIndicator> crudService;
-    @Autowired
-    private DaoOnlyEntireLookupService<AlarmTypeIndicator> entireLookupService;
+    private final GeneralBatchCrudService<StringIdKey, AlarmTypeIndicator> crudService;
+    private final DaoOnlyEntireLookupService<AlarmTypeIndicator> entireLookupService;
+
+    public AlarmTypeIndicatorMaintainServiceImpl(
+            GeneralBatchCrudService<StringIdKey, AlarmTypeIndicator> crudService,
+            DaoOnlyEntireLookupService<AlarmTypeIndicator> entireLookupService
+    ) {
+        this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
+    }
 
     @Override
     @BehaviorAnalyse

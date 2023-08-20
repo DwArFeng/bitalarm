@@ -13,7 +13,6 @@ import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -22,23 +21,35 @@ import java.util.List;
 @Component
 public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, AlarmSetting> {
 
-    @Autowired
-    private AlarmSettingDao alarmSettingDao;
-    @Autowired
-    private AlarmHistoryDao alarmHistoryDao;
-    @Autowired
-    private CurrentAlarmDao currentAlarmDao;
-    @Autowired
-    private AlarmInfoDao alarmInfoDao;
+    private final AlarmSettingDao alarmSettingDao;
+    private final AlarmSettingCache alarmSettingCache;
 
-    @Autowired
-    private AlarmSettingCache alarmSettingCache;
+    private final AlarmHistoryDao alarmHistoryDao;
 
-    @Autowired
-    private EnabledAlarmSettingCache enabledAlarmSettingCache;
+    private final CurrentAlarmDao currentAlarmDao;
+
+    private final AlarmInfoDao alarmInfoDao;
+
+    private final EnabledAlarmSettingCache enabledAlarmSettingCache;
 
     @Value("${cache.timeout.entity.alarm_setting}")
     private long alarmSettingTimeout;
+
+    public AlarmSettingCrudOperation(
+            AlarmSettingDao alarmSettingDao, AlarmSettingCache alarmSettingCache,
+            AlarmHistoryDao alarmHistoryDao,
+            CurrentAlarmDao currentAlarmDao,
+            AlarmInfoDao alarmInfoDao,
+            EnabledAlarmSettingCache enabledAlarmSettingCache
+    ) {
+        this.alarmSettingDao = alarmSettingDao;
+        this.alarmSettingCache = alarmSettingCache;
+        this.alarmHistoryDao = alarmHistoryDao;
+        this.currentAlarmDao = currentAlarmDao;
+        this.alarmInfoDao = alarmInfoDao;
+        this.enabledAlarmSettingCache = enabledAlarmSettingCache;
+    }
+
 
     @Override
     public boolean exists(LongIdKey key) throws Exception {

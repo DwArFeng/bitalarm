@@ -10,7 +10,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +18,19 @@ import java.util.List;
 @Repository
 public class AlarmInfoDaoImpl implements AlarmInfoDao {
 
-    @Autowired
-    private RedisBatchBaseDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> batchBaseDao;
-    @Autowired
-    private RedisEntireLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> entireLookupDao;
-    @Autowired
-    private RedisPresetLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> presetLookupDao;
+    private final RedisBatchBaseDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> batchBaseDao;
+    private final RedisEntireLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> entireLookupDao;
+    private final RedisPresetLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> presetLookupDao;
+
+    public AlarmInfoDaoImpl(
+            RedisBatchBaseDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> batchBaseDao,
+            RedisEntireLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> entireLookupDao,
+            RedisPresetLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> presetLookupDao
+    ) {
+        this.batchBaseDao = batchBaseDao;
+        this.entireLookupDao = entireLookupDao;
+        this.presetLookupDao = presetLookupDao;
+    }
 
     @Override
     @BehaviorAnalyse

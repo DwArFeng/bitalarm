@@ -7,7 +7,6 @@ import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +15,13 @@ import java.util.List;
 @Repository
 public class AlarmTypeIndicatorCacheImpl implements AlarmTypeIndicatorCache {
 
-    @Autowired
-    private RedisBatchBaseCache<StringIdKey, AlarmTypeIndicator, FastJsonAlarmTypeIndicator> batchBaseCache;
+    private final RedisBatchBaseCache<StringIdKey, AlarmTypeIndicator, FastJsonAlarmTypeIndicator> batchBaseCache;
+
+    public AlarmTypeIndicatorCacheImpl(
+            RedisBatchBaseCache<StringIdKey, AlarmTypeIndicator, FastJsonAlarmTypeIndicator> batchBaseCache
+    ) {
+        this.batchBaseCache = batchBaseCache;
+    }
 
     @Override
     @BehaviorAnalyse

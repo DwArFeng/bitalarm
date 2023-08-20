@@ -8,7 +8,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +16,13 @@ import java.util.List;
 @Repository
 public class PointCacheImpl implements PointCache {
 
-    @Autowired
-    private RedisBatchBaseCache<LongIdKey, Point, FastJsonPoint> pointBatchBaseDelegate;
+    private final RedisBatchBaseCache<LongIdKey, Point, FastJsonPoint> pointBatchBaseDelegate;
+
+    public PointCacheImpl(
+            RedisBatchBaseCache<LongIdKey, Point, FastJsonPoint> pointBatchBaseDelegate
+    ) {
+        this.pointBatchBaseDelegate = pointBatchBaseDelegate;
+    }
 
     @Override
     @BehaviorAnalyse

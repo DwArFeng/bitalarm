@@ -6,7 +6,6 @@ import com.dwarfeng.bitalarm.stack.service.AlarmHistoryMaintainService;
 import com.dwarfeng.dutil.basic.mea.TimeMeasurer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,8 +17,11 @@ public class AlarmHistoryValueConsumer implements Consumer<AlarmHistory> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AlarmHistoryValueConsumer.class);
 
-    @Autowired
-    private AlarmHistoryMaintainService alarmHistoryMaintainService;
+    private final AlarmHistoryMaintainService alarmHistoryMaintainService;
+
+    public AlarmHistoryValueConsumer(AlarmHistoryMaintainService alarmHistoryMaintainService) {
+        this.alarmHistoryMaintainService = alarmHistoryMaintainService;
+    }
 
     @Override
     public void consume(List<AlarmHistory> alarmHistories) {

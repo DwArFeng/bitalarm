@@ -6,7 +6,6 @@ import com.dwarfeng.bitalarm.stack.handler.PushHandler;
 import com.dwarfeng.dutil.basic.mea.TimeMeasurer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,8 +17,11 @@ public class HistoryRecordEventConsumer implements Consumer<AlarmHistory> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HistoryRecordEventConsumer.class);
 
-    @Autowired
-    private PushHandler pushHandler;
+    private final PushHandler pushHandler;
+
+    public HistoryRecordEventConsumer(PushHandler pushHandler) {
+        this.pushHandler = pushHandler;
+    }
 
     @Override
     public void consume(List<AlarmHistory> alarmHistories) {

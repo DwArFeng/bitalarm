@@ -10,7 +10,6 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +18,19 @@ import java.util.List;
 @Service
 public class AlarmSettingMaintainServiceImpl implements AlarmSettingMaintainService {
 
-    @Autowired
-    private CustomBatchCrudService<LongIdKey, AlarmSetting> crudService;
-    @Autowired
-    private DaoOnlyEntireLookupService<AlarmSetting> entireLookupService;
-    @Autowired
-    private DaoOnlyPresetLookupService<AlarmSetting> presetLookupService;
+    private final CustomBatchCrudService<LongIdKey, AlarmSetting> crudService;
+    private final DaoOnlyEntireLookupService<AlarmSetting> entireLookupService;
+    private final DaoOnlyPresetLookupService<AlarmSetting> presetLookupService;
+
+    public AlarmSettingMaintainServiceImpl(
+            CustomBatchCrudService<LongIdKey, AlarmSetting> crudService,
+            DaoOnlyEntireLookupService<AlarmSetting> entireLookupService,
+            DaoOnlyPresetLookupService<AlarmSetting> presetLookupService
+    ) {
+        this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
+        this.presetLookupService = presetLookupService;
+    }
 
     @Override
     @BehaviorAnalyse

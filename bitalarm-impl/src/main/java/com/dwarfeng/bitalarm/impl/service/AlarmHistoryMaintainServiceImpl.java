@@ -10,7 +10,6 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +18,19 @@ import java.util.List;
 @Service
 public class AlarmHistoryMaintainServiceImpl implements AlarmHistoryMaintainService {
 
-    @Autowired
-    private CustomBatchCrudService<LongIdKey, AlarmHistory> batchCrudService;
-    @Autowired
-    private DaoOnlyEntireLookupService<AlarmHistory> entireLookupService;
-    @Autowired
-    private DaoOnlyPresetLookupService<AlarmHistory> presetLookupService;
+    private final CustomBatchCrudService<LongIdKey, AlarmHistory> batchCrudService;
+    private final DaoOnlyEntireLookupService<AlarmHistory> entireLookupService;
+    private final DaoOnlyPresetLookupService<AlarmHistory> presetLookupService;
+
+    public AlarmHistoryMaintainServiceImpl(
+            CustomBatchCrudService<LongIdKey, AlarmHistory> batchCrudService,
+            DaoOnlyEntireLookupService<AlarmHistory> entireLookupService,
+            DaoOnlyPresetLookupService<AlarmHistory> presetLookupService
+    ) {
+        this.batchCrudService = batchCrudService;
+        this.entireLookupService = entireLookupService;
+        this.presetLookupService = presetLookupService;
+    }
 
     @Override
     @BehaviorAnalyse

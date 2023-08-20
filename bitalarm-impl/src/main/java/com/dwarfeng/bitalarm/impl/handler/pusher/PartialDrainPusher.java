@@ -4,12 +4,14 @@ import com.dwarfeng.bitalarm.impl.handler.Pusher;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author DwArFeng
@@ -20,8 +22,7 @@ public class PartialDrainPusher extends AbstractPusher {
 
     public static final String PUSHER_TYPE = "partial_drain";
 
-    @Autowired
-    private List<Pusher> pushers;
+    private final List<Pusher> pushers;
 
     @Value("${pusher.partial_drain.delegate_type}")
     private String delegateType;
@@ -32,8 +33,12 @@ public class PartialDrainPusher extends AbstractPusher {
 
     private Pusher delegate;
 
-    public PartialDrainPusher() {
+    public PartialDrainPusher(
+            // 使用懒加载，避免循环依赖。
+            @Lazy List<Pusher> pushers
+    ) {
         super(PUSHER_TYPE);
+        this.pushers = Optional.ofNullable(pushers).orElse(Collections.emptyList());
     }
 
     @PostConstruct

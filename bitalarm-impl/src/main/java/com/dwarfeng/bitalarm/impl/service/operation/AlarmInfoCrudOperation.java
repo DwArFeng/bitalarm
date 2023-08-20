@@ -6,7 +6,6 @@ import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,8 +13,11 @@ import java.util.List;
 @Component
 public class AlarmInfoCrudOperation implements BatchCrudOperation<LongIdKey, AlarmInfo> {
 
-    @Autowired
-    private AlarmInfoDao AlarmInfoDao;
+    private final AlarmInfoDao AlarmInfoDao;
+
+    public AlarmInfoCrudOperation(AlarmInfoDao AlarmInfoDao) {
+        this.AlarmInfoDao = AlarmInfoDao;
+    }
 
     @Override
     public boolean exists(LongIdKey key) throws Exception {

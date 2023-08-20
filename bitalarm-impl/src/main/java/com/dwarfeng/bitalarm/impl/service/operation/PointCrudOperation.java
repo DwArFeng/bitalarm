@@ -13,7 +13,6 @@ import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -23,27 +22,40 @@ import java.util.stream.Collectors;
 @Component
 public class PointCrudOperation implements BatchCrudOperation<LongIdKey, Point> {
 
-    @Autowired
-    private PointDao pointDao;
-    @Autowired
-    private AlarmSettingDao alarmSettingDao;
-    @Autowired
-    private AlarmInfoDao alarmInfoDao;
-    @Autowired
-    private CurrentAlarmDao currentAlarmDao;
-    @Autowired
-    private AlarmHistoryDao alarmHistoryDao;
+    private final PointDao pointDao;
+    private final PointCache pointCache;
 
-    @Autowired
-    private PointCache pointCache;
-    @Autowired
-    private AlarmSettingCache alarmSettingCache;
+    private final AlarmSettingDao alarmSettingDao;
+    private final AlarmSettingCache alarmSettingCache;
 
-    @Autowired
-    private EnabledAlarmSettingCache enabledAlarmSettingCache;
+    private final AlarmInfoDao alarmInfoDao;
+
+    private final CurrentAlarmDao currentAlarmDao;
+
+    private final AlarmHistoryDao alarmHistoryDao;
+
+    private final EnabledAlarmSettingCache enabledAlarmSettingCache;
 
     @Value("${cache.timeout.entity.point}")
     private long pointTimeout;
+
+    public PointCrudOperation(
+            PointDao pointDao, PointCache pointCache,
+            AlarmSettingDao alarmSettingDao, AlarmSettingCache alarmSettingCache,
+            AlarmInfoDao alarmInfoDao,
+            CurrentAlarmDao currentAlarmDao,
+            AlarmHistoryDao alarmHistoryDao,
+            EnabledAlarmSettingCache enabledAlarmSettingCache
+    ) {
+        this.pointDao = pointDao;
+        this.pointCache = pointCache;
+        this.alarmSettingDao = alarmSettingDao;
+        this.alarmSettingCache = alarmSettingCache;
+        this.alarmInfoDao = alarmInfoDao;
+        this.currentAlarmDao = currentAlarmDao;
+        this.alarmHistoryDao = alarmHistoryDao;
+        this.enabledAlarmSettingCache = enabledAlarmSettingCache;
+    }
 
     @Override
     public boolean exists(LongIdKey key) throws Exception {

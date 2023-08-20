@@ -6,14 +6,16 @@ import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.CrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CurrentAlarmCrudOperation implements CrudOperation<LongIdKey, CurrentAlarm> {
 
-    @Autowired
-    private CurrentAlarmDao currentAlarmDao;
+    private final CurrentAlarmDao currentAlarmDao;
+
+    public CurrentAlarmCrudOperation(CurrentAlarmDao currentAlarmDao) {
+        this.currentAlarmDao = currentAlarmDao;
+    }
 
     @Override
     public boolean exists(LongIdKey key) throws Exception {

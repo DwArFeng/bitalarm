@@ -10,7 +10,6 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +18,16 @@ import java.util.List;
 @Service
 public class AlarmInfoMaintainServiceImpl implements AlarmInfoMaintainService {
 
-    @Autowired
-    private CustomBatchCrudService<LongIdKey, AlarmInfo> crudService;
-    @Autowired
-    private DaoOnlyEntireLookupService<AlarmInfo> entireLookupService;
+    private final CustomBatchCrudService<LongIdKey, AlarmInfo> crudService;
+    private final DaoOnlyEntireLookupService<AlarmInfo> entireLookupService;
+
+    public AlarmInfoMaintainServiceImpl(
+            CustomBatchCrudService<LongIdKey, AlarmInfo> crudService,
+            DaoOnlyEntireLookupService<AlarmInfo> entireLookupService
+    ) {
+        this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
+    }
 
     @Override
     @BehaviorAnalyse

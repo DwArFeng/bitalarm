@@ -8,7 +8,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +18,14 @@ import java.util.List;
 @Repository
 public class EnabledAlarmSettingCacheImpl implements EnabledAlarmSettingCache {
 
-    @Autowired
-    @Qualifier("alarmSettingEnabledRedisKeyListCache")
-    private RedisKeyListCache<LongIdKey, AlarmSetting, FastJsonAlarmSetting> delegate;
+    private final RedisKeyListCache<LongIdKey, AlarmSetting, FastJsonAlarmSetting> delegate;
+
+    public EnabledAlarmSettingCacheImpl(
+            @Qualifier("alarmSettingEnabledRedisKeyListCache")
+            RedisKeyListCache<LongIdKey, AlarmSetting, FastJsonAlarmSetting> delegate
+    ) {
+        this.delegate = delegate;
+    }
 
     @Override
     @BehaviorAnalyse

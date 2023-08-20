@@ -7,7 +7,6 @@ import com.dwarfeng.bitalarm.stack.service.PointMaintainService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +17,15 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 @Component
 public class AlarmLocalCacheHandlerImpl implements AlarmLocalCacheHandler {
 
-    @Autowired
-    private AlarmSettingFetcher alarmSettingFetcher;
+    private final AlarmSettingFetcher alarmSettingFetcher;
 
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private final Map<LongIdKey, List<AlarmSetting>> alarmSettingListMap = new HashMap<>();
     private final Set<LongIdKey> notExistPoints = new HashSet<>();
+
+    public AlarmLocalCacheHandlerImpl(AlarmSettingFetcher alarmSettingFetcher) {
+        this.alarmSettingFetcher = alarmSettingFetcher;
+    }
 
     @Override
     public List<AlarmSetting> getAlarmSetting(LongIdKey pointKey) throws HandlerException {
@@ -76,10 +78,16 @@ public class AlarmLocalCacheHandlerImpl implements AlarmLocalCacheHandler {
     @Component
     public static class AlarmSettingFetcher {
 
-        @Autowired
-        private PointMaintainService pointMaintainService;
-        @Autowired
-        private EnabledAlarmSettingLookupService enabledAlarmSettingLookupService;
+        private final PointMaintainService pointMaintainService;
+        private final EnabledAlarmSettingLookupService enabledAlarmSettingLookupService;
+
+        public AlarmSettingFetcher(
+                PointMaintainService pointMaintainService,
+                EnabledAlarmSettingLookupService enabledAlarmSettingLookupService
+        ) {
+            this.pointMaintainService = pointMaintainService;
+            this.enabledAlarmSettingLookupService = enabledAlarmSettingLookupService;
+        }
 
         @BehaviorAnalyse
         @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)

@@ -12,7 +12,6 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -30,12 +29,12 @@ public class AlarmLocalCacheCommand extends CliCommand {
     private static final String CMD_LINE_SYNTAX_P = "alc -p point-id";
     private static final String CMD_LINE_SYNTAX = CMD_LINE_SYNTAX_C + System.lineSeparator() + CMD_LINE_SYNTAX_P;
 
-    public AlarmLocalCacheCommand() {
+    public AlarmLocalCacheCommand(AlarmQosService alarmQosService) {
         super(IDENTITY, DESCRIPTION, CMD_LINE_SYNTAX);
+        this.alarmQosService = alarmQosService;
     }
 
-    @Autowired
-    private AlarmQosService alarmQosService;
+    private final AlarmQosService alarmQosService;
 
     @Override
     protected List<Option> buildOptions() {

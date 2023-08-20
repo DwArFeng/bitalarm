@@ -6,7 +6,6 @@ import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -14,10 +13,13 @@ import java.util.Date;
 @Service
 public class AlarmServiceImpl implements AlarmService {
 
-    @Autowired
-    private AlarmHandler alarmHandler;
-    @Autowired
-    private ServiceExceptionMapper sem;
+    private final AlarmHandler alarmHandler;
+    private final ServiceExceptionMapper sem;
+
+    public AlarmServiceImpl(AlarmHandler alarmHandler, ServiceExceptionMapper sem) {
+        this.alarmHandler = alarmHandler;
+        this.sem = sem;
+    }
 
     @Override
     public void processAlarm(long pointId, byte[] data, Date happenedDate) throws ServiceException {

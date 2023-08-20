@@ -15,7 +15,6 @@ import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,16 +46,22 @@ public class DctiKafkaSource implements Source {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DctiKafkaSource.class);
 
-    @Autowired
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    private KafkaListenerEndpointRegistry registry;
-    @Autowired
-    private AlarmService alarmService;
+    private final KafkaListenerEndpointRegistry registry;
+    private final AlarmService alarmService;
 
     @Value("${source.dcti.kafka.listener_id}")
     private String listenerId;
 
     private final Lock lock = new ReentrantLock();
+
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    public DctiKafkaSource(
+            KafkaListenerEndpointRegistry registry,
+            AlarmService alarmService
+    ) {
+        this.registry = registry;
+        this.alarmService = alarmService;
+    }
 
     @Override
     public boolean isOnline() throws HandlerException {

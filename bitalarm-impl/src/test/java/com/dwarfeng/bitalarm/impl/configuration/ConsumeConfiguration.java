@@ -7,7 +7,6 @@ import com.dwarfeng.bitalarm.impl.handler.consumer.HistoryRecordEventConsumer;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.handler.ConsumeHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,15 +18,16 @@ import java.util.ArrayList;
 @Configuration
 public class ConsumeConfiguration {
 
-    @Autowired
-    private ThreadPoolTaskExecutor executor;
-    @Autowired
-    private ThreadPoolTaskScheduler scheduler;
+    private final ThreadPoolTaskExecutor executor;
+    private final ThreadPoolTaskScheduler scheduler;
+
+    private final AlarmUpdatedEventConsumer alarmUpdatedEventConsumer;
+    private final HistoryRecordEventConsumer historyRecordEventConsumer;
+    private final AlarmHistoryValueConsumer alarmHistoryValueConsumer;
+
     @Value("${consume.threshold.warn}")
     private double warnThreshold;
 
-    @Autowired
-    private AlarmUpdatedEventConsumer alarmUpdatedEventConsumer;
     @Value("${consume.alarm_updated_event.consumer_thread}")
     private int alarmUpdatedEventConsumerThread;
     @Value("${consume.alarm_updated_event.buffer_size}")
@@ -36,6 +36,20 @@ public class ConsumeConfiguration {
     private int alarmUpdatedEventBatchSize;
     @Value("${consume.alarm_updated_event.max_idle_time}")
     private long alarmUpdatedEventMaxIdleTime;
+
+    public ConsumeConfiguration(
+            ThreadPoolTaskExecutor executor,
+            ThreadPoolTaskScheduler scheduler,
+            AlarmUpdatedEventConsumer alarmUpdatedEventConsumer,
+            HistoryRecordEventConsumer historyRecordEventConsumer,
+            AlarmHistoryValueConsumer alarmHistoryValueConsumer
+    ) {
+        this.executor = executor;
+        this.scheduler = scheduler;
+        this.alarmUpdatedEventConsumer = alarmUpdatedEventConsumer;
+        this.historyRecordEventConsumer = historyRecordEventConsumer;
+        this.alarmHistoryValueConsumer = alarmHistoryValueConsumer;
+    }
 
     @Bean("alarmUpdatedEventConsumeHandler")
     public ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler() {
@@ -53,8 +67,6 @@ public class ConsumeConfiguration {
         return consumeHandler;
     }
 
-    @Autowired
-    private HistoryRecordEventConsumer historyRecordEventConsumer;
     @Value("${consume.history_recorded_event.consumer_thread}")
     private int historyRecordedEventConsumerThread;
     @Value("${consume.history_recorded_event.buffer_size}")
@@ -80,8 +92,6 @@ public class ConsumeConfiguration {
         return consumeHandler;
     }
 
-    @Autowired
-    private AlarmHistoryValueConsumer alarmHistoryValueConsumer;
     @Value("${consume.alarm_history_value.consumer_thread}")
     private int alarmHistoryValueConsumerThread;
     @Value("${consume.alarm_history_value.buffer_size}")

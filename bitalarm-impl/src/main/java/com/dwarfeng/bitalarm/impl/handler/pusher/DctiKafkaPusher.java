@@ -11,7 +11,6 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -38,17 +37,19 @@ public class DctiKafkaPusher extends AbstractPusher {
 
     public static final String PUSHER_TYPE = "dcti.kafka";
 
-    @Autowired
-    @Qualifier("dctiKafkaPusher.kafkaTemplate")
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Value("${pusher.dcti.kafka.topic.alarm_updated}")
     private String alarmUpdatedTopic;
     @Value("${pusher.dcti.kafka.topic.history_recorded}")
     private String historyRecordedTopic;
 
-    public DctiKafkaPusher() {
+    public DctiKafkaPusher(
+            @Qualifier("dctiKafkaPusher.kafkaTemplate")
+            KafkaTemplate<String, String> kafkaTemplate
+    ) {
         super(PUSHER_TYPE);
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override

@@ -18,7 +18,6 @@ import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletionMod;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,22 +27,15 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 @Configuration
 public class DaoConfiguration {
 
-    @Autowired
-    private HibernateTemplate hibernateTemplate;
-    @Autowired
-    private RedisTemplate<String, ?> redisTemplate;
+    private final HibernateTemplate hibernateTemplate;
+    private final RedisTemplate<String, ?> redisTemplate;
 
-    @Autowired
-    private AlarmSettingPresetCriteriaMaker alarmSettingPresetCriteriaMaker;
-    @Autowired
-    private AlarmHistoryPresetCriteriaMaker alarmHistoryPresetCriteriaMaker;
-    @Autowired
-    private PointPresetCriteriaMaker pointPresetCriteriaMaker;
+    private final AlarmSettingPresetCriteriaMaker alarmSettingPresetCriteriaMaker;
+    private final AlarmHistoryPresetCriteriaMaker alarmHistoryPresetCriteriaMaker;
+    private final PointPresetCriteriaMaker pointPresetCriteriaMaker;
 
-    @Autowired
-    private CurrentAlarmPresetEntityFilter currentAlarmPresetEntityFilter;
-    @Autowired
-    private AlarmInfoPresetEntityFilter alarmInfoPresetEntityFilter;
+    private final CurrentAlarmPresetEntityFilter currentAlarmPresetEntityFilter;
+    private final AlarmInfoPresetEntityFilter alarmInfoPresetEntityFilter;
 
     @Value("${redis.dbkey.current_alarm}")
     private String currentAlarmDbKey;
@@ -52,6 +44,24 @@ public class DaoConfiguration {
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
+
+    public DaoConfiguration(
+            HibernateTemplate hibernateTemplate,
+            RedisTemplate<String, ?> redisTemplate,
+            AlarmSettingPresetCriteriaMaker alarmSettingPresetCriteriaMaker,
+            AlarmHistoryPresetCriteriaMaker alarmHistoryPresetCriteriaMaker,
+            PointPresetCriteriaMaker pointPresetCriteriaMaker,
+            CurrentAlarmPresetEntityFilter currentAlarmPresetEntityFilter,
+            AlarmInfoPresetEntityFilter alarmInfoPresetEntityFilter
+    ) {
+        this.hibernateTemplate = hibernateTemplate;
+        this.redisTemplate = redisTemplate;
+        this.alarmSettingPresetCriteriaMaker = alarmSettingPresetCriteriaMaker;
+        this.alarmHistoryPresetCriteriaMaker = alarmHistoryPresetCriteriaMaker;
+        this.pointPresetCriteriaMaker = pointPresetCriteriaMaker;
+        this.currentAlarmPresetEntityFilter = currentAlarmPresetEntityFilter;
+        this.alarmInfoPresetEntityFilter = alarmInfoPresetEntityFilter;
+    }
 
     @Bean
     public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmSetting, HibernateAlarmSetting>

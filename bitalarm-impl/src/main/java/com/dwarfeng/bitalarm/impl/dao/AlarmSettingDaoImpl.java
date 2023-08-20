@@ -11,7 +11,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +19,20 @@ import java.util.List;
 @Repository
 public class AlarmSettingDaoImpl implements AlarmSettingDao {
 
-    @Autowired
-    private HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmSetting, HibernateAlarmSetting> batchBaseDao;
-    @Autowired
-    private HibernateEntireLookupDao<AlarmSetting, HibernateAlarmSetting> entireLookupDao;
-    @Autowired
-    private HibernatePresetLookupDao<AlarmSetting, HibernateAlarmSetting> presetLookupDao;
+    private final HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmSetting, HibernateAlarmSetting>
+            batchBaseDao;
+    private final HibernateEntireLookupDao<AlarmSetting, HibernateAlarmSetting> entireLookupDao;
+    private final HibernatePresetLookupDao<AlarmSetting, HibernateAlarmSetting> presetLookupDao;
+
+    public AlarmSettingDaoImpl(
+            HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmSetting, HibernateAlarmSetting> batchBaseDao,
+            HibernateEntireLookupDao<AlarmSetting, HibernateAlarmSetting> entireLookupDao,
+            HibernatePresetLookupDao<AlarmSetting, HibernateAlarmSetting> presetLookupDao
+    ) {
+        this.batchBaseDao = batchBaseDao;
+        this.entireLookupDao = entireLookupDao;
+        this.presetLookupDao = presetLookupDao;
+    }
 
     @Override
     @BehaviorAnalyse

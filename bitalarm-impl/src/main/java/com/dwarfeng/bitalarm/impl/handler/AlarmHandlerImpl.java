@@ -17,7 +17,6 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -34,27 +33,37 @@ public class AlarmHandlerImpl implements AlarmHandler {
     private static final char[] hexCode = "0123456789ABCDEF".toCharArray();
     private static final int BIT_PER_BYTE = 8;
 
-    @Autowired
-    private AlarmInfoMaintainService alarmInfoMaintainService;
-    @Autowired
-    private CurrentAlarmMaintainService currentAlarmMaintainService;
+    private final AlarmInfoMaintainService alarmInfoMaintainService;
+    private final CurrentAlarmMaintainService currentAlarmMaintainService;
 
-    @Autowired
-    private AlarmLocalCacheHandler alarmLocalCacheHandler;
-    @Autowired
-    @Qualifier("alarmUpdatedEventConsumeHandler")
-    private ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler;
-    @Autowired
-    @Qualifier("historyRecordedEventConsumeHandler")
-    private ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler;
-    @Autowired
-    @Qualifier("alarmHistoryValueConsumeHandler")
-    private ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler;
+    private final AlarmLocalCacheHandler alarmLocalCacheHandler;
+    private final ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler;
+    private final ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler;
+    private final ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler;
 
     // 由于报警逻辑严格与时间相关，此处使用公平锁保证执行顺序的一致性。
     private final Lock lock = new ReentrantLock(true);
 
     private boolean startFlag = false;
+
+    public AlarmHandlerImpl(
+            AlarmInfoMaintainService alarmInfoMaintainService,
+            CurrentAlarmMaintainService currentAlarmMaintainService,
+            AlarmLocalCacheHandler alarmLocalCacheHandler,
+            @Qualifier("alarmUpdatedEventConsumeHandler")
+            ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler,
+            @Qualifier("historyRecordedEventConsumeHandler")
+            ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler,
+            @Qualifier("alarmHistoryValueConsumeHandler")
+            ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler
+    ) {
+        this.alarmInfoMaintainService = alarmInfoMaintainService;
+        this.currentAlarmMaintainService = currentAlarmMaintainService;
+        this.alarmLocalCacheHandler = alarmLocalCacheHandler;
+        this.alarmUpdatedEventConsumeHandler = alarmUpdatedEventConsumeHandler;
+        this.historyRecordedEventConsumeHandler = historyRecordedEventConsumeHandler;
+        this.alarmHistoryValueConsumeHandler = alarmHistoryValueConsumeHandler;
+    }
 
     @Override
     public boolean isStarted() {

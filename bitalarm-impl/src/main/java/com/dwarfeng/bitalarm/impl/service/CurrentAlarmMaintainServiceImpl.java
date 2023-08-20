@@ -10,19 +10,25 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CurrentAlarmMaintainServiceImpl implements CurrentAlarmMaintainService {
 
-    @Autowired
-    private CustomCrudService<LongIdKey, CurrentAlarm> crudService;
-    @Autowired
-    private DaoOnlyEntireLookupService<CurrentAlarm> entireLookupService;
-    @Autowired
-    private DaoOnlyPresetLookupService<CurrentAlarm> presetLookupService;
+    private final CustomCrudService<LongIdKey, CurrentAlarm> crudService;
+    private final DaoOnlyEntireLookupService<CurrentAlarm> entireLookupService;
+    private final DaoOnlyPresetLookupService<CurrentAlarm> presetLookupService;
+
+    public CurrentAlarmMaintainServiceImpl(
+            CustomCrudService<LongIdKey, CurrentAlarm> crudService,
+            DaoOnlyEntireLookupService<CurrentAlarm> entireLookupService,
+            DaoOnlyPresetLookupService<CurrentAlarm> presetLookupService
+    ) {
+        this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
+        this.presetLookupService = presetLookupService;
+    }
 
     @Override
     @BehaviorAnalyse

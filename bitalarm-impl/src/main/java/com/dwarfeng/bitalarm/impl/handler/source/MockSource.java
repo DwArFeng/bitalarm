@@ -7,7 +7,6 @@ import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -34,13 +33,9 @@ public class MockSource implements Source {
     private static final Logger LOGGER = LoggerFactory.getLogger(MockSource.class);
     private static final int BIT_PER_BYTE = 8;
 
-    @Autowired
-    private ThreadPoolTaskScheduler scheduler;
-    @Autowired
-    private AlarmService alarmService;
-    @Autowired
-    @Qualifier("mockSource.random")
-    private Random random;
+    private final ThreadPoolTaskScheduler scheduler;
+    private final AlarmService alarmService;
+    private final Random random;
 
     @Value("${source.mock.alarm_interval}")
     private long alarmInterval;
@@ -53,6 +48,16 @@ public class MockSource implements Source {
     private boolean startFlag = false;
     private MockAlarmPlain mockAlarmPlain = null;
     private ScheduledFuture<?> mockAlarmPlainFuture = null;
+
+    public MockSource(
+            ThreadPoolTaskScheduler scheduler,
+            AlarmService alarmService,
+            @Qualifier("mockSource.random") Random random
+    ) {
+        this.scheduler = scheduler;
+        this.alarmService = alarmService;
+        this.random = random;
+    }
 
     @Override
     public boolean isOnline() {

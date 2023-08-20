@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- 将 Bean 的注入形式由注解注入改为构造器注入。
+
 - 使用 `MapStruct` 重构 `BeanTransformer`。
 
 - 增加依赖。

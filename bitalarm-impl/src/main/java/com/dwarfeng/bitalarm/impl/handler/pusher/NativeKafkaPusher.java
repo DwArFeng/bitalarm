@@ -10,7 +10,6 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -37,17 +36,19 @@ public class NativeKafkaPusher extends AbstractPusher {
 
     public static final String PUSHER_TYPE = "native.kafka";
 
-    @Autowired
-    @Qualifier("nativeKafkaPusher.kafkaTemplate")
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Value("${pusher.native.kafka.topic.alarm_updated}")
     private String alarmUpdatedTopic;
     @Value("${pusher.native.kafka.topic.history_recorded}")
     private String historyRecordedTopic;
 
-    public NativeKafkaPusher() {
+    public NativeKafkaPusher(
+            @Qualifier("nativeKafkaPusher.kafkaTemplate")
+            KafkaTemplate<String, String> kafkaTemplate
+    ) {
         super(PUSHER_TYPE);
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override

@@ -18,7 +18,6 @@ import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -33,28 +32,40 @@ public class AlarmQosServiceImpl implements AlarmQosService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AlarmQosServiceImpl.class);
 
-    @Autowired
-    private AlarmLocalCacheHandler alarmLocalCacheHandler;
-    @Autowired(required = false)
-    @SuppressWarnings("FieldMayBeFinal")
-    private List<Source> sources = new ArrayList<>();
-    @Autowired
-    private AlarmHandler alarmHandler;
-    @Autowired
-    @Qualifier("alarmUpdatedEventConsumeHandler")
-    private ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler;
-    @Autowired
-    @Qualifier("historyRecordedEventConsumeHandler")
-    private ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler;
-    @Autowired
-    @Qualifier("alarmHistoryValueConsumeHandler")
-    private ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler;
+    private final AlarmLocalCacheHandler alarmLocalCacheHandler;
+    private final AlarmHandler alarmHandler;
 
-    @Autowired
-    private ServiceExceptionMapper sem;
+    private final List<Source> sources;
+
+    private final ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler;
+    private final ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler;
+    private final ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler;
+
+    private final ServiceExceptionMapper sem;
 
     private final Lock lock = new ReentrantLock();
     private final Map<ConsumerId, ConsumeHandler<? extends Bean>> consumeHandlerMap = new EnumMap<>(ConsumerId.class);
+
+    public AlarmQosServiceImpl(
+            AlarmLocalCacheHandler alarmLocalCacheHandler,
+            AlarmHandler alarmHandler,
+            List<Source> sources,
+            @Qualifier("alarmUpdatedEventConsumeHandler")
+            ConsumeHandler<AlarmInfo> alarmUpdatedEventConsumeHandler,
+            @Qualifier("historyRecordedEventConsumeHandler")
+            ConsumeHandler<AlarmHistory> historyRecordedEventConsumeHandler,
+            @Qualifier("alarmHistoryValueConsumeHandler")
+            ConsumeHandler<AlarmHistory> alarmHistoryValueConsumeHandler,
+            ServiceExceptionMapper sem
+    ) {
+        this.alarmLocalCacheHandler = alarmLocalCacheHandler;
+        this.alarmHandler = alarmHandler;
+        this.sources = Optional.ofNullable(sources).orElse(Collections.emptyList());
+        this.alarmUpdatedEventConsumeHandler = alarmUpdatedEventConsumeHandler;
+        this.historyRecordedEventConsumeHandler = historyRecordedEventConsumeHandler;
+        this.alarmHistoryValueConsumeHandler = alarmHistoryValueConsumeHandler;
+        this.sem = sem;
+    }
 
     @PostConstruct
     public void init() {

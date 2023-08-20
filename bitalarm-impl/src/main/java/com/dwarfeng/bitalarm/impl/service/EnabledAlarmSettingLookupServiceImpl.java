@@ -10,7 +10,6 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import com.dwarfeng.subgrade.stack.exception.ServiceExceptionMapper;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +18,22 @@ import java.util.List;
 @Service
 public class EnabledAlarmSettingLookupServiceImpl implements EnabledAlarmSettingLookupService {
 
-    @Autowired
-    private AlarmSettingDao dao;
-    @Autowired
-    private EnabledAlarmSettingCache cache;
-    @Autowired
-    private ServiceExceptionMapper sem;
+    private final AlarmSettingDao dao;
+    private final EnabledAlarmSettingCache cache;
+    private final ServiceExceptionMapper sem;
+
     @Value("${cache.timeout.key_list.enabled_alarm_setting}")
     private long timeout;
+
+    public EnabledAlarmSettingLookupServiceImpl(
+            AlarmSettingDao dao,
+            EnabledAlarmSettingCache cache,
+            ServiceExceptionMapper sem
+    ) {
+        this.dao = dao;
+        this.cache = cache;
+        this.sem = sem;
+    }
 
     @Override
     public List<AlarmSetting> getEnabledAlarmSettings(LongIdKey pointKey) throws ServiceException {

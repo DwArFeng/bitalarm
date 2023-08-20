@@ -11,7 +11,6 @@ import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +19,19 @@ import java.util.List;
 @Service
 public class PointMaintainServiceImpl implements PointMaintainService {
 
-    @Autowired
-    private CustomBatchCrudService<LongIdKey, Point> crudService;
-    @Autowired
-    private DaoOnlyEntireLookupService<Point> entireLookupService;
-    @Autowired
-    private DaoOnlyPresetLookupService<Point> presetLookupService;
+    private final CustomBatchCrudService<LongIdKey, Point> crudService;
+    private final DaoOnlyEntireLookupService<Point> entireLookupService;
+    private final DaoOnlyPresetLookupService<Point> presetLookupService;
+
+    public PointMaintainServiceImpl(
+            CustomBatchCrudService<LongIdKey, Point> crudService,
+            DaoOnlyEntireLookupService<Point> entireLookupService,
+            DaoOnlyPresetLookupService<Point> presetLookupService
+    ) {
+        this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
+        this.presetLookupService = presetLookupService;
+    }
 
     @Override
     @BehaviorAnalyse

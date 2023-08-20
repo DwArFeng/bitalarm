@@ -12,7 +12,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +20,19 @@ import java.util.List;
 @Repository
 public class PointDaoImpl implements PointDao {
 
-    @Autowired
-    private HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Point, HibernatePoint> batchBaseDao;
-    @Autowired
-    private HibernateEntireLookupDao<Point, HibernatePoint> entireLookupDao;
-    @Autowired
-    private HibernatePresetLookupDao<Point, HibernatePoint> presetLookupDao;
+    private final HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Point, HibernatePoint> batchBaseDao;
+    private final HibernateEntireLookupDao<Point, HibernatePoint> entireLookupDao;
+    private final HibernatePresetLookupDao<Point, HibernatePoint> presetLookupDao;
+
+    public PointDaoImpl(
+            HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Point, HibernatePoint> batchBaseDao,
+            HibernateEntireLookupDao<Point, HibernatePoint> entireLookupDao,
+            HibernatePresetLookupDao<Point, HibernatePoint> presetLookupDao
+    ) {
+        this.batchBaseDao = batchBaseDao;
+        this.entireLookupDao = entireLookupDao;
+        this.presetLookupDao = presetLookupDao;
+    }
 
     @Override
     @BehaviorAnalyse

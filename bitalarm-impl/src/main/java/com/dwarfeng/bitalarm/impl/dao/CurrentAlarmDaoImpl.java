@@ -10,7 +10,6 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +18,19 @@ import java.util.List;
 @Repository
 public class CurrentAlarmDaoImpl implements CurrentAlarmDao {
 
-    @Autowired
-    private RedisBatchBaseDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> batchBaseDao;
-    @Autowired
-    private RedisEntireLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> entireLookupDao;
-    @Autowired
-    private RedisPresetLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> presetLookupDao;
+    private final RedisBatchBaseDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> batchBaseDao;
+    private final RedisEntireLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> entireLookupDao;
+    private final RedisPresetLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> presetLookupDao;
+
+    public CurrentAlarmDaoImpl(
+            RedisBatchBaseDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> batchBaseDao,
+            RedisEntireLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> entireLookupDao,
+            RedisPresetLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> presetLookupDao
+    ) {
+        this.batchBaseDao = batchBaseDao;
+        this.entireLookupDao = entireLookupDao;
+        this.presetLookupDao = presetLookupDao;
+    }
 
     @Override
     @BehaviorAnalyse

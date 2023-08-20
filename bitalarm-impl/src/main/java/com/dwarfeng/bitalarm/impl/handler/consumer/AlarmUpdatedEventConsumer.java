@@ -8,7 +8,6 @@ import com.dwarfeng.dutil.basic.mea.TimeMeasurer;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -19,10 +18,16 @@ public class AlarmUpdatedEventConsumer implements Consumer<AlarmInfo> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AlarmUpdatedEventConsumer.class);
 
-    @Autowired
-    private AlarmInfoMaintainService alarmInfoMaintainService;
-    @Autowired
-    private PushHandler pushHandler;
+    private final AlarmInfoMaintainService alarmInfoMaintainService;
+    private final PushHandler pushHandler;
+
+    public AlarmUpdatedEventConsumer(
+            AlarmInfoMaintainService alarmInfoMaintainService,
+            PushHandler pushHandler
+    ) {
+        this.alarmInfoMaintainService = alarmInfoMaintainService;
+        this.pushHandler = pushHandler;
+    }
 
     @Override
     public void consume(List<AlarmInfo> alarmInfos) {
