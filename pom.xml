@@ -323,30 +323,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!-- Zookeeper 客户端 -->
-            <dependency>
-                <groupId>com.101tec</groupId>
-                <artifactId>zkclient</artifactId>
-                <version>${zkclient.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>slf4j-log4j12</artifactId>
-                        <groupId>org.slf4j</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>log4j</artifactId>
-                        <groupId>log4j</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>netty</artifactId>
-                        <groupId>io.netty</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>jline</artifactId>
-                        <groupId>jline</groupId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
             <!-- Hibernate 组件 -->
             <dependency>
                 <groupId>org.hibernate</groupId>
