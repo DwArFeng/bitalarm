@@ -29,7 +29,7 @@
         <javassist.version>3.23.2-GA</javassist.version>
         <junit.version>4.13.2</junit.version>
         <spring.version>5.3.31</spring.version>
-        <kafka.version>2.6.3</kafka.version>
+        <kafka.version>3.6.1</kafka.version>
         <protobuf.version>3.19.6</protobuf.version>
         <mysql.version>8.0.31</mysql.version>
         <fastjson.version>1.2.83</fastjson.version>
