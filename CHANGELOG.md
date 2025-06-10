@@ -8,6 +8,9 @@
   - com.dwarfeng.bitalarm.stack.service.AlarmHistoryMaintainService。
   - com.dwarfeng.bitalarm.stack.service.CurrentAlarmMaintainService。
 
+- 依赖升级，规避漏洞。
+  - 升级 `spring` 依赖版本为 `5.3.31` 以规避漏洞。
+
 #### Bug修复
 
 - 修复当某点位一直推送为报警点时，报警时间一直更新问题。
