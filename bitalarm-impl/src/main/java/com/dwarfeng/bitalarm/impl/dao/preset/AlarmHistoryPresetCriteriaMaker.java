@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
@@ -66,6 +68,9 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
                 break;
             case AlarmHistoryMaintainService.SEARCH_CONDITION:
                 searchCondition(detachedCriteria, objects);
+                break;
+            case AlarmHistoryMaintainService.CHILD_FOR_POINTS_START_DATE_BETWEEN:
+                childForPointsStartDateBetween(detachedCriteria, objects);
                 break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
@@ -296,7 +301,7 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
                 detachedCriteria.add(Restrictions.eq("alarmType", alarmType));
             }
             if (Objects.nonNull(objects[2]) && Objects.nonNull(objects[3])) {
-                Long startDateLong  = (Long)objects[2];
+                Long startDateLong = (Long) objects[2];
                 Long endDateLong = (Long) objects[3];
                 Date startDate = new Date(startDateLong);
                 Date endDate = new Date(endDateLong);
@@ -307,6 +312,31 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
         }
+    }
 
+    private void childForPointsStartDateBetween(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("pointLongId"));
+            }
+
+            List<LongIdKey> keys = (List<LongIdKey>) objects[0];
+            detachedCriteria.add(Restrictions.in("pointLongId", keys.stream().map(LongIdKey::getLongId).collect(Collectors.toList())));
+            if (Objects.nonNull(objects[1]) && Objects.nonNull(objects[2])) {
+                Date startDate = (Date) objects[1];
+                Date endDate = (Date) objects[2];
+                detachedCriteria.add(Restrictions.between("startDate", startDate, endDate));
+            } else if (Objects.nonNull(objects[1])) {
+                Date startDate = (Date) objects[1];
+                detachedCriteria.add(Restrictions.ge("startDate", startDate));
+            } else if (Objects.nonNull(objects[2])) {
+                Date endDate = (Date) objects[2];
+                detachedCriteria.add(Restrictions.le("startDate", endDate));
+            }
+
+            detachedCriteria.addOrder(Order.desc("startDate"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
     }
 }

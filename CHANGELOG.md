@@ -4,7 +4,9 @@
 
 #### 功能构建
 
-- (无)
+- 新增预设查询。
+  - com.dwarfeng.bitalarm.stack.service.AlarmHistoryMaintainService。
+  - com.dwarfeng.bitalarm.stack.service.CurrentAlarmMaintainService。
 
 #### Bug修复
 

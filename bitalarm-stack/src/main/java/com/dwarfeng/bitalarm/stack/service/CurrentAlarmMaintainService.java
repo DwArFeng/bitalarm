@@ -16,4 +16,6 @@ public interface CurrentAlarmMaintainService extends CrudService<LongIdKey, Curr
         EntireLookupService<CurrentAlarm>, PresetLookupService<CurrentAlarm> {
 
     String CHILD_FOR_POINT = "child_for_point";
+
+    String CHILD_FOR_POINTS = "child_for_points";
 }
