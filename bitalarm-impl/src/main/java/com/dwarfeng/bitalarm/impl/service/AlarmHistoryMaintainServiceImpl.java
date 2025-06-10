@@ -18,16 +18,16 @@ import java.util.List;
 @Service
 public class AlarmHistoryMaintainServiceImpl implements AlarmHistoryMaintainService {
 
-    private final CustomBatchCrudService<LongIdKey, AlarmHistory> batchCrudService;
+    private final CustomBatchCrudService<LongIdKey, AlarmHistory> crudService;
     private final DaoOnlyEntireLookupService<AlarmHistory> entireLookupService;
     private final DaoOnlyPresetLookupService<AlarmHistory> presetLookupService;
 
     public AlarmHistoryMaintainServiceImpl(
-            CustomBatchCrudService<LongIdKey, AlarmHistory> batchCrudService,
+            CustomBatchCrudService<LongIdKey, AlarmHistory> crudService,
             DaoOnlyEntireLookupService<AlarmHistory> entireLookupService,
             DaoOnlyPresetLookupService<AlarmHistory> presetLookupService
     ) {
-        this.batchCrudService = batchCrudService;
+        this.crudService = crudService;
         this.entireLookupService = entireLookupService;
         this.presetLookupService = presetLookupService;
     }
@@ -36,147 +36,155 @@ public class AlarmHistoryMaintainServiceImpl implements AlarmHistoryMaintainServ
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public boolean exists(LongIdKey key) throws ServiceException {
-        return batchCrudService.exists(key);
+        return crudService.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public AlarmHistory get(LongIdKey key) throws ServiceException {
-        return batchCrudService.get(key);
+        return crudService.get(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public LongIdKey insert(AlarmHistory element) throws ServiceException {
-        return batchCrudService.insert(element);
+        return crudService.insert(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void update(AlarmHistory element) throws ServiceException {
-        batchCrudService.update(element);
+        crudService.update(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void delete(LongIdKey key) throws ServiceException {
-        batchCrudService.delete(key);
+        crudService.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public AlarmHistory getIfExists(LongIdKey key) throws ServiceException {
-        return batchCrudService.getIfExists(key);
+        return crudService.getIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public LongIdKey insertIfNotExists(AlarmHistory element) throws ServiceException {
-        return batchCrudService.insertIfNotExists(element);
+        return crudService.insertIfNotExists(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void updateIfExists(AlarmHistory element) throws ServiceException {
-        batchCrudService.updateIfExists(element);
+        crudService.updateIfExists(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void deleteIfExists(LongIdKey key) throws ServiceException {
-        batchCrudService.deleteIfExists(key);
+        crudService.deleteIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public LongIdKey insertOrUpdate(AlarmHistory element) throws ServiceException {
-        return batchCrudService.insertOrUpdate(element);
+        return crudService.insertOrUpdate(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public boolean allExists(List<LongIdKey> keys) throws ServiceException {
-        return batchCrudService.allExists(keys);
+        return crudService.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public boolean nonExists(List<LongIdKey> keys) throws ServiceException {
-        return batchCrudService.nonExists(keys);
+        return crudService.nonExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<AlarmHistory> batchGet(List<LongIdKey> keys) throws ServiceException {
-        return batchCrudService.batchGet(keys);
+        return crudService.batchGet(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public List<LongIdKey> batchInsert(List<AlarmHistory> elements) throws ServiceException {
-        return batchCrudService.batchInsert(elements);
+        return crudService.batchInsert(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void batchUpdate(List<AlarmHistory> elements) throws ServiceException {
-        batchCrudService.batchUpdate(elements);
+        crudService.batchUpdate(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void batchDelete(List<LongIdKey> keys) throws ServiceException {
-        batchCrudService.batchDelete(keys);
+        crudService.batchDelete(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<AlarmHistory> batchGetIfExists(List<LongIdKey> keys) throws ServiceException {
-        return batchCrudService.batchGetIfExists(keys);
+        return crudService.batchGetIfExists(keys);
+    }
+
+    @Deprecated
+    @Override
+    @BehaviorAnalyse
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public List<LongIdKey> batchInsertIfExists(List<AlarmHistory> elements) throws ServiceException {
+        return crudService.batchInsertIfExists(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<LongIdKey> batchInsertIfExists(List<AlarmHistory> elements) throws ServiceException {
-        return batchCrudService.batchInsertIfExists(elements);
+    public List<LongIdKey> batchInsertIfNotExists(List<AlarmHistory> elements) throws ServiceException {
+        return crudService.batchInsertIfNotExists(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void batchUpdateIfExists(List<AlarmHistory> elements) throws ServiceException {
-        batchCrudService.batchUpdateIfExists(elements);
+        crudService.batchUpdateIfExists(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public void batchDeleteIfExists(List<LongIdKey> keys) throws ServiceException {
-        batchCrudService.batchDeleteIfExists(keys);
+        crudService.batchDeleteIfExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public List<LongIdKey> batchInsertOrUpdate(List<AlarmHistory> elements) throws ServiceException {
-        return batchCrudService.batchInsertOrUpdate(elements);
+        return crudService.batchInsertOrUpdate(elements);
     }
 
     @Override

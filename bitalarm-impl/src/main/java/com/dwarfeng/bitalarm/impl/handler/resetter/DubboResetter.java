@@ -148,7 +148,7 @@ public class DubboResetter extends AbstractResetter {
                 context.resetAlarm();
                 return true;
             } catch (Exception e) {
-                throw ServiceExceptionHelper.logAndThrow("发生异常", LogLevel.WARN, sem, e);
+                throw ServiceExceptionHelper.logParse("发生异常", LogLevel.WARN, e, sem);
             }
         }
 

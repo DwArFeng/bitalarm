@@ -35,9 +35,7 @@ public class AlarmQosServiceImpl implements AlarmQosService {
         try {
             return alarmHandler.getAlarmSetting(pointKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow(
-                    "获取指定的数据点对应的所有报警设置时发生异常", LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("获取指定的数据点对应的所有报警设置时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -46,9 +44,7 @@ public class AlarmQosServiceImpl implements AlarmQosService {
         try {
             alarmHandler.clearLocalCache();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow(
-                    "清除本地缓存时发生异常", LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("清除本地缓存时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -57,9 +53,7 @@ public class AlarmQosServiceImpl implements AlarmQosService {
         try {
             return alarmHandler.getConsumerStatus(consumerId);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow(
-                    "获取指定消费者的消费者状态时发生异常", LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("获取指定消费者的消费者状态时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -68,9 +62,7 @@ public class AlarmQosServiceImpl implements AlarmQosService {
         try {
             alarmHandler.setConsumerParameters(consumerId, bufferSize, batchSize, maxIdleTime, thread);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow(
-                    "设置指定消费者的参数时发生异常", LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("设置指定消费者的参数时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -79,9 +71,7 @@ public class AlarmQosServiceImpl implements AlarmQosService {
         try {
             alarmHandler.start();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow(
-                    "开启记录服务时发生异常", LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("开启记录服务时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -90,9 +80,7 @@ public class AlarmQosServiceImpl implements AlarmQosService {
         try {
             internalStopAlarm();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow(
-                    "停止记录服务时发生异常", LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("停止记录服务时发生异常", LogLevel.WARN, e, sem);
         }
     }
 

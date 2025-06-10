@@ -4,10 +4,8 @@ import com.dwarfeng.bitalarm.impl.service.operation.*;
 import com.dwarfeng.bitalarm.stack.bean.entity.*;
 import com.dwarfeng.bitalarm.stack.cache.AlarmTypeIndicatorCache;
 import com.dwarfeng.bitalarm.stack.dao.*;
-import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
-import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
+import com.dwarfeng.subgrade.impl.generation.ExceptionKeyGenerator;
 import com.dwarfeng.subgrade.impl.service.*;
-import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -19,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfiguration {
 
     private final ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
+    private final GenerateConfiguration generateConfiguration;
 
     private final AlarmSettingCrudOperation alarmSettingCrudOperation;
     private final AlarmSettingDao alarmSettingDao;
@@ -38,15 +37,22 @@ public class ServiceConfiguration {
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
-            AlarmSettingCrudOperation alarmSettingCrudOperation, AlarmSettingDao alarmSettingDao,
-            AlarmHistoryCrudOperation alarmHistoryCrudOperation, PointCrudOperation pointCrudOperation,
-            AlarmHistoryDao alarmHistoryDao, CurrentAlarmCrudOperation currentAlarmCrudOperation,
+            GenerateConfiguration generateConfiguration,
+            AlarmSettingCrudOperation alarmSettingCrudOperation,
+            AlarmSettingDao alarmSettingDao,
+            AlarmHistoryCrudOperation alarmHistoryCrudOperation,
+            PointCrudOperation pointCrudOperation,
+            AlarmHistoryDao alarmHistoryDao,
+            CurrentAlarmCrudOperation currentAlarmCrudOperation,
             CurrentAlarmDao currentAlarmDao,
             PointDao pointDao,
-            AlarmInfoCrudOperation alarmInfoCrudOperation, AlarmInfoDao alarmInfoDao,
-            AlarmTypeIndicatorDao alarmTypeIndicatorDao, AlarmTypeIndicatorCache alarmTypeIndicatorCache
+            AlarmInfoCrudOperation alarmInfoCrudOperation,
+            AlarmInfoDao alarmInfoDao,
+            AlarmTypeIndicatorDao alarmTypeIndicatorDao,
+            AlarmTypeIndicatorCache alarmTypeIndicatorCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
+        this.generateConfiguration = generateConfiguration;
         this.alarmSettingCrudOperation = alarmSettingCrudOperation;
         this.alarmSettingDao = alarmSettingDao;
         this.alarmHistoryCrudOperation = alarmHistoryCrudOperation;
@@ -62,130 +68,125 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public KeyFetcher<LongIdKey> longIdKeyKeyFetcher() {
-        return new SnowFlakeLongIdKeyFetcher();
-    }
-
-    @Bean
     public CustomBatchCrudService<LongIdKey, AlarmSetting> alarmSettingCustomBatchCrudService() {
         return new CustomBatchCrudService<>(
-                alarmSettingCrudOperation,
-                longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                alarmSettingCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
         );
     }
 
     @Bean
     public DaoOnlyEntireLookupService<AlarmSetting> alarmSettingDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                alarmSettingDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                alarmSettingDao
         );
     }
 
     @Bean
     public DaoOnlyPresetLookupService<AlarmSetting> alarmSettingDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
-                alarmSettingDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                alarmSettingDao
         );
     }
 
     @Bean
     public CustomBatchCrudService<LongIdKey, AlarmHistory> alarmHistoryCustomBatchCrudService() {
         return new CustomBatchCrudService<>(
-                alarmHistoryCrudOperation,
-                longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                alarmHistoryCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
         );
     }
 
     @Bean
     public DaoOnlyEntireLookupService<AlarmHistory> alarmHistoryDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                alarmHistoryDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                alarmHistoryDao
         );
     }
 
     @Bean
     public DaoOnlyPresetLookupService<AlarmHistory> alarmHistoryDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
-                alarmHistoryDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                alarmHistoryDao
         );
     }
 
     @Bean
     public CustomCrudService<LongIdKey, CurrentAlarm> currentAlarmCustomCrudService() {
         return new CustomCrudService<>(
-                currentAlarmCrudOperation,
-                longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                currentAlarmCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
         );
     }
 
     @Bean
     public DaoOnlyEntireLookupService<CurrentAlarm> currentAlarmDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                currentAlarmDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                currentAlarmDao
         );
     }
 
     @Bean
     public DaoOnlyPresetLookupService<CurrentAlarm> currentAlarmDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
-                currentAlarmDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                currentAlarmDao
         );
     }
 
     @Bean
     public CustomBatchCrudService<LongIdKey, AlarmInfo> alarmInfoCustomBatchCrudService() {
         return new CustomBatchCrudService<>(
-                alarmInfoCrudOperation,
-                longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                alarmInfoCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
         );
     }
 
     @Bean
     public DaoOnlyEntireLookupService<AlarmInfo> alarmInfoDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                alarmInfoDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                alarmInfoDao
         );
     }
 
     @Bean
     public DaoOnlyPresetLookupService<AlarmInfo> alarmInfoDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
-                alarmInfoDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                alarmInfoDao
         );
     }
 
     @Bean
     public GeneralBatchCrudService<StringIdKey, AlarmTypeIndicator> alarmTypeIndicatorGeneralBatchCrudService() {
         return new GeneralBatchCrudService<>(
-                alarmTypeIndicatorDao,
-                alarmTypeIndicatorCache,
-                new ExceptionKeyFetcher<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
+                alarmTypeIndicatorDao,
+                alarmTypeIndicatorCache,
+                new ExceptionKeyGenerator<>(),
                 alarmTypeIndicatorTimeout
         );
     }
@@ -193,37 +194,37 @@ public class ServiceConfiguration {
     @Bean
     public DaoOnlyEntireLookupService<AlarmTypeIndicator> alarmTypeIndicatorDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                alarmTypeIndicatorDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                alarmTypeIndicatorDao
         );
     }
 
     @Bean
     public CustomBatchCrudService<LongIdKey, Point> pointBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
-                pointCrudOperation,
-                longIdKeyKeyFetcher(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                pointCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
         );
     }
 
     @Bean
     public DaoOnlyEntireLookupService<Point> pointDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
-                pointDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                pointDao
         );
     }
 
     @Bean
     public DaoOnlyPresetLookupService<Point> pointDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
-                pointDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
+                LogLevel.WARN,
+                pointDao
         );
     }
 }

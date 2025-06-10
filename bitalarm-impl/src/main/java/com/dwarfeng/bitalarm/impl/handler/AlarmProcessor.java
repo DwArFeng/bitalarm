@@ -10,6 +10,7 @@ import com.dwarfeng.bitalarm.stack.handler.AlarmLocalCacheHandler;
 import com.dwarfeng.bitalarm.stack.handler.ConsumeHandler;
 import com.dwarfeng.bitalarm.stack.service.AlarmInfoMaintainService;
 import com.dwarfeng.bitalarm.stack.service.CurrentAlarmMaintainService;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -147,10 +148,8 @@ public class AlarmProcessor {
                     processNotAlarming(alarmInfo, pointKey);
                 }
             }
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         } finally {
             lock.unlock();
         }

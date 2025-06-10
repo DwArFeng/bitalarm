@@ -1,6 +1,7 @@
 package com.dwarfeng.bitalarm.impl.handler.resetter;
 
 import com.dwarfeng.bitalarm.stack.handler.Resetter;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
 /**
@@ -22,10 +23,8 @@ public abstract class AbstractResetter implements Resetter {
     public void start() throws HandlerException {
         try {
             doStart();
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -41,10 +40,8 @@ public abstract class AbstractResetter implements Resetter {
     public void stop() throws HandlerException {
         try {
             doStop();
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 

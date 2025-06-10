@@ -41,7 +41,7 @@ public class ResetQosServiceImpl implements ResetQosService {
         try {
             return resetterHandler.all();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("列出在用的全部重置器时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("列出在用的全部重置器时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -50,7 +50,7 @@ public class ResetQosServiceImpl implements ResetQosService {
         try {
             return resetHandler.isStarted();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断重置服务是否启动时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("判断重置服务是否启动时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -59,7 +59,7 @@ public class ResetQosServiceImpl implements ResetQosService {
         try {
             resetHandler.start();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("重置服务启动时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("重置服务启动时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -68,7 +68,7 @@ public class ResetQosServiceImpl implements ResetQosService {
         try {
             resetHandler.stop();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("重置服务停止时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("重置服务停止时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -77,7 +77,7 @@ public class ResetQosServiceImpl implements ResetQosService {
         try {
             resetHandler.resetAlarm();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("重置报警功能时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("重置报警功能时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

@@ -27,9 +27,7 @@ public class AlarmServiceImpl implements AlarmService {
         try {
             alarmHandler.processAlarm(pointKey, data, happenedDate);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow(
-                    "处理报警信息时发生异常", LogLevel.WARN, sem, e
-            );
+            throw ServiceExceptionHelper.logParse("处理报警信息时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

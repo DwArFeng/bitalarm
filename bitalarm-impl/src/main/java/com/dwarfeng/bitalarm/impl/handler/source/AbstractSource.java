@@ -1,6 +1,7 @@
 package com.dwarfeng.bitalarm.impl.handler.source;
 
 import com.dwarfeng.bitalarm.stack.handler.Source;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
 import java.util.concurrent.locks.Lock;
@@ -40,10 +41,8 @@ public abstract class AbstractSource implements Source {
         try {
             doOnline();
             onlineFlag = true;
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         } finally {
             lock.unlock();
         }
@@ -57,10 +56,8 @@ public abstract class AbstractSource implements Source {
         try {
             doOffline();
             onlineFlag = false;
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         } finally {
             lock.unlock();
         }

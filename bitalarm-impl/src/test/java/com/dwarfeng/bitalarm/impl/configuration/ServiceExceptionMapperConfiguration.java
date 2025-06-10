@@ -21,6 +21,6 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(AlarmDisabledException.class, ServiceExceptionCodes.ALARM_HANDLER_DISABLED);
         destination.put(ConsumeStoppedException.class, ServiceExceptionCodes.CONSUME_HANDLER_STOPPED);
         destination.put(PointNotExistsException.class, ServiceExceptionCodes.POINT_NOT_EXISTS);
-        return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINE);
+        return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }
