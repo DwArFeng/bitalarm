@@ -157,6 +157,10 @@ public class AlarmProcessor {
     }
 
     private void processAlarming(AlarmInfo alarmInfo) throws Exception {
+        if (currentAlarmMaintainService.exists(alarmInfo.getKey())) {
+            return;
+        }
+
         CurrentAlarm currentAlarm = new CurrentAlarm(alarmInfo.getKey(), alarmInfo.getPointKey(), alarmInfo.getIndex(),
                 alarmInfo.getAlarmMessage(), alarmInfo.getAlarmType(), alarmInfo.getHappenedDate());
         currentAlarmMaintainService.insertOrUpdate(currentAlarm);
