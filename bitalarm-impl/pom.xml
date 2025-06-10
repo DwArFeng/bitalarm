@@ -89,11 +89,6 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
         </dependency>
-        <!-- Spring 集成 Kafka 组件 -->
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-        </dependency>
         <!-- Druid 连接池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
