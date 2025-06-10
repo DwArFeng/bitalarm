@@ -4,6 +4,14 @@
 
 #### 功能构建
 
+- 优化部分维护服务实现中的部分方法的性能。
+  - com.dwarfeng.bitalarm.impl.service.AlarmHistoryMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.AlarmInfoMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.AlarmSettingMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.AlarmTypeIndicatorMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.CurrentAlarmMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.PointMaintainServiceImpl。
+
 - 依赖升级。
   - 升级 `subgrade` 依赖版本为 `1.5.10.a` 并解决兼容性问题，以规避漏洞。
   - 升级 `spring` 依赖版本为 `5.3.39` 以规避漏洞。
