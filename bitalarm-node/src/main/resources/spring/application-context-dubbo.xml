@@ -66,6 +66,7 @@
     <dubbo:reference
             id="longIdService"
             interface="com.dwarfeng.sfds.stack.service.LongIdService"
+            check="false"
             group="${dubbo.consumer.snowflake.group}"
     />
 </beans>
