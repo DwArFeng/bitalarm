@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- 优化启停脚本的目录结构。
+
 - 新增预设查询。
   - com.dwarfeng.bitalarm.stack.service.AlarmHistoryMaintainService。
   - com.dwarfeng.bitalarm.stack.service.CurrentAlarmMaintainService。
