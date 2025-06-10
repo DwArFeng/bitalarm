@@ -1,6 +1,7 @@
 #!/bin/sh
-# 程序的根目录
-basedir="/usr/local/bitalarm"
+
+# 设置程序的根目录。
+basedir="$(cd $(dirname $0)/.. && pwd)"
 
 PID=$(cat "$basedir/bitalarm.pid")
 kill "$PID"
