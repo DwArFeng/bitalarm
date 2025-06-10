@@ -83,6 +83,15 @@
             <fileMode>0644</fileMode>
         </fileSet>
         <fileSet>
+            <outputDirectory>conf/logging</outputDirectory>
+            <directory>src/main/resources/logging</directory>
+            <includes>
+                <include>README.md</include>
+                <include>*.xml</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
             <outputDirectory>opt</outputDirectory>
             <directory>src/main/resources/opt</directory>
             <includes>
@@ -113,6 +122,7 @@
             <directory>src/main/resources/confext</directory>
             <includes>
                 <include>README.md</include>
+                <include>*.xml</include>
                 <include>*.properties</include>
             </includes>
             <fileMode>0644</fileMode>
