@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 部分 dubbo 消费者服务注册配置添加 `check="false"` 属性。
+  - snowflakeGenerateService。
+
 - 为部分重置器的依赖注入对象增加限定符，以避免潜在的冲突。
   - com.dwarfeng.bitalarm.impl.handler.resetter.DubboResetter。
 
