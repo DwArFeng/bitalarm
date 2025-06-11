@@ -12,6 +12,7 @@ import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.ServiceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -43,7 +44,11 @@ public class DubboResetter extends AbstractResetter {
     private ServiceConfig<DubboResetService> dubboService = null;
     private boolean startFlag = false;
 
-    public DubboResetter(ApplicationContext ctx, RegistryConfig registry, ProtocolConfig protocol) {
+    public DubboResetter(
+            ApplicationContext ctx,
+            RegistryConfig registry,
+            @Qualifier("dubbo") ProtocolConfig protocol
+    ) {
         this.ctx = ctx;
         this.registry = registry;
         this.protocol = protocol;
