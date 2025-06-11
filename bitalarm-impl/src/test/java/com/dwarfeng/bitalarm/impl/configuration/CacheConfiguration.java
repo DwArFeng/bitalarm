@@ -1,6 +1,6 @@
 package com.dwarfeng.bitalarm.impl.configuration;
 
-import com.dwarfeng.bitalarm.sdk.bean.FastJsonMapper;
+import com.dwarfeng.bitalarm.sdk.bean.BeanMapper;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmHistory;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmSetting;
 import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmTypeIndicator;
@@ -47,7 +47,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonAlarmSetting>) template,
                 new LongIdStringKeyFormatter(alarmSettingPrefix),
-                new MapStructBeanTransformer<>(AlarmSetting.class, FastJsonAlarmSetting.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(AlarmSetting.class, FastJsonAlarmSetting.class, BeanMapper.class)
         );
     }
 
@@ -57,7 +57,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonAlarmHistory>) template,
                 new LongIdStringKeyFormatter(alarmHistoryPrefix),
-                new MapStructBeanTransformer<>(AlarmHistory.class, FastJsonAlarmHistory.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(AlarmHistory.class, FastJsonAlarmHistory.class, BeanMapper.class)
         );
     }
 
@@ -67,7 +67,7 @@ public class CacheConfiguration {
         return new RedisKeyListCache<>(
                 (RedisTemplate<String, FastJsonAlarmSetting>) template,
                 new LongIdStringKeyFormatter(enabledAlarmSettingPrefix),
-                new MapStructBeanTransformer<>(AlarmSetting.class, FastJsonAlarmSetting.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(AlarmSetting.class, FastJsonAlarmSetting.class, BeanMapper.class)
         );
     }
 
@@ -79,7 +79,7 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonAlarmTypeIndicator>) template,
                 new StringIdStringKeyFormatter(alarmTypeIndicatorPrefix),
                 new MapStructBeanTransformer<>(
-                        AlarmTypeIndicator.class, FastJsonAlarmTypeIndicator.class, FastJsonMapper.class
+                        AlarmTypeIndicator.class, FastJsonAlarmTypeIndicator.class, BeanMapper.class
                 )
         );
     }
@@ -90,7 +90,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonPoint>) template,
                 new LongIdStringKeyFormatter(pointPrefix),
-                new MapStructBeanTransformer<>(Point.class, FastJsonPoint.class, FastJsonMapper.class)
+                new MapStructBeanTransformer<>(Point.class, FastJsonPoint.class, BeanMapper.class)
         );
     }
 }

@@ -17,14 +17,17 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 /**
- * Hibernate Bean 映射器。
+ * Bean 映射器。
+ *
+ * <p>
+ * 该映射器中包含了 <code>impl</code> 模块中所有实体与 <code>stack</code> 模块中对应实体的映射方法。
  *
  * @author DwArFeng
- * @since 1.7.0
+ * @since 1.8.0
  */
 @Mapper
-public interface HibernateMapper {
-
+public interface BeanMapper {
+    // -----------------------------------------------------------Subgrade Key-----------------------------------------------------------
     HibernateLongIdKey longIdKeyToHibernate(LongIdKey longIdKey);
 
     @InheritInverseConfiguration
@@ -35,6 +38,7 @@ public interface HibernateMapper {
     @InheritInverseConfiguration
     StringIdKey stringIdKeyFromHibernate(HibernateStringIdKey hibernateStringIdKey);
 
+    // -----------------------------------------------------------Bitalarm Key-----------------------------------------------------------
     @Mapping(target = "pointLongId", ignore = true)
     @Mapping(target = "longId", ignore = true)
     @Mapping(target = "alarmSettingLongId", ignore = true)
