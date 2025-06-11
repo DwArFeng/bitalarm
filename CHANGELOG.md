@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 优化配置文件。
+  - 优化 `application-context-database.xml`，使得更多属性可以在配置文件中配置。
+
 - 为部分工具类中方法的入口参数增加 `@Nonnull` 注解。
   - com.dwarfeng.bitalarm.impl.service.telqos.CommandUtil。
 
