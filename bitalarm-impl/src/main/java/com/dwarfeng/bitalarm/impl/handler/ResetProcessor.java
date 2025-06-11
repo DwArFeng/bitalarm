@@ -35,9 +35,17 @@ public class ResetProcessor {
     }
 
     public void resetAlarm() throws HandlerException {
+        // 获取当前的报警处理器的状态。
+        boolean started = alarmHandler.isStarted();
+
+        // 报警处理器停止，且清空本地缓存。
         alarmHandler.stop();
         alarmLocalCacheHandler.clear();
-        alarmHandler.start();
+
+        // 如果报警处理器之前是启动的，则重新启动。
+        if (started) {
+            alarmHandler.start();
+        }
 
         try {
             pushHandler.alarmReset();
