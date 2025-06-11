@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("DuplicatedCode")
 @Component
 public class HistoryRecordEventConsumer implements Consumer<AlarmHistory> {
 
@@ -41,18 +40,18 @@ public class HistoryRecordEventConsumer implements Consumer<AlarmHistory> {
                 try {
                     pushHandler.historyRecorded(alarmHistory);
                 } catch (Exception e) {
-                    LOGGER.error("数据推送失败, 放弃对数据的推送: " + alarmHistory, e);
+                    LOGGER.error("数据推送失败, 放弃对数据的推送: {}", alarmHistory, e);
                     failedList.add(alarmHistory);
                 }
             }
 
             if (!failedList.isEmpty()) {
-                LOGGER.error("推送数据时发生异常, 最多 " + failedList.size() + " 个数据信息丢失");
-                failedList.forEach(realtimeValue -> LOGGER.debug(realtimeValue + ""));
+                LOGGER.error("推送数据时发生异常, 最多 {} 个数据信息丢失", failedList.size());
+                failedList.forEach(realtimeValue -> LOGGER.debug("{}", realtimeValue));
             }
         } finally {
             tm.stop();
-            LOGGER.debug("消费者处理了 " + alarmHistories.size() + " 条数据, 共用时 " + tm.getTimeMs() + " 毫秒");
+            LOGGER.debug("消费者处理了 {} 条数据, 共用时 {} 毫秒", alarmHistories.size(), tm.getTimeMs());
         }
     }
 }

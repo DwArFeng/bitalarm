@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-@SuppressWarnings("DuplicatedCode")
 @Component
 public class AlarmUpdatedEventConsumer implements Consumer<AlarmInfo> {
 
@@ -48,8 +47,8 @@ public class AlarmUpdatedEventConsumer implements Consumer<AlarmInfo> {
                     }
                 }
             } catch (Exception e) {
-                LOGGER.error("记录数据时发生异常, 最多 " + alarmInfos.size() + " 个数据信息丢失", e);
-                alarmInfos.forEach(alarmInfo -> LOGGER.debug(alarmInfo + ""));
+                LOGGER.error("记录数据时发生异常, 最多 {} 个数据信息丢失", alarmInfos.size(), e);
+                alarmInfos.forEach(alarmInfo -> LOGGER.debug("{}", alarmInfo));
                 return;
             }
 
@@ -67,18 +66,18 @@ public class AlarmUpdatedEventConsumer implements Consumer<AlarmInfo> {
                         }
                     }
                 } catch (Exception e) {
-                    LOGGER.error("数据推送失败, 放弃对数据的推送: " + alarmInfo, e);
+                    LOGGER.error("数据推送失败, 放弃对数据的推送: {}", alarmInfo, e);
                     failedList.add(alarmInfo);
                 }
             }
 
             if (!failedList.isEmpty()) {
-                LOGGER.error("推送数据时发生异常, 最多 " + failedList.size() + " 个数据信息丢失");
-                failedList.forEach(alarmInfo -> LOGGER.debug(alarmInfo + ""));
+                LOGGER.error("推送数据时发生异常, 最多 {} 个数据信息丢失", failedList.size());
+                failedList.forEach(alarmInfo -> LOGGER.debug("{}", alarmInfo));
             }
         } finally {
             tm.stop();
-            LOGGER.debug("消费者处理了 " + alarmInfos.size() + " 条数据, 共用时 " + tm.getTimeMs() + " 毫秒");
+            LOGGER.debug("消费者处理了 {} 条数据, 共用时 {} 毫秒", alarmInfos.size(), tm.getTimeMs());
         }
     }
 }

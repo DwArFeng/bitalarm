@@ -25,7 +25,6 @@ public class CurrentAlarmPresetEntityFilter implements PresetEntityFilter<Curren
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private boolean childForPoint(CurrentAlarm entity, Object[] objs) {
         try {
             LongIdKey longIdKey = (LongIdKey) objs[0];
@@ -41,6 +40,8 @@ public class CurrentAlarmPresetEntityFilter implements PresetEntityFilter<Curren
                 return false;
             }
 
+            // 此处类型转换的安全性由调用者保证。
+            @SuppressWarnings("unchecked")
             List<LongIdKey> keys = (List<LongIdKey>) objs[0];
             return keys.contains(entity.getPointKey());
         } catch (Exception e) {

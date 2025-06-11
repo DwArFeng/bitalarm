@@ -110,7 +110,7 @@ public class AlarmProcessor {
             }
 
             // 记录日志，准备工作。
-            LOGGER.debug("分析并记录数据点 " + pointKey + " 的报警信息: " + toHexString(data));
+            LOGGER.debug("分析并记录数据点 {} 的报警信息: {}", pointKey, toHexString(data));
 
             // 获取指定数据点的所有报警设置，同时判断数据点是否存在。
             if (!alarmLocalCacheHandler.exists(pointKey)) {
@@ -123,12 +123,11 @@ public class AlarmProcessor {
                 // 判断报警设置的index是否越界，如果越界，则中止。
                 int index = alarmSetting.getIndex();
                 if (index < 0) {
-                    LOGGER.warn("无效的报警配置 " + alarmSetting.getKey() + ": 报警配置的 index 为 " + index + ", 小于0");
+                    LOGGER.warn("无效的报警配置 {}: 报警配置的 index 为 {}, 小于0", alarmSetting.getKey(), index);
                     continue;
                 }
                 if (index >= data.length * BIT_PER_BYTE) {
-                    LOGGER.warn("无效的报警配置 " + alarmSetting.getKey() + ": 报警配置的 index 为 " + index +
-                            ", 超过了报警数据的长度 " + data.length * BIT_PER_BYTE);
+                    LOGGER.warn("无效的报警配置 {}: 报警配置的 index 为 {}, 超过了报警数据的长度 {}", alarmSetting.getKey(), index, data.length * BIT_PER_BYTE);
                     continue;
                 }
 

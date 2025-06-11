@@ -23,7 +23,6 @@ public class AlarmInfoPresetEntityFilter implements PresetEntityFilter<AlarmInfo
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private boolean childForPoint(AlarmInfo entity, Object[] objs) {
         try {
             LongIdKey longIdKey = (LongIdKey) objs[0];

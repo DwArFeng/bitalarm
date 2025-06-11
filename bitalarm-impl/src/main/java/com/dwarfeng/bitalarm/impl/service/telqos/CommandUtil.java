@@ -69,6 +69,8 @@ final class CommandUtil {
         return sj.toString();
     }
 
+    // 为了项目的可扩展性，保留此方法。
+    @SuppressWarnings("unused")
     public static int maxStringLength(@Nonnull List<String> stringList, int offset) {
         int result = 0;
         for (String string : stringList) {
@@ -78,6 +80,8 @@ final class CommandUtil {
         return result + offset;
     }
 
+    // 为了项目的可扩展性，保留此方法。
+    @SuppressWarnings("unused")
     public static String formatDate(@Nullable Date date) {
         if (Objects.isNull(date)) {
             return "null";

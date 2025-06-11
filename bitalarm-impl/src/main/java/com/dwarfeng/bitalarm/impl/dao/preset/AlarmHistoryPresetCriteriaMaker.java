@@ -320,6 +320,8 @@ public class AlarmHistoryPresetCriteriaMaker implements PresetCriteriaMaker {
                 detachedCriteria.add(Restrictions.isNull("pointLongId"));
             }
 
+            // 此处类型转换的安全性由调用者保证。
+            @SuppressWarnings("unchecked")
             List<LongIdKey> keys = (List<LongIdKey>) objects[0];
             detachedCriteria.add(Restrictions.in("pointLongId", keys.stream().map(LongIdKey::getLongId).collect(Collectors.toList())));
             if (Objects.nonNull(objects[1]) && Objects.nonNull(objects[2])) {

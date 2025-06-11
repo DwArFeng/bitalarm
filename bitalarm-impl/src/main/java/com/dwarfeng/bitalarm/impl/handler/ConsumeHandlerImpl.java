@@ -103,7 +103,6 @@ public class ConsumeHandlerImpl<E extends Entity<?>> implements ConsumeHandler<E
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public void stop() {
         lock.lock();
@@ -159,7 +158,7 @@ public class ConsumeHandlerImpl<E extends Entity<?>> implements ConsumeHandler<E
             try {
                 consumer.consume(element2Consume);
             } catch (Exception e) {
-                LOGGER.warn("消费元素时发生异常, 最多抛弃 " + element2Consume.size() + " 个元素", e);
+                LOGGER.warn("消费元素时发生异常, 最多抛弃 {} 个元素", element2Consume.size(), e);
             }
         }
         scheduledFuture.cancel(true);
@@ -269,7 +268,6 @@ public class ConsumeHandlerImpl<E extends Entity<?>> implements ConsumeHandler<E
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public boolean isIdle() {
         lock.lock();
@@ -287,7 +285,7 @@ public class ConsumeHandlerImpl<E extends Entity<?>> implements ConsumeHandler<E
         }
     }
 
-    private static final class ConsumeTask<E extends Entity<?>> extends AbstractTask {
+    public static final class ConsumeTask<E extends Entity<?>> extends AbstractTask {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(ConsumeTask.class);
 
@@ -311,7 +309,7 @@ public class ConsumeHandlerImpl<E extends Entity<?>> implements ConsumeHandler<E
                     }
                 } catch (Exception e) {
                     if (Objects.nonNull(pollList)) {
-                        LOGGER.warn("消费元素时发生异常, 最多抛弃 " + pollList.size() + " 个元素", e);
+                        LOGGER.warn("消费元素时发生异常, 最多抛弃 {} 个元素", pollList.size(), e);
                     }
                 }
             }
@@ -323,7 +321,7 @@ public class ConsumeHandlerImpl<E extends Entity<?>> implements ConsumeHandler<E
         }
     }
 
-    private static class ConsumeBuffer<E extends Entity<?>> {
+    public static class ConsumeBuffer<E extends Entity<?>> {
 
         private final Lock lock = new ReentrantLock();
         private final Condition provideCondition = lock.newCondition();
@@ -390,7 +388,7 @@ public class ConsumeHandlerImpl<E extends Entity<?>> implements ConsumeHandler<E
                         if (batchSize <= 1 || maxIdleTime <= 0) {
                             consumeCondition.await();
                         } else {
-                            consumeCondition.await(timeOffset, TimeUnit.MILLISECONDS);
+                            boolean ignored = consumeCondition.await(timeOffset, TimeUnit.MILLISECONDS);
                         }
                     } catch (InterruptedException ignored) {
                     }
