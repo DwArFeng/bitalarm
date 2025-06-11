@@ -11,11 +11,8 @@
 
     <!-- 设置配置文件的路径 -->
     <context:property-placeholder
-            location=
-                    "classpath:database/*.properties,
-                    classpath:dubbo/*.properties,
-                    classpath:redis/*.properties,
-                    classpath:bitalarm/*.properties"
+            location="classpath:database/*.properties,classpath:dubbo/*.properties,classpath:redis/*.properties,
+            classpath:bitalarm/*.properties,classpath:datamark/*.properties"
             local-override="true"
             properties-ref="refProperties"/>
 
@@ -31,6 +28,8 @@
                 <value>file:conf/test.redis/*.properties</value>
                 <!--suppress SpringXmlModelInspection -->
                 <value>file:conf/test.bitalarm/*.properties</value>
+                <!--suppress SpringXmlModelInspection -->
+                <value>file:conf/test.datamark/*.properties</value>
             </list>
         </property>
     </bean>

@@ -4,6 +4,17 @@
 
 #### 功能构建
 
+- 导入运维指令。
+  - com.dwarfeng.datamark.service.telqos.*。
+
+- 增加 Hibernate 实体数据标记字段，并应用相关实体侦听器。
+  - com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmSetting。
+  - com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmTypeIndicator。
+  - com.dwarfeng.bitalarm.impl.bean.entity.HibernatePoint。
+
+- 增加依赖。
+  - 增加依赖 `dwarfeng-datamark` 以应用其新功能，版本为 `1.0.2.a`。
+
 - 增加 `PusherAdapter`。
   - 建议任何插件的推送器实现都继承自该适配器。
   - 适配器对所有的事件推送方法都进行了空实现。

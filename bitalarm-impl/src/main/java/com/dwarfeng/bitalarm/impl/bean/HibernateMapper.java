@@ -46,12 +46,16 @@ public interface HibernateMapper {
     @Mapping(target = "pointLongId", ignore = true)
     @Mapping(target = "point", ignore = true)
     @Mapping(target = "longId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
     HibernateAlarmSetting alarmSettingToHibernate(AlarmSetting alarmSetting);
 
     @InheritInverseConfiguration
     AlarmSetting alarmSettingFromHibernate(HibernateAlarmSetting hibernateAlarmSetting);
 
     @Mapping(target = "stringId", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
     HibernateAlarmTypeIndicator alarmTypeIndicatorToHibernate(AlarmTypeIndicator alarmTypeIndicator);
 
     @InheritInverseConfiguration
@@ -59,6 +63,8 @@ public interface HibernateMapper {
 
     @Mapping(target = "longId", ignore = true)
     @Mapping(target = "alarmSettings", ignore = true)
+    @Mapping(target = "createdDatamark", ignore = true)
+    @Mapping(target = "modifiedDatamark", ignore = true)
     HibernatePoint pointToHibernate(Point point);
 
     @InheritInverseConfiguration

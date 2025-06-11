@@ -1,6 +1,8 @@
 package com.dwarfeng.bitalarm.impl.bean.entity;
 
 import com.dwarfeng.bitalarm.sdk.util.Constraints;
+import com.dwarfeng.datamark.bean.jpa.DatamarkEntityListener;
+import com.dwarfeng.datamark.bean.jpa.DatamarkField;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
@@ -10,9 +12,10 @@ import java.util.Optional;
 @Entity
 @IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_alarm_setting")
+@EntityListeners(DatamarkEntityListener.class)
 public class HibernateAlarmSetting implements Bean {
 
-    private static final long serialVersionUID = 5052011856627355626L;
+    private static final long serialVersionUID = -3045839736948612054L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -46,6 +49,22 @@ public class HibernateAlarmSetting implements Bean {
     })
     private HibernatePoint point;
 
+    // -----------------------------------------------------------审计-----------------------------------------------------------
+    @DatamarkField(handlerName = "alarmSettingDatamarkHandler")
+    @Column(
+            name = "created_datamark",
+            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE,
+            updatable = false
+    )
+    private String createdDatamark;
+
+    @DatamarkField(handlerName = "alarmSettingDatamarkHandler")
+    @Column(
+            name = "modified_datamark",
+            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE
+    )
+    private String modifiedDatamark;
+
     public HibernateAlarmSetting() {
     }
 
@@ -56,6 +75,14 @@ public class HibernateAlarmSetting implements Bean {
 
     public void setKey(HibernateLongIdKey idKey) {
         this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
+    }
+
+    public HibernateLongIdKey getPointKey() {
+        return Optional.ofNullable(pointLongId).map(HibernateLongIdKey::new).orElse(null);
+    }
+
+    public void setPointKey(HibernateLongIdKey parentKey) {
+        this.pointLongId = Optional.ofNullable(parentKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
     // -----------------------------------------------------------常规属性区-----------------------------------------------------------
@@ -71,16 +98,8 @@ public class HibernateAlarmSetting implements Bean {
         return pointLongId;
     }
 
-    public void setPointLongId(Long pointGuid) {
-        this.pointLongId = pointGuid;
-    }
-
-    public HibernateLongIdKey getPointKey() {
-        return Optional.ofNullable(pointLongId).map(HibernateLongIdKey::new).orElse(null);
-    }
-
-    public void setPointKey(HibernateLongIdKey parentKey) {
-        this.pointLongId = Optional.ofNullable(parentKey).map(HibernateLongIdKey::getLongId).orElse(null);
+    public void setPointLongId(Long pointLongId) {
+        this.pointLongId = pointLongId;
     }
 
     public boolean isEnabled() {
@@ -131,6 +150,22 @@ public class HibernateAlarmSetting implements Bean {
         this.point = point;
     }
 
+    public String getCreatedDatamark() {
+        return createdDatamark;
+    }
+
+    public void setCreatedDatamark(String createdDatamark) {
+        this.createdDatamark = createdDatamark;
+    }
+
+    public String getModifiedDatamark() {
+        return modifiedDatamark;
+    }
+
+    public void setModifiedDatamark(String modifiedDatamark) {
+        this.modifiedDatamark = modifiedDatamark;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
@@ -141,6 +176,8 @@ public class HibernateAlarmSetting implements Bean {
                 "alarmMessage = " + alarmMessage + ", " +
                 "alarmType = " + alarmType + ", " +
                 "remark = " + remark + ", " +
-                "point = " + point + ")";
+                "point = " + point + ", " +
+                "createdDatamark = " + createdDatamark + ", " +
+                "modifiedDatamark = " + modifiedDatamark + ")";
     }
 }

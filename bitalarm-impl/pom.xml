@@ -192,6 +192,11 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>dcti</artifactId>
         </dependency>
+        <!-- Dwarfeng-datamark 组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dwarfeng-datamark</artifactId>
+        </dependency>
         <!-- 程序自身模块 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>

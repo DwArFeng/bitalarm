@@ -18,6 +18,7 @@ public class ServiceExceptionMapperConfiguration {
     @Bean
     public MapServiceExceptionMapper mapServiceExceptionMapper() {
         Map<Class<? extends Exception>, ServiceException.Code> destination = ServiceExceptionHelper.putDefaultDestination(null);
+        destination = com.dwarfeng.datamark.util.ServiceExceptionHelper.putDefaultDestination(destination);
         destination.put(AlarmDisabledException.class, ServiceExceptionCodes.ALARM_HANDLER_DISABLED);
         destination.put(ConsumeStoppedException.class, ServiceExceptionCodes.CONSUME_HANDLER_STOPPED);
         destination.put(PointNotExistsException.class, ServiceExceptionCodes.POINT_NOT_EXISTS);

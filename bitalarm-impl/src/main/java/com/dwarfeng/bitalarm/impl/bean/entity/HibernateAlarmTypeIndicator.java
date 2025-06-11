@@ -1,21 +1,21 @@
 package com.dwarfeng.bitalarm.impl.bean.entity;
 
 import com.dwarfeng.bitalarm.sdk.util.Constraints;
+import com.dwarfeng.datamark.bean.jpa.DatamarkEntityListener;
+import com.dwarfeng.datamark.bean.jpa.DatamarkField;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Optional;
 
 @javax.persistence.Entity
 @IdClass(HibernateStringIdKey.class)
 @Table(name = "tbl_alarm_type_indicator")
+@EntityListeners(DatamarkEntityListener.class)
 public class HibernateAlarmTypeIndicator implements Bean {
 
-    private static final long serialVersionUID = -7381358854229853218L;
+    private static final long serialVersionUID = 8327458668874455794L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -28,6 +28,22 @@ public class HibernateAlarmTypeIndicator implements Bean {
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
+
+    // -----------------------------------------------------------审计-----------------------------------------------------------
+    @DatamarkField(handlerName = "alarmTypeIndicatorDatamarkHandler")
+    @Column(
+            name = "created_datamark",
+            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE,
+            updatable = false
+    )
+    private String createdDatamark;
+
+    @DatamarkField(handlerName = "alarmTypeIndicatorDatamarkHandler")
+    @Column(
+            name = "modified_datamark",
+            length = com.dwarfeng.datamark.util.Constraints.LENGTH_DATAMARK_VALUE
+    )
+    private String modifiedDatamark;
 
     public HibernateAlarmTypeIndicator() {
     }
@@ -66,11 +82,29 @@ public class HibernateAlarmTypeIndicator implements Bean {
         this.remark = remark;
     }
 
+    public String getCreatedDatamark() {
+        return createdDatamark;
+    }
+
+    public void setCreatedDatamark(String createdDatamark) {
+        this.createdDatamark = createdDatamark;
+    }
+
+    public String getModifiedDatamark() {
+        return modifiedDatamark;
+    }
+
+    public void setModifiedDatamark(String modifiedDatamark) {
+        this.modifiedDatamark = modifiedDatamark;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "stringId = " + stringId + ", " +
                 "label = " + label + ", " +
-                "remark = " + remark + ")";
+                "remark = " + remark + ", " +
+                "createdDatamark = " + createdDatamark + ", " +
+                "modifiedDatamark = " + modifiedDatamark + ")";
     }
 }

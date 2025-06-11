@@ -57,6 +57,7 @@
         <spring-terminator.version>1.0.14.a</spring-terminator.version>
         <spring-telqos.version>1.1.13.a</spring-telqos.version>
         <dcti.version>1.1.11.a</dcti.version>
+        <dwarfeng-datamark.version>1.0.2.a</dwarfeng-datamark.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -423,6 +424,12 @@
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>dcti</artifactId>
                 <version>${dcti.version}</version>
+            </dependency>
+            <!-- Dwarfeng-datamark 组件 -->
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>dwarfeng-datamark</artifactId>
+                <version>${dwarfeng-datamark.version}</version>
             </dependency>
             <!-- 程序自身组件 -->
             <dependency>

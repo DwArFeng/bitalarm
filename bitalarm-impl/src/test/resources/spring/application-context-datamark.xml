@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:datamark="http://dwarfeng.com/schema/dwarfeng-datamark"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://dwarfeng.com/schema/dwarfeng-datamark
+        http://dwarfeng.com/schema/dwarfeng-datamark/dwarfeng-datamark.xsd"
+>
+
+    <!-- AlarmTypeIndicator 数据标识 -->
+    <datamark:handler
+            handler-name="alarmTypeIndicatorDatamarkHandler"
+            resource-url="${datamark.alarm_type_indicator.resource_url}"
+            resource-charset="${datamark.alarm_type_indicator.resource_charset}"
+            update-allowed="${datamark.alarm_type_indicator.update_allowed}"
+    />
+
+    <!-- AlarmSetting 数据标识 -->
+    <datamark:handler
+            handler-name="alarmSettingDatamarkHandler"
+            resource-url="${datamark.alarm_setting.resource_url}"
+            resource-charset="${datamark.alarm_setting.resource_charset}"
+            update-allowed="${datamark.alarm_setting.update_allowed}"
+    />
+
+    <!-- Point 数据标识 -->
+    <datamark:handler
+            handler-name="pointDatamarkHandler"
+            resource-url="${datamark.point.resource_url}"
+            resource-charset="${datamark.point.resource_charset}"
+            update-allowed="${datamark.point.update_allowed}"
+    />
+</beans>
