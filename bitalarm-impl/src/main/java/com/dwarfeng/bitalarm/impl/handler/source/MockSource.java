@@ -1,5 +1,6 @@
 package com.dwarfeng.bitalarm.impl.handler.source;
 
+import com.dwarfeng.bitalarm.sdk.handler.source.AbstractSource;
 import com.dwarfeng.bitalarm.stack.exception.AlarmDisabledException;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import org.slf4j.Logger;

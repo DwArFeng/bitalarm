@@ -1,5 +1,6 @@
 package com.dwarfeng.bitalarm.impl.handler.pusher;
 
+import com.dwarfeng.bitalarm.sdk.handler.pusher.AbstractPusher;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import org.springframework.stereotype.Component;

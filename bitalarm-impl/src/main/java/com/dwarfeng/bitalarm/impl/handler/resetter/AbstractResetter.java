@@ -1,62 +1,16 @@
 package com.dwarfeng.bitalarm.impl.handler.resetter;
 
-import com.dwarfeng.bitalarm.stack.handler.Resetter;
-import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
-import com.dwarfeng.subgrade.stack.exception.HandlerException;
-
 /**
  * 重置器的抽象实现。
  *
  * @author DwArFeng
+ * @see com.dwarfeng.bitalarm.sdk.handler.resetter.AbstractResetter
  * @since 1.7.0
+ * @deprecated 该对象已经被废弃，请使用 sdk 模块下的对应对象代替。
  */
-public abstract class AbstractResetter implements Resetter {
+@Deprecated
+public abstract class AbstractResetter extends com.dwarfeng.bitalarm.sdk.handler.resetter.AbstractResetter {
 
-    protected Context context;
-
-    @Override
-    public void init(Context context) {
-        this.context = context;
-    }
-
-    @Override
-    public void start() throws HandlerException {
-        try {
-            doStart();
-        } catch (Exception e) {
-            throw HandlerExceptionHelper.parse(e);
-        }
-    }
-
-    /**
-     * 启动方法的具体实现。
-     *
-     * @throws Exception 启动过程中发生的任何异常。
-     * @see Resetter#start()
-     */
-    protected abstract void doStart() throws Exception;
-
-    @Override
-    public void stop() throws HandlerException {
-        try {
-            doStop();
-        } catch (Exception e) {
-            throw HandlerExceptionHelper.parse(e);
-        }
-    }
-
-    /**
-     * 停止方法的具体实现。
-     *
-     * @throws Exception 停止过程中发生的任何异常。
-     * @see Resetter#stop()
-     */
-    protected abstract void doStop() throws Exception;
-
-    @Override
-    public String toString() {
-        return "AbstractResetter{" +
-                "context=" + context +
-                '}';
+    public AbstractResetter() {
     }
 }

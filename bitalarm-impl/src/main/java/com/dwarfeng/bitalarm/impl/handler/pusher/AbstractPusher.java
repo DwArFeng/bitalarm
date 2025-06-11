@@ -1,9 +1,5 @@
 package com.dwarfeng.bitalarm.impl.handler.pusher;
 
-import com.dwarfeng.bitalarm.impl.handler.Pusher;
-
-import java.util.Objects;
-
 /**
  * 抽象推送器。
  *
@@ -11,36 +7,17 @@ import java.util.Objects;
  * 推送器的抽象实现。
  *
  * @author DwArFeng
+ * @see com.dwarfeng.bitalarm.sdk.handler.pusher.AbstractPusher
  * @since 1.0.0
+ * @deprecated 该对象已经被废弃，请使用 sdk 模块下的对应对象代替。
  */
-public abstract class AbstractPusher implements Pusher {
-
-    protected String pusherType;
+@Deprecated
+public abstract class AbstractPusher extends com.dwarfeng.bitalarm.sdk.handler.pusher.AbstractPusher {
 
     public AbstractPusher() {
     }
 
-    public AbstractPusher(String sinkType) {
-        this.pusherType = sinkType;
-    }
-
-    @Override
-    public boolean supportType(String type) {
-        return Objects.equals(pusherType, type);
-    }
-
-    public String getPusherType() {
-        return pusherType;
-    }
-
-    public void setPusherType(String pusherType) {
-        this.pusherType = pusherType;
-    }
-
-    @Override
-    public String toString() {
-        return "AbstractPusher{" +
-                "pusherType='" + pusherType + '\'' +
-                '}';
+    public AbstractPusher(String pusherType) {
+        super(pusherType);
     }
 }

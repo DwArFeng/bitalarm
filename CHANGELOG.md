@@ -4,6 +4,12 @@
 
 #### 功能构建
 
+- SPI 目录结构优化。
+  - 将驱动机制的 SPI 接口与抽象类提相关代码文件提升至 `sdk` 模块中。
+  - 将执行机制的 SPI 接口与抽象类提相关代码文件提升至 `sdk` 模块中。
+  - 将推送机制的 SPI 接口与抽象类提相关代码文件提升至 `sdk` 模块中。
+  - 将重置机制的 SPI 抽象类提相关代码文件提升至 `sdk` 模块中。
+
 - 优化部分类中部分方法的行为分析行为。
   - com.dwarfeng.bitalarm.impl.cache.AlarmHistoryCacheImpl。
   - com.dwarfeng.bitalarm.impl.cache.AlarmSettingCacheImpl。
