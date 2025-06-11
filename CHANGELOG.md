@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 增加预设的运维指令。
+  - com.dwarfeng.springtelqos.api.integration.log4j2.Log4j2Command。
+
 - 导入运维指令。
   - com.dwarfeng.datamark.service.telqos.*。
 
