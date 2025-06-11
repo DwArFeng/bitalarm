@@ -4,6 +4,24 @@
 
 #### 功能构建
 
+- 优化部分类中部分方法的行为分析行为。
+  - com.dwarfeng.bitalarm.impl.cache.AlarmHistoryCacheImpl。
+  - com.dwarfeng.bitalarm.impl.cache.AlarmSettingCacheImpl。
+  - com.dwarfeng.bitalarm.impl.cache.AlarmTypeIndicatorCacheImpl。
+  - com.dwarfeng.bitalarm.impl.cache.EnabledAlarmSettingCacheImpl。
+  - com.dwarfeng.bitalarm.impl.dao.AlarmHistoryDaoImpl。
+  - com.dwarfeng.bitalarm.impl.dao.AlarmInfoDaoImpl。
+  - com.dwarfeng.bitalarm.impl.dao.AlarmSettingDaoImpl。
+  - com.dwarfeng.bitalarm.impl.dao.AlarmTypeIndicatorDaoImpl。
+  - com.dwarfeng.bitalarm.impl.dao.CurrentAlarmDaoImpl。
+  - com.dwarfeng.bitalarm.impl.handler.AlarmLocalCacheHandlerImpl。
+  - com.dwarfeng.bitalarm.impl.service.AlarmHistoryMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.AlarmInfoMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.AlarmSettingMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.AlarmTypeIndicatorMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.CurrentAlarmMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.PointMaintainServiceImpl。
+
 - 优化部分维护服务实现中的部分方法的性能。
   - com.dwarfeng.bitalarm.impl.service.AlarmHistoryMaintainServiceImpl。
   - com.dwarfeng.bitalarm.impl.service.AlarmInfoMaintainServiceImpl。

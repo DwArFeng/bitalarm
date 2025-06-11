@@ -211,6 +211,7 @@ public class AlarmInfoMaintainServiceImpl implements AlarmInfoMaintainService {
      */
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<AlarmInfo> lookupAsList() throws ServiceException {
         return entireLookupService.lookupAsList();
@@ -221,6 +222,7 @@ public class AlarmInfoMaintainServiceImpl implements AlarmInfoMaintainService {
      */
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<AlarmInfo> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
         return entireLookupService.lookupAsList(pagingInfo);

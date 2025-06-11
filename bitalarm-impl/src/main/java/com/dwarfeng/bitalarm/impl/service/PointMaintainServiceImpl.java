@@ -231,6 +231,7 @@ public class PointMaintainServiceImpl implements PointMaintainService {
      */
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<Point> lookupAsList() throws ServiceException {
         return entireLookupService.lookupAsList();
@@ -241,6 +242,7 @@ public class PointMaintainServiceImpl implements PointMaintainService {
      */
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<Point> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
         return entireLookupService.lookupAsList(pagingInfo);
@@ -271,6 +273,7 @@ public class PointMaintainServiceImpl implements PointMaintainService {
      */
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<Point> lookupAsList(String preset, Object[] objs) throws ServiceException {
         return presetLookupService.lookupAsList(preset, objs);

@@ -6,6 +6,7 @@ import com.dwarfeng.subgrade.impl.service.CustomCrudService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -104,6 +105,7 @@ public class CurrentAlarmMaintainServiceImpl implements CurrentAlarmMaintainServ
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public PagedData<CurrentAlarm> lookup() throws ServiceException {
         return entireLookupService.lookup();
@@ -111,6 +113,7 @@ public class CurrentAlarmMaintainServiceImpl implements CurrentAlarmMaintainServ
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public PagedData<CurrentAlarm> lookup(PagingInfo pagingInfo) throws ServiceException {
         return entireLookupService.lookup(pagingInfo);
@@ -118,6 +121,7 @@ public class CurrentAlarmMaintainServiceImpl implements CurrentAlarmMaintainServ
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<CurrentAlarm> lookup(String preset, Object[] objs) throws ServiceException {
         return presetLookupService.lookup(preset, objs);
@@ -125,6 +129,7 @@ public class CurrentAlarmMaintainServiceImpl implements CurrentAlarmMaintainServ
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public PagedData<CurrentAlarm> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         return presetLookupService.lookup(preset, objs, pagingInfo);
@@ -135,6 +140,7 @@ public class CurrentAlarmMaintainServiceImpl implements CurrentAlarmMaintainServ
      */
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<CurrentAlarm> lookupAsList() throws ServiceException {
         return entireLookupService.lookupAsList();
@@ -145,6 +151,7 @@ public class CurrentAlarmMaintainServiceImpl implements CurrentAlarmMaintainServ
      */
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<CurrentAlarm> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
         return entireLookupService.lookupAsList(pagingInfo);
@@ -175,6 +182,7 @@ public class CurrentAlarmMaintainServiceImpl implements CurrentAlarmMaintainServ
      */
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<CurrentAlarm> lookupAsList(String preset, Object[] objs) throws ServiceException {
         return presetLookupService.lookupAsList(preset, objs);

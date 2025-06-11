@@ -7,6 +7,7 @@ import com.dwarfeng.bitalarm.stack.service.PointMaintainService;
 import com.dwarfeng.subgrade.impl.handler.Fetcher;
 import com.dwarfeng.subgrade.impl.handler.GeneralLocalCacheHandler;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.stereotype.Component;
@@ -30,6 +31,7 @@ public class AlarmLocalCacheHandlerImpl implements AlarmLocalCacheHandler {
     }
 
     @BehaviorAnalyse
+    @SkipRecord
     @Override
     public List<AlarmSetting> get(LongIdKey key) throws HandlerException {
         return handler.get(key);

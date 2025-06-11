@@ -5,6 +5,7 @@ import com.dwarfeng.bitalarm.stack.service.AlarmTypeIndicatorMaintainService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -100,6 +101,7 @@ public class AlarmTypeIndicatorMaintainServiceImpl implements AlarmTypeIndicator
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public PagedData<AlarmTypeIndicator> lookup() throws ServiceException {
         return entireLookupService.lookup();
@@ -107,6 +109,7 @@ public class AlarmTypeIndicatorMaintainServiceImpl implements AlarmTypeIndicator
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public PagedData<AlarmTypeIndicator> lookup(PagingInfo pagingInfo) throws ServiceException {
         return entireLookupService.lookup(pagingInfo);
@@ -117,6 +120,7 @@ public class AlarmTypeIndicatorMaintainServiceImpl implements AlarmTypeIndicator
      */
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<AlarmTypeIndicator> lookupAsList() throws ServiceException {
         return entireLookupService.lookupAsList();
@@ -127,6 +131,7 @@ public class AlarmTypeIndicatorMaintainServiceImpl implements AlarmTypeIndicator
      */
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
     public List<AlarmTypeIndicator> lookupAsList(PagingInfo pagingInfo) throws ServiceException {
         return entireLookupService.lookupAsList(pagingInfo);
