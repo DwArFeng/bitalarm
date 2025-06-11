@@ -9,7 +9,7 @@
         http://dubbo.apache.org/schema/dubbo/dubbo.xsd"
 >
 
-    <dubbo:application name="bitalarm-test">
+    <dubbo:application name="bitalarm-impl-test">
         <dubbo:parameter key="qos.enable" value="false"/>
     </dubbo:application>
 
