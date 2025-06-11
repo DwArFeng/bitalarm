@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 启动器优化。
+  - 将入口方法中完整独立的功能封装在子方法中，使入口方法代码结构更加清晰。
+
 - 优化部分单元测试代码，以规避潜在的 bug。
   - com.dwarfeng.bitalarm.impl.service.AlarmHistoryMaintainServiceImplTest。
   - com.dwarfeng.bitalarm.impl.service.AlarmInfoMaintainServiceImplTest。
