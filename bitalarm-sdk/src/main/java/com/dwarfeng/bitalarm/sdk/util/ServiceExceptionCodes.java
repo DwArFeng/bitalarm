@@ -38,7 +38,13 @@ public final class ServiceExceptionCodes {
      * @param exceptionCodeOffset 指定的异常代号的偏移量。
      */
     public static void setExceptionCodeOffset(int exceptionCodeOffset) {
+        // 设置 EXCEPTION_CODE_OFFSET 的值。
         EXCEPTION_CODE_OFFSET = exceptionCodeOffset;
+
+        // 以新的 EXCEPTION_CODE_OFFSET 为基准，更新异常代码的值。
+        ALARM_HANDLER_DISABLED.setCode(offset(0));
+        CONSUME_HANDLER_STOPPED.setCode(offset(10));
+        POINT_NOT_EXISTS.setCode(offset(20));
     }
 
     private ServiceExceptionCodes() {

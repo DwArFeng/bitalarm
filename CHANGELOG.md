@@ -102,6 +102,9 @@
 
 #### Bug修复
 
+- 修复服务异常代号的 bug。
+  - 修复 `ServiceExceptionCodes` 设置服务异常代号的偏移量时，服务异常代号中的代码值未更新的的 bug。
+
 - 修正配置类中的错误。
   - ExceptionCodeOffsetConfiguration。
 
