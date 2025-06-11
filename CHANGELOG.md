@@ -4,6 +4,15 @@
 
 #### 功能构建
 
+- 优化部分单元测试代码，以规避潜在的 bug。
+  - com.dwarfeng.bitalarm.impl.service.AlarmHistoryMaintainServiceImplTest。
+  - com.dwarfeng.bitalarm.impl.service.AlarmInfoMaintainServiceImplTest。
+  - com.dwarfeng.bitalarm.impl.service.AlarmSettingMaintainServiceImplTest。
+  - com.dwarfeng.bitalarm.impl.service.AlarmTypeIndicatorMaintainServiceImplTest。
+  - com.dwarfeng.bitalarm.impl.service.CurrentAlarmMaintainServiceImplTest。
+  - com.dwarfeng.bitalarm.impl.service.EnabledAlarmSettingLookupServiceImplTest。
+  - com.dwarfeng.bitalarm.impl.service.PointMaintainServiceImplTest。
+
 - 增加预设的运维指令。
   - com.dwarfeng.springtelqos.api.integration.log4j2.Log4j2Command。
 

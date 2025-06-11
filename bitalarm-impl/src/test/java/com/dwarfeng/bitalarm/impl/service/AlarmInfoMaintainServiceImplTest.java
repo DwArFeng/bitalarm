@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 
@@ -37,29 +38,11 @@ public class AlarmInfoMaintainServiceImplTest {
 
     @Before
     public void setUp() {
-        parentPoint = new Point(
-                new LongIdKey(1),
-                "test-point",
-                "test-point"
-        );
+        parentPoint = new Point(new LongIdKey(1), "test-point", "test-point");
         parentAlarmSetting = new AlarmSetting(
-                null,
-                parentPoint.getKey(),
-                true,
-                1,
-                "我是报警信息",
-                "alarmType",
-                "测试用报警设置"
+                null, parentPoint.getKey(), true, 1, "我是报警信息", "alarmType", "测试用报警设置"
         );
-        alarmInfo = new AlarmInfo(
-                null,
-                parentPoint.getKey(),
-                1,
-                "我是报警信息",
-                "alarmType",
-                new Date(),
-                true
-        );
+        alarmInfo = new AlarmInfo(null, parentPoint.getKey(), 1, "我是报警信息", "alarmType", new Date(), true);
     }
 
     @After
@@ -79,9 +62,15 @@ public class AlarmInfoMaintainServiceImplTest {
             AlarmInfo alarmInfo1 = alarmInfoMaintainService.get(this.alarmInfo.getKey());
             assertEquals(BeanUtils.describe(alarmInfo), BeanUtils.describe(alarmInfo1));
         } finally {
-            pointMaintainService.deleteIfExists(parentPoint.getKey());
-            alarmInfoMaintainService.deleteIfExists(alarmInfo.getKey());
-            alarmSettingMaintainService.deleteIfExists(parentAlarmSetting.getKey());
+            if (Objects.nonNull(alarmInfo.getKey())) {
+                alarmInfoMaintainService.deleteIfExists(alarmInfo.getKey());
+            }
+            if (Objects.nonNull(parentAlarmSetting.getKey())) {
+                alarmSettingMaintainService.deleteIfExists(parentAlarmSetting.getKey());
+            }
+            if (Objects.nonNull(parentPoint.getKey())) {
+                pointMaintainService.deleteIfExists(parentPoint.getKey());
+            }
         }
     }
 }

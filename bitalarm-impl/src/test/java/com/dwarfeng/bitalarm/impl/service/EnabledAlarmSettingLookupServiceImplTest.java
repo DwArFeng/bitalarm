@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 
@@ -100,9 +101,14 @@ public class EnabledAlarmSettingLookupServiceImplTest {
             assertEquals(5, enabledAlarmSettingLookupService.getEnabledAlarmSettings(pointKey).size());
             assertEquals(5, enabledAlarmSettingCache.get(pointKey).size());
         } finally {
-            pointMaintainService.deleteIfExists(pointKey);
             for (AlarmSetting alarmSetting : alarmSettings) {
+                if (Objects.isNull(alarmSetting.getKey())) {
+                    continue;
+                }
                 alarmSettingMaintainService.deleteIfExists(alarmSetting.getKey());
+            }
+            if (Objects.nonNull(pointKey)) {
+                pointMaintainService.deleteIfExists(pointKey);
             }
         }
     }

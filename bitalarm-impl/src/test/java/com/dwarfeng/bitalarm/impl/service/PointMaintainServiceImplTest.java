@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,11 +30,7 @@ public class PointMaintainServiceImplTest {
     public void setUp() {
         points = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            Point point = new Point(
-                    null,
-                    "point-" + (i + 1),
-                    "test-point"
-            );
+            Point point = new Point(null, "point-" + (i + 1), "test-point");
             points.add(point);
         }
     }
@@ -54,6 +51,9 @@ public class PointMaintainServiceImplTest {
             }
         } finally {
             for (Point point : points) {
+                if (Objects.isNull(point.getKey())) {
+                    continue;
+                }
                 pointMaintainService.delete(point.getKey());
             }
         }

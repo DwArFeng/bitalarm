@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,33 +41,15 @@ public class AlarmHistoryMaintainServiceImplTest {
 
     @Before
     public void setUp() {
-        parentPoint = new Point(
-                new LongIdKey(1),
-                "test-point",
-                "test-point"
-        );
+        parentPoint = new Point(new LongIdKey(1), "test-point", "test-point");
         Date date = new Date();
         parentAlarmSetting = new AlarmSetting(
-                null,
-                parentPoint.getKey(),
-                true,
-                1,
-                "我是报警信息",
-                "alarmType",
-                "测试用报警设置"
+                null, parentPoint.getKey(), true, 1, "我是报警信息", "alarmType", "测试用报警设置"
         );
         alarmHistories = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             AlarmHistory alarmHistory = new AlarmHistory(
-                    null,
-                    null,
-                    null,
-                    1,
-                    "我是报警信息",
-                    "alarmType",
-                    date,
-                    date,
-                    0L
+                    null, null, null, 1, "我是报警信息", "alarmType", date, date, 0L
             );
             alarmHistories.add(alarmHistory);
         }
@@ -98,11 +81,18 @@ public class AlarmHistoryMaintainServiceImplTest {
                     AlarmHistoryMaintainService.CHILD_FOR_ALARM_SETTING, new Object[]{parentAlarmSetting.getKey()});
             assertEquals(5, lookup.getCount());
         } finally {
-            pointMaintainService.deleteIfExists(parentPoint.getKey());
             for (AlarmHistory alarmHistory : alarmHistories) {
+                if (Objects.isNull(alarmHistory.getKey())) {
+                    continue;
+                }
                 alarmHistoryMaintainService.deleteIfExists(alarmHistory.getKey());
             }
-            alarmSettingMaintainService.deleteIfExists(parentAlarmSetting.getKey());
+            if (Objects.nonNull(parentAlarmSetting.getKey())) {
+                alarmSettingMaintainService.deleteIfExists(parentAlarmSetting.getKey());
+            }
+            if (Objects.nonNull(parentPoint.getKey())) {
+                pointMaintainService.deleteIfExists(parentPoint.getKey());
+            }
         }
     }
 }

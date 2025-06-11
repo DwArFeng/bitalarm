@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,21 +34,11 @@ public class AlarmSettingMaintainServiceImplTest {
 
     @Before
     public void setUp() {
-        parentPoint = new Point(
-                new LongIdKey(1),
-                "test-point",
-                "test-point"
-        );
+        parentPoint = new Point(new LongIdKey(1), "test-point", "test-point");
         alarmSettings = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             AlarmSetting alarmSetting = new AlarmSetting(
-                    null,
-                    parentPoint.getKey(),
-                    true,
-                    1,
-                    "我是报警信息",
-                    "alarmType",
-                    "测试用报警设置"
+                    null, parentPoint.getKey(), true, 1, "我是报警信息", "alarmType", "测试用报警设置"
             );
             alarmSettings.add(alarmSetting);
         }
@@ -70,9 +61,14 @@ public class AlarmSettingMaintainServiceImplTest {
                 assertEquals(BeanUtils.describe(alarmSetting), BeanUtils.describe(testAlarmSetting));
             }
         } finally {
-            pointMaintainService.deleteIfExists(parentPoint.getKey());
             for (AlarmSetting alarmSetting : alarmSettings) {
+                if (Objects.isNull(alarmSetting.getKey())) {
+                    continue;
+                }
                 alarmSettingMaintainService.deleteIfExists(alarmSetting.getKey());
+            }
+            if (Objects.nonNull(parentPoint.getKey())) {
+                pointMaintainService.deleteIfExists(parentPoint.getKey());
             }
         }
     }
