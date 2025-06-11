@@ -3,6 +3,8 @@ package com.dwarfeng.bitalarm.impl.service.telqos;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,7 +39,7 @@ final class CommandUtil {
         return "-" + commandOption;
     }
 
-    public static String syntax(String... patterns) {
+    public static String syntax(@Nonnull String... patterns) {
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         for (String pattern : patterns) {
             sj.add(pattern);
@@ -45,7 +47,9 @@ final class CommandUtil {
         return sj.toString();
     }
 
-    public static Pair<String, Integer> analyseCommand(CommandLine commandLine, String... commandOptions) {
+    public static Pair<String, Integer> analyseCommand(
+            @Nonnull CommandLine commandLine, @Nonnull String... commandOptions
+    ) {
         int i = 0;
         String subCmd = null;
         for (String commandOption : commandOptions) {
@@ -57,7 +61,7 @@ final class CommandUtil {
         return Pair.of(subCmd, i);
     }
 
-    public static String optionMismatchMessage(String... patterns) {
+    public static String optionMismatchMessage(@Nonnull String... patterns) {
         StringJoiner sj = new StringJoiner(", ", "下列选项必须且只能含有一个: ", "");
         for (String pattern : patterns) {
             sj.add(concatOptionPrefix(pattern));
@@ -65,7 +69,7 @@ final class CommandUtil {
         return sj.toString();
     }
 
-    public static int maxStringLength(List<String> stringList, int offset) {
+    public static int maxStringLength(@Nonnull List<String> stringList, int offset) {
         int result = 0;
         for (String string : stringList) {
             int currentLength = Objects.isNull(string) ? STRING_LENGTH_NULL : string.length();
@@ -74,7 +78,7 @@ final class CommandUtil {
         return result + offset;
     }
 
-    public static String formatDate(Date date) {
+    public static String formatDate(@Nullable Date date) {
         if (Objects.isNull(date)) {
             return "null";
         }

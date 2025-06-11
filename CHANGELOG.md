@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 为部分工具类中方法的入口参数增加 `@Nonnull` 注解。
+  - com.dwarfeng.bitalarm.impl.service.telqos.CommandUtil。
+
 - 优化文件格式。
   - 优化 `*.properties` 文件的格式。
   - 优化 `application-context-*.xml` 文件的格式。
