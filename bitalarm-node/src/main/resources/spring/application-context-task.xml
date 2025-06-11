@@ -9,11 +9,13 @@
         http://www.springframework.org/schema/task/spring-task.xsd"
 >
 
-    <!-- 启用Async注解 -->
+    <!-- 启用 Async 注解。 -->
     <task:annotation-driven executor="executor"/>
-    <!-- 装配Executor -->
-    <task:executor id="executor" pool-size="${executor.pool_size}" queue-capacity="${executor.queue_capacity}"
-                   keep-alive="${executor.keep_alive}" rejection-policy="CALLER_RUNS"/>
-    <!-- 装配Scheduler -->
+    <!-- 装配 Executor。 -->
+    <task:executor
+            id="executor" pool-size="${executor.pool_size}" queue-capacity="${executor.queue_capacity}"
+            keep-alive="${executor.keep_alive}" rejection-policy="CALLER_RUNS"
+    />
+    <!-- 装配 Scheduler。 -->
     <task:scheduler id="scheduler" pool-size="${scheduler.pool_size}"/>
 </beans>

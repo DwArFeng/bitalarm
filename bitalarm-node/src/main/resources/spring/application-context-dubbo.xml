@@ -13,14 +13,14 @@
         <dubbo:parameter key="qos.enable" value="false"/>
     </dubbo:application>
 
-    <!-- zookeeper注册中心 -->
+    <!-- Zookeeper 注册中心。 -->
     <dubbo:registry address="${dubbo.registry.zookeeper.address}" timeout="${dubbo.registry.zookeeper.timeout}"/>
 
-    <!-- dubbo协议 -->
+    <!-- Dubbo 协议。 -->
     <dubbo:protocol name="dubbo" port="${dubbo.protocol.dubbo.port}" host="${dubbo.protocol.dubbo.host}"
                     dispatcher="message" threadpool="fixed" threads="100"/>
 
-    <!-- 向注册中心注册暴露服务地址,注册服务 -->
+    <!-- 向注册中心注册暴露服务地址,注册服务。 -->
     <dubbo:service
             interface="com.dwarfeng.bitalarm.stack.service.AlarmSettingMaintainService"
             ref="alarmSettingMaintainServiceImpl"
@@ -62,7 +62,7 @@
             group="${dubbo.provider.group}"
     />
 
-    <!-- 向注册中心注册暴露服务地址,注册消费者服务 -->
+    <!-- 向注册中心注册暴露服务地址,注册消费者服务。 -->
     <dubbo:reference
             id="snowflakeGenerateService"
             interface="com.dwarfeng.sfds.stack.service.GenerateService"

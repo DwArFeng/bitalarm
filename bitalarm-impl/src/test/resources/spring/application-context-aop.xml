@@ -9,6 +9,6 @@
         http://www.springframework.org/schema/aop/spring-aop.xsd"
 >
 
-    <!-- 启用AOP注解 -->
+    <!-- 启用 AOP 注解。 -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 </beans>
