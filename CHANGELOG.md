@@ -79,6 +79,9 @@
 
 #### Bug修复
 
+- 修正配置类中的错误。
+  - ExceptionCodeOffsetConfiguration。
+
 - 修复当某点位一直推送为报警点时，报警时间一直更新问题。
 
 #### 功能移除
