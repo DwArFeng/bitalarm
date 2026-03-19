@@ -134,7 +134,7 @@ public class PointCrudOperation implements BatchCrudOperation<LongIdKey, Point> 
 
     @Override
     public boolean nonExists(List<LongIdKey> keys) throws Exception {
-        return pointCache.nonExists(keys) && pointCache.nonExists(keys);
+        return pointCache.nonExists(keys) && pointDao.nonExists(keys);
     }
 
     @Override

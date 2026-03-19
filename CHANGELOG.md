@@ -71,6 +71,9 @@
 
 ### Bug 修复
 
+- 修复部分 CrudOperation 中部分存在性判断方法行为异常的 bug。
+  - com.dwarfeng.bitalarm.impl.service.operation.PointCrudOperation。
+
 - 修复 `assembly.xml` 中的配置错误。
 
 ### 功能移除
