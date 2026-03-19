@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 优化启停脚本注释，以规避潜在的字符集问题。
+  - binres/bitalarm-start.bat。
+  - binres/bitalarm-start.sh。
+  - binres/bitalarm-stop.sh。
+
 - 增加预设的运维指令。
   - com.dwarfeng.springtelqos.api.integration.system.UptimeCommand。
   - com.dwarfeng.springtelqos.api.integration.system.JmxRemoteCommand。
