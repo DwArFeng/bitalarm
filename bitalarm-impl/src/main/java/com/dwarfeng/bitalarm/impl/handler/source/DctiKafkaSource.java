@@ -6,7 +6,7 @@ import com.dwarfeng.dcti.sdk.util.DataInfoUtil;
 import com.dwarfeng.dcti.stack.bean.dto.DataInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -91,7 +91,7 @@ public class DctiKafkaSource extends AbstractSource {
                 DataInfo dataInfo = DataInfoUtil.fromMessage(message);
 
                 // 如果从消息队列里接到了 null 值的标识，则忽略本次数据。
-                if (StringUtils.equals(dataInfo.getValue(), "!null")) {
+                if (Strings.CS.equals(dataInfo.getValue(), "!null")) {
                     break;
                 }
 
@@ -99,9 +99,8 @@ public class DctiKafkaSource extends AbstractSource {
                 LongIdKey pointKey = new LongIdKey(pointId);
                 byte[] data = null;
                 Date happenedDate = dataInfo.getHappenedDate();
-                if (StringUtils.equalsIgnoreCase("T", dataInfo.getValue())
-                        || StringUtils.equalsIgnoreCase("F", dataInfo.getValue())) {
-                    if (StringUtils.equalsIgnoreCase("T", dataInfo.getValue())) {
+                if (Strings.CI.equals("T", dataInfo.getValue()) || Strings.CI.equals("F", dataInfo.getValue())) {
+                    if (Strings.CI.equals("T", dataInfo.getValue())) {
                         data = new byte[]{(byte) 1};
                     } else {
                         data = new byte[]{(byte) 0};
