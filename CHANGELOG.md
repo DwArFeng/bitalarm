@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `bitalarm-stack` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.bitalarm.stack.handler.AlarmHandler。
+  - com.dwarfeng.bitalarm.stack.service.AlarmQosService。
+
 - 依赖升级。
   - 升级 `subgrade` 依赖版本为 `1.8.2.a` 并解决兼容性问题，以规避漏洞。
   - 升级 `kafka` 依赖版本为 `3.9.2` 以规避漏洞。
