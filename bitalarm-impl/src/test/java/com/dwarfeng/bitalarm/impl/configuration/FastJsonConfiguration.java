@@ -13,7 +13,7 @@ public class FastJsonConfiguration {
 
     public FastJsonConfiguration() {
         LOGGER.info("正在配置 FastJson autotype 白名单");
-        //实体对象。
+        // 实体对象。
         ParserConfig.getGlobalInstance().addAccept(FastJsonAlarmSetting.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonAlarmHistory.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonCurrentAlarm.class.getCanonicalName());

@@ -15,12 +15,16 @@ public class HibernateAlarmHistory implements Bean {
 
     private static final long serialVersionUID = -9202719167406169615L;
 
-    // -----------------------------------------------------------主键-----------------------------------------------------------
+    // region 主键
+
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private Long longId;
 
-    // -----------------------------------------------------------主属性字段-----------------------------------------------------------
+    // endregion
+
+    // region 主属性字段
+
     @Column(name = "alarm_setting_id")
     private Long alarmSettingLongId;
 
@@ -47,10 +51,13 @@ public class HibernateAlarmHistory implements Bean {
     @Column(name = "duration")
     private long duration;
 
+    // endregion
+
     public HibernateAlarmHistory() {
     }
 
-    // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
+    // region 映射用属性区
+
     public HibernateLongIdKey getKey() {
         return Optional.ofNullable(longId).map(HibernateLongIdKey::new).orElse(null);
     }
@@ -59,7 +66,10 @@ public class HibernateAlarmHistory implements Bean {
         this.longId = Optional.ofNullable(idKey).map(HibernateLongIdKey::getLongId).orElse(null);
     }
 
-    // -----------------------------------------------------------常规属性区-----------------------------------------------------------
+    // endregion
+
+    // region 常规属性区
+
     public Long getLongId() {
         return longId;
     }
@@ -147,6 +157,8 @@ public class HibernateAlarmHistory implements Bean {
     public void setDuration(long duration) {
         this.duration = duration;
     }
+
+    // endregion
 
     @Override
     public String toString() {

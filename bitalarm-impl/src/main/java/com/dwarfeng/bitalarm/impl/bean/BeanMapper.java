@@ -27,7 +27,9 @@ import org.mapstruct.Mapping;
  */
 @Mapper
 public interface BeanMapper {
-    // -----------------------------------------------------------Subgrade Key-----------------------------------------------------------
+
+    // region Subgrade Key
+
     HibernateLongIdKey longIdKeyToHibernate(LongIdKey longIdKey);
 
     @InheritInverseConfiguration
@@ -38,7 +40,10 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     StringIdKey stringIdKeyFromHibernate(HibernateStringIdKey hibernateStringIdKey);
 
-    // -----------------------------------------------------------Bitalarm Key-----------------------------------------------------------
+    // endregion
+
+    // region Bitalarm Entity
+
     @Mapping(target = "pointLongId", ignore = true)
     @Mapping(target = "longId", ignore = true)
     @Mapping(target = "alarmSettingLongId", ignore = true)
@@ -73,4 +78,6 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     Point pointFromHibernate(HibernatePoint hibernatePoint);
+
+    // endregion
 }

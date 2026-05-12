@@ -217,12 +217,12 @@ public class ConsumerCommand extends CliCommand {
     }
 
     private void handleLc(Context context) throws Exception {
-        context.sendMessage("1.\tevent\t事件类型消费者");
-        context.sendMessage("2.\tvalue\t值类型消费者");
+        context.sendMessage(String.format("%-4d %-12s %s", 1, "event", "事件类型消费者"));
+        context.sendMessage(String.format("%-4d %-12s %s", 2, "value", "值类型消费者"));
     }
 
     private void handleLn(Context context) throws Exception {
-        context.sendMessage("1.\talarm\t报警信息消费者");
-        context.sendMessage("2.\thistory\t报警历史消费者");
+        context.sendMessage(String.format("%-4d %-12s %s", 1, "alarm", "报警信息消费者"));
+        context.sendMessage(String.format("%-4d %-12s %s", 2, "history", "报警历史消费者"));
     }
 }

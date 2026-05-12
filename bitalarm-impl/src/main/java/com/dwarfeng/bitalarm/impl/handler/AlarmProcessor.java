@@ -120,10 +120,10 @@ public class AlarmProcessor {
 
             // 分析所有报警设置。
             for (AlarmSetting alarmSetting : alarmSettings) {
-                // 判断报警设置的index是否越界，如果越界，则中止。
+                // 判断报警设置的 index 是否越界，如果越界，则中止。
                 int index = alarmSetting.getIndex();
                 if (index < 0) {
-                    LOGGER.warn("无效的报警配置 {}: 报警配置的 index 为 {}, 小于0", alarmSetting.getKey(), index);
+                    LOGGER.warn("无效的报警配置 {}: 报警配置的 index 为 {}, 小于 0", alarmSetting.getKey(), index);
                     continue;
                 }
                 if (index >= data.length * BIT_PER_BYTE) {
@@ -134,13 +134,13 @@ public class AlarmProcessor {
                 // 分析所有报警设置。
                 boolean alarming = checkAlarming(data, index);
 
-                // 生成报警记录，记录并推送
+                // 生成报警记录，记录并推送。
                 AlarmInfo alarmInfo = new AlarmInfo(alarmSetting.getKey(), pointKey, alarmSetting.getIndex(),
                         alarmSetting.getAlarmMessage(), alarmSetting.getAlarmType(), happenedDate, alarming);
                 alarmInfoMaintainService.insertOrUpdate(alarmInfo);
                 alarmUpdatedEventConsumeHandler.accept(alarmInfo);
 
-                // 依据是否报警进行操作
+                // 依据是否报警进行操作。
                 if (alarmInfo.isAlarming()) {
                     processAlarming(alarmInfo);
                 } else {
@@ -181,12 +181,12 @@ public class AlarmProcessor {
     }
 
     private boolean checkAlarming(byte[] data, int index) {
-        // 根据index定位数组的行列。
+        // 根据 index 定位数组的行列。
         int row = index / BIT_PER_BYTE;
         int column = index % BIT_PER_BYTE;
-        // 根据row取出具体的某个byte。
+        // 根据 row 取出具体的某个 byte。
         byte b = data[row];
-        // 根据column按位运算，返回结果。
+        // 根据 column 按位运算，返回结果。
         byte mask = (byte) (1 << column);
         return (b & mask) != 0;
     }

@@ -92,11 +92,11 @@ public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, 
 
     @Override
     public void delete(LongIdKey key) throws Exception {
-        //清除旧的报警信息的点位相关的使能报警信息缓存。
+        // 清除旧的报警信息的点位相关的使能报警信息缓存。
         LongIdKey oldPointKey = get(key).getPointKey();
         enabledAlarmSettingCache.delete(oldPointKey);
 
-        //如果存在当前报警和报警信息，则删除。
+        // 如果存在当前报警和报警信息，则删除。
         if (currentAlarmDao.exists(key)) {
             currentAlarmDao.delete(key);
         }
@@ -104,7 +104,7 @@ public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, 
             alarmInfoDao.delete(key);
         }
 
-        //找到所有所属的报警历史，将报警信息主键设置为 null。
+        // 找到所有所属的报警历史，将报警信息主键设置为 null。
         List<AlarmHistory> alarmHistories = alarmHistoryDao.lookup(
                 AlarmHistoryMaintainService.CHILD_FOR_ALARM_SETTING, new Object[]{key}
         );
@@ -113,7 +113,7 @@ public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, 
         }
         alarmHistoryDao.batchUpdate(alarmHistories);
 
-        //删除报警设置本身。
+        // 删除报警设置本身。
         alarmSettingDao.delete(key);
         alarmSettingCache.delete(key);
     }

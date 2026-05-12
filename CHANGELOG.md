@@ -4,6 +4,21 @@
 
 ### 功能构建
 
+- `bitalarm-impl` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.bitalarm.impl.bean.BeanMapper。
+  - com.dwarfeng.bitalarm.impl.bean.entity.HibernatePoint。
+  - com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmHistory。
+  - com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmSetting。
+  - com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmTypeIndicator。
+  - com.dwarfeng.bitalarm.impl.handler.AlarmProcessor。
+  - com.dwarfeng.bitalarm.impl.handler.ConsumeHandlerImpl。
+  - com.dwarfeng.bitalarm.impl.handler.pusher.DctiKafkaPusher。
+  - com.dwarfeng.bitalarm.impl.handler.pusher.NativeKafkaPusher。
+  - com.dwarfeng.bitalarm.impl.handler.source.DctiKafkaSource。
+  - com.dwarfeng.bitalarm.impl.service.operation.AlarmSettingCrudOperation。
+  - com.dwarfeng.bitalarm.impl.service.operation.PointCrudOperation。
+  - com.dwarfeng.bitalarm.impl.service.telqos.ConsumerCommand。
+
 - `bitalarm-sdk` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.bitalarm.sdk.bean.BeanMapper。
   - com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonPoint。

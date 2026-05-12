@@ -90,12 +90,12 @@ public class PointCrudOperation implements BatchCrudOperation<LongIdKey, Point> 
 
     @Override
     public void delete(LongIdKey key) throws Exception {
-        //删除与点位相关的报警设置。
+        // 删除与点位相关的报警设置。
         List<LongIdKey> alarmSettingKeys = alarmSettingDao
                 .lookup(AlarmSettingMaintainService.CHILD_FOR_POINT, new Object[]{key})
                 .stream().map(AlarmSetting::getKey).collect(Collectors.toList());
         for (LongIdKey alarmSettingKey : alarmSettingKeys) {
-            //找到所有所属的报警历史，将报警信息主键设置为 null。
+            // 找到所有所属的报警历史，将报警信息主键设置为 null。
             List<AlarmHistory> alarmHistories = alarmHistoryDao.lookup(
                     AlarmHistoryMaintainService.CHILD_FOR_ALARM_SETTING, new Object[]{alarmSettingKey}
             );
@@ -107,22 +107,22 @@ public class PointCrudOperation implements BatchCrudOperation<LongIdKey, Point> 
         alarmSettingDao.batchDelete(alarmSettingKeys);
         alarmSettingCache.batchDelete(alarmSettingKeys);
 
-        //删除与点位相关的报警信息。
+        // 删除与点位相关的报警信息。
         List<LongIdKey> alarmInfoKeys = alarmInfoDao
                 .lookup(AlarmInfoMaintainService.CHILD_FOR_POINT, new Object[]{key})
                 .stream().map(AlarmInfo::getKey).collect(Collectors.toList());
         alarmInfoDao.batchDelete(alarmInfoKeys);
 
-        //删除与点位相关的当前报警。
+        // 删除与点位相关的当前报警。
         List<LongIdKey> currentAlarmKey = currentAlarmDao
                 .lookup(CurrentAlarmMaintainService.CHILD_FOR_POINT, new Object[]{key})
                 .stream().map(CurrentAlarm::getKey).collect(Collectors.toList());
         currentAlarmDao.batchDelete(currentAlarmKey);
 
-        //使能的数据点持久报警信息缓存信息删除。
+        // 使能的数据点持久报警信息缓存信息删除。
         enabledAlarmSettingCache.delete(key);
 
-        //删除数据点自身。
+        // 删除数据点自身。
         pointDao.delete(key);
         pointCache.delete(key);
     }
