@@ -5,7 +5,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +31,7 @@ final class CommandUtil {
      * @param commandOption 指定的选项。
      * @return 拼接前缀之后的选项。
      */
-    public static String concatOptionPrefix(@NotNull String commandOption) {
+    public static String concatOptionPrefix(@Nonnull String commandOption) {
         if (commandOption.contains("-")) {
             return "--" + commandOption;
         }

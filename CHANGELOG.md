@@ -75,6 +75,9 @@
 
 ### Bug 修复
 
+- 修复 telqos 工具类中部分注解不正确的 bug。
+  - com.dwarfeng.bitalarm.impl.service.telqos.CommandUtil。
+
 - 修复部分 CrudOperation 中部分存在性判断方法行为异常的 bug。
   - com.dwarfeng.bitalarm.impl.service.operation.PointCrudOperation。
 
