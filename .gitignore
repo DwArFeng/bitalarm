@@ -34,6 +34,25 @@ local.properties
 .idea/
 
 #################
+## VSCode
+#################
+.vscode/
+*.code-workspace
+
+#################
+## Vibe Coding
+#################
+AGENTS.md
+.agents
+
+#################
+## Cursor
+#################
+.cursor/
+.cursorrules
+.cursorignore
+
+#################
 ## Maven
 #################
 target/
