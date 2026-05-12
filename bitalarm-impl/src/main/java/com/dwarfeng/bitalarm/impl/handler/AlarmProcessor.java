@@ -36,7 +36,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class AlarmProcessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AlarmProcessor.class);
-    @SuppressWarnings("SpellCheckingInspection")
     private static final char[] hexCode = "0123456789ABCDEF".toCharArray();
     private static final int BIT_PER_BYTE = 8;
 
