@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import java.util.Objects;
 
 /**
- * FastJson数据点对象。
+ * FastJson 数据点对象。
  *
  * @author DwArFeng
  * @since 1.4.4

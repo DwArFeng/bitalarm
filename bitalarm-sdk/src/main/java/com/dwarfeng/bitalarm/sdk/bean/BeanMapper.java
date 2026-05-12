@@ -20,7 +20,8 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface BeanMapper {
 
-    // -----------------------------------------------------------Subgrade Key-----------------------------------------------------------
+    // region Subgrade Key
+
     FastJsonLongIdKey longIdKeyToFastJson(LongIdKey longIdKey);
 
     @InheritInverseConfiguration
@@ -46,7 +47,10 @@ public interface BeanMapper {
     @InheritInverseConfiguration
     StringIdKey stringIdKeyFromWebInput(WebInputStringIdKey webInputStringIdKey);
 
-    // -----------------------------------------------------------Bitalarm Key-----------------------------------------------------------
+    // endregion
+
+    // region Bitalarm Entity
+
     FastJsonAlarmHistory alarmHistoryToFastJson(AlarmHistory alarmHistory);
 
     @InheritInverseConfiguration
@@ -131,4 +135,6 @@ public interface BeanMapper {
 
     @InheritInverseConfiguration
     Point pointFromWebInput(WebInputPoint webInputPoint);
+
+    // endregion
 }

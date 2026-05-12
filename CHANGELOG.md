@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `bitalarm-sdk` 子模块类优化注释、文档注释格式、代码换行格式。
+  - com.dwarfeng.bitalarm.sdk.bean.BeanMapper。
+  - com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonPoint。
+
 - `bitalarm-stack` 子模块类优化注释、文档注释格式、代码换行格式。
   - com.dwarfeng.bitalarm.stack.handler.AlarmHandler。
   - com.dwarfeng.bitalarm.stack.service.AlarmQosService。
