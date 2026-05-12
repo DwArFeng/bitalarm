@@ -46,7 +46,7 @@ public interface AlarmHandler extends StartableHandler {
     /**
      * 获取指定消费者的消费者状态。
      *
-     * @param consumerId 指定的消费者ID。
+     * @param consumerId 指定的消费者 ID。
      * @return 消费者状态。
      * @throws HandlerException 处理器异常。
      */
@@ -55,7 +55,7 @@ public interface AlarmHandler extends StartableHandler {
     /**
      * 设置指定消费者的参数。
      *
-     * @param consumerId  指定的消费者ID。
+     * @param consumerId  指定的消费者 ID。
      * @param bufferSize  缓冲器的大小。
      * @param batchSize   数据的批处理量。
      * @param maxIdleTime 最大空闲时间。
