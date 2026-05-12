@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 优化文件格式。
+  - 优化 `application-context-*.xml` 文件的格式。
+
 - 优化开发环境支持。
   - 在 .gitignore 中添加 VSCode 相关文件的忽略规则。
   - 在 .gitignore 中添加 Vibe Coding 相关文件的忽略规则。
