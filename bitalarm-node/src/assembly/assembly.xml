@@ -20,6 +20,25 @@
 
     <fileSets>
         <fileSet>
+            <outputDirectory>docs</outputDirectory>
+            <directory>../docs</directory>
+            <includes>
+                <include>**/*.md</include>
+            </includes>
+            <filtered>false</filtered>
+            <fileMode>0644</fileMode>
+            <lineEnding>unix</lineEnding>
+        </fileSet>
+        <fileSet>
+            <outputDirectory>docs</outputDirectory>
+            <directory>../docs</directory>
+            <includes>
+                <include>**/*.png</include>
+            </includes>
+            <filtered>false</filtered>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
             <outputDirectory>bin</outputDirectory>
             <directory>src/main/resources/binres</directory>
             <includes>
