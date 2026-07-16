@@ -9,8 +9,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>bitalarm</artifactId>
         <groupId>com.dwarfeng</groupId>
+        <artifactId>bitalarm</artifactId>
         <version>2.0.0.a-SNAPSHOT</version>
     </parent>
 
@@ -149,11 +149,6 @@
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
         </dependency>
-        <!-- Dutil 模块 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>dutil-basic</artifactId>
-        </dependency>
         <!-- 日志处理 -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -167,35 +162,40 @@
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
         </dependency>
-        <!-- SnowFlake 服务 -->
+        <!-- Dutil 模块 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>snowflake-distributed-service-api</artifactId>
+            <artifactId>dutil-basic</artifactId>
         </dependency>
         <!-- Subgrade 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>subgrade-impl</artifactId>
         </dependency>
+        <!-- Spring-telqos 组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>spring-telqos-core</artifactId>
+        </dependency>
         <!-- Spring-terminator 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>spring-terminator</artifactId>
         </dependency>
-        <!-- Spring-telqos 组件 -->
+        <!-- Dwarfeng-datamark 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>spring-telqos-core</artifactId>
+            <artifactId>dwarfeng-datamark</artifactId>
         </dependency>
         <!-- Dcti 标准接口 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
             <artifactId>dcti</artifactId>
         </dependency>
-        <!-- Dwarfeng-datamark 组件 -->
+        <!-- SnowFlake 服务 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>dwarfeng-datamark</artifactId>
+            <artifactId>snowflake-distributed-service-api</artifactId>
         </dependency>
         <!-- 程序自身模块 -->
         <dependency>
