@@ -9,11 +9,12 @@
         http://www.springframework.org/schema/tx/spring-tx.xsd"
 >
 
-    <!-- 配置 hibernate 事务管理器。 -->
+    <!-- 启用 @Transactional 注解。 -->
+    <tx:annotation-driven transaction-manager="hibernateTransactionManager"/>
+
+    <!-- 定义 hibernate 事务管理器。 -->
     <bean id="hibernateTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <!--suppress SpringXmlModelInspection -->
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-
-    <!-- 开启事务注解。 -->
-    <tx:annotation-driven transaction-manager="hibernateTransactionManager"/>
 </beans>

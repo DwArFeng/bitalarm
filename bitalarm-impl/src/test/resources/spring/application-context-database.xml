@@ -6,7 +6,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 
-    <!--配置一个 Druid 数据源。 -->
+    <!-- 配置一个 druid 数据源。 -->
     <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driver}"/>
         <property name="url" value="${jdbc.url}"/>
@@ -35,7 +35,7 @@
         <!-- 关闭 abandoned 连接时输出错误日志。 -->
         <property name="logAbandoned" value="true"/>
         <!-- 监控数据库。 -->
-        <!--<property name="filters" value="mergeStat"/> -->
+        <!-- <property name="filters" value="mergeStat"/> -->
         <property name="filters" value="stat"/>
         <property name="proxyFilters">
             <list>
@@ -48,7 +48,7 @@
         <property name="statementExecutableSqlLogEnable" value="false"/>
     </bean>
 
-    <!--创建 session 工厂。 -->
+    <!-- 创建 session 工厂。 -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <!-- 数据源。 -->
         <property name="dataSource" ref="dataSource"/>
@@ -77,7 +77,7 @@
         <!-- <property name="mappingLocations" value="classpath:entity/*.hbm.xml"></property> -->
     </bean>
 
-    <!--这里将数据源注入模板。然后在把模板注入到你的实现类去调用。当然实现类需要有模板的 get/set 方法。 -->
+    <!-- 这里将数据源注入模板。然后在把模板注入到你的实现类去调用。当然实现类需要有模板的 get/set 方法。 -->
     <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>

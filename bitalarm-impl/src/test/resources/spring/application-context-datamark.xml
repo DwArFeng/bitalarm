@@ -9,7 +9,7 @@
         http://dwarfeng.com/schema/dwarfeng-datamark/dwarfeng-datamark.xsd"
 >
 
-    <!-- AlarmTypeIndicator 数据标识 -->
+    <!-- AlarmTypeIndicator 数据标识。 -->
     <datamark:handler
             handler-name="alarmTypeIndicatorDatamarkHandler"
             resource-url="${datamark.alarm_type_indicator.resource_url}"
@@ -17,7 +17,7 @@
             update-allowed="${datamark.alarm_type_indicator.update_allowed}"
     />
 
-    <!-- AlarmSetting 数据标识 -->
+    <!-- AlarmSetting 数据标识。 -->
     <datamark:handler
             handler-name="alarmSettingDatamarkHandler"
             resource-url="${datamark.alarm_setting.resource_url}"
@@ -25,7 +25,7 @@
             update-allowed="${datamark.alarm_setting.update_allowed}"
     />
 
-    <!-- Point 数据标识 -->
+    <!-- Point 数据标识。 -->
     <datamark:handler
             handler-name="pointDatamarkHandler"
             resource-url="${datamark.point.resource_url}"

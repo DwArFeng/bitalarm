@@ -34,45 +34,9 @@
         <property name="testWhileIdle" value="${redis.testWhileIdle}"/>
     </bean>
 
-    <!-- Redis 集群配置 哨兵模式。 -->
-    <!--
-    <bean id="sentinelConfiguration" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
-        <property name="master">
-            <bean class="org.springframework.data.redis.connection.RedisNode">
-                这个值要和 Sentinel 中指定的 master 的值一致，不然启动时找不到 Sentinel 会报错的
-                <property name="name" value="mymaster"></property>
-            </bean>
-        </property>
-        记住了,这里是指定 Sentinel 的 IP 和端口，不是 Master 和 Slave 的
-        <property name="sentinels">
-            <set>
-                <bean class="org.springframework.data.redis.connection.RedisNode">
-                    <constructor-arg name="host" value="${redis.sentinel.host1}"></constructor-arg>
-                    <constructor-arg name="port" value="${redis.sentinel.port1}"></constructor-arg>
-                </bean>
-                <bean class="org.springframework.data.redis.connection.RedisNode">
-                    <constructor-arg name="host" value="${redis.sentinel.host2}"></constructor-arg>
-                    <constructor-arg name="port" value="${redis.sentinel.port2}"></constructor-arg>
-                </bean>
-                <bean class="org.springframework.data.redis.connection.RedisNode">
-                    <constructor-arg name="host" value="${redis.sentinel.host3}"></constructor-arg>
-                    <constructor-arg name="port" value="${redis.sentinel.port3}"></constructor-arg>
-                </bean>
-            </set>
-        </property>
-    </bean>
-    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-        <constructor-arg name="sentinelConfig" ref="sentinelConfiguration"></constructor-arg>
-        <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
-    </bean>
-    -->
-
     <!-- Redis 连接工厂。 -->
-    <bean
-            id="jedisConnectionFactory"
-            class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-            destroy-method="destroy"
-    >
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          destroy-method="destroy">
         <property name="poolConfig" ref="jedisPoolConfig"/>
         <property name="hostName" value="${redis.hostName}"/>
         <property name="port" value="${redis.port}"/>
@@ -80,7 +44,7 @@
         <property name="timeout" value="${redis.timeout}"/>
     </bean>
 
-    <!-- Redis 操作模版,使用该对象可以操作 redis。 -->
+    <!-- Redis 操作模版，使用该对象可以操作 redis。 -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="jedisConnectionFactory"/>
         <property name="keySerializer">
