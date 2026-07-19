@@ -34,6 +34,21 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>spring-telqos-api</artifactId>
         </dependency>
+        <!-- Spring-terminator 组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>spring-terminator-api</artifactId>
+        </dependency>
+        <!-- Dwarfeng-datamark 组件 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dwarfeng-datamark-api</artifactId>
+        </dependency>
+        <!-- Dcti 标准接口 -->
+        <dependency>
+            <groupId>com.dwarfeng</groupId>
+            <artifactId>dcti-api</artifactId>
+        </dependency>
         <!-- 程序自身模块 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>

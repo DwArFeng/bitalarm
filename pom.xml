@@ -52,12 +52,12 @@
         <jboss-logging.version>3.4.3.Final</jboss-logging.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <dutil.version>0.4.2.a-beta</dutil.version>
-        <subgrade.version>1.8.2.a</subgrade.version>
-        <spring-telqos.version>1.2.0.a</spring-telqos.version>
-        <spring-terminator.version>1.1.0.a</spring-terminator.version>
-        <dwarfeng-datamark.version>1.1.3.a</dwarfeng-datamark.version>
-        <dcti.version>2.0.1.a</dcti.version>
-        <snowflake.version>1.9.0.a</snowflake.version>
+        <subgrade.version>1.8.3.a</subgrade.version>
+        <spring-telqos.version>2.0.2.a</spring-telqos.version>
+        <spring-terminator.version>2.0.2.a</spring-terminator.version>
+        <dwarfeng-datamark.version>2.2.0.a</dwarfeng-datamark.version>
+        <dcti.version>3.0.1.a</dcti.version>
+        <snowflake.version>2.0.2.a</snowflake.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -414,19 +414,34 @@
             <!-- Spring-terminator 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>spring-terminator</artifactId>
+                <artifactId>spring-terminator-core</artifactId>
+                <version>${spring-terminator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>spring-terminator-api</artifactId>
                 <version>${spring-terminator.version}</version>
             </dependency>
             <!-- Dwarfeng-datamark 组件 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>dwarfeng-datamark</artifactId>
+                <artifactId>dwarfeng-datamark-core</artifactId>
+                <version>${dwarfeng-datamark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>dwarfeng-datamark-api</artifactId>
                 <version>${dwarfeng-datamark.version}</version>
             </dependency>
             <!-- Dcti 标准接口 -->
             <dependency>
                 <groupId>com.dwarfeng</groupId>
-                <artifactId>dcti</artifactId>
+                <artifactId>dcti-core</artifactId>
+                <version>${dcti.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>dcti-api</artifactId>
                 <version>${dcti.version}</version>
             </dependency>
             <!-- SnowFlake 服务 -->

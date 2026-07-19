@@ -23,6 +23,6 @@ public class ExceptionCodeOffsetConfiguration {
         ServiceExceptionCodes.setExceptionCodeOffset(exceptionCodeOffset);
         com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.setExceptionCodeOffset(subgradeExceptionCodeOffset);
         com.dwarfeng.sfds.sdk.util.ServiceExceptionCodes.setExceptionCodeOffset(snowflakeExceptionCodeOffset);
-        com.dwarfeng.datamark.util.ServiceExceptionCodes.setExceptionCodeOffset(dwarfengDatamarkExceptionCodeOffset);
+        com.dwarfeng.datamark.sdk.util.ServiceExceptionCodes.setExceptionCodeOffset(dwarfengDatamarkExceptionCodeOffset);
     }
 }

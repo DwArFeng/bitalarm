@@ -180,17 +180,17 @@
         <!-- Spring-terminator 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>spring-terminator</artifactId>
+            <artifactId>spring-terminator-core</artifactId>
         </dependency>
         <!-- Dwarfeng-datamark 组件 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>dwarfeng-datamark</artifactId>
+            <artifactId>dwarfeng-datamark-core</artifactId>
         </dependency>
         <!-- Dcti 标准接口 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>
-            <artifactId>dcti</artifactId>
+            <artifactId>dcti-core</artifactId>
         </dependency>
         <!-- SnowFlake 服务 -->
         <dependency>

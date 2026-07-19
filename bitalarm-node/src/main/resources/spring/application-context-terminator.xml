@@ -8,5 +8,8 @@
         http://dwarfeng.com/schema/spring-terminator
         http://dwarfeng.com/schema/spring-terminator/spring-terminator.xsd"
 >
-    <terminator:bean pre-delay="500"/>
+
+    <terminator:config pre-delay="500"/>
+    <terminator:handler/>
+    <terminator:qos/>
 </beans>
