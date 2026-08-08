@@ -1,9 +1,5 @@
 package com.dwarfeng.bitalarm.impl.configuration;
 
-import com.dwarfeng.bitalarm.sdk.util.ServiceExceptionCodes;
-import com.dwarfeng.bitalarm.stack.exception.AlarmDisabledException;
-import com.dwarfeng.bitalarm.stack.exception.ConsumeStoppedException;
-import com.dwarfeng.bitalarm.stack.exception.PointNotExistsException;
 import com.dwarfeng.subgrade.impl.exception.MapServiceExceptionMapper;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
@@ -17,11 +13,12 @@ public class ServiceExceptionMapperConfiguration {
 
     @Bean
     public MapServiceExceptionMapper mapServiceExceptionMapper() {
-        Map<Class<? extends Exception>, ServiceException.Code> destination = ServiceExceptionHelper.putDefaultDestination(null);
-        destination = com.dwarfeng.datamark.sdk.util.ServiceExceptionHelper.putDefaultDestination(destination);
-        destination.put(AlarmDisabledException.class, ServiceExceptionCodes.ALARM_HANDLER_DISABLED);
-        destination.put(ConsumeStoppedException.class, ServiceExceptionCodes.CONSUME_HANDLER_STOPPED);
-        destination.put(PointNotExistsException.class, ServiceExceptionCodes.POINT_NOT_EXISTS);
-        return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
+        Map<Class<? extends Exception>, ServiceException.Code> des = ServiceExceptionHelper.putDefaultDestination(null);
+        des = com.dwarfeng.springtelqos.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
+        des = com.dwarfeng.springterminator.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
+        des = com.dwarfeng.datamark.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
+        des = com.dwarfeng.dcti.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
+        des = com.dwarfeng.bitalarm.sdk.util.ServiceExceptionHelper.putDefaultDestination(des);
+        return new MapServiceExceptionMapper(des, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }
