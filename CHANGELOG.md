@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
+
 - `bitalarm-distribute` 模块新增。
   - 新增 `bitalarm-distribute` 模块，负责各个构型的产物分发。
 
