@@ -11,7 +11,7 @@
     <parent>
         <groupId>com.dwarfeng</groupId>
         <artifactId>bitalarm-node</artifactId>
-        <version>2.0.0.a-SNAPSHOT</version>
+        <version>2.0.0.a</version>
     </parent>
 
     <artifactId>bitalarm-node-all-he</artifactId>
