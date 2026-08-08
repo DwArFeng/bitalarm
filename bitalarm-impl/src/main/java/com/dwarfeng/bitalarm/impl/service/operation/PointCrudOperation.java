@@ -36,7 +36,7 @@ public class PointCrudOperation implements BatchCrudOperation<LongIdKey, Point> 
 
     private final EnabledAlarmSettingCache enabledAlarmSettingCache;
 
-    @Value("${cache.timeout.entity.point}")
+    @Value("${com.dwarfeng.bitalarm.cache.timeout.entity.point}")
     private long pointTimeout;
 
     public PointCrudOperation(

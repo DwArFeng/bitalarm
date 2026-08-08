@@ -26,15 +26,15 @@ public class CacheConfiguration {
 
     private final RedisTemplate<String, ?> template;
 
-    @Value("${cache.prefix.entity.alarm_setting}")
+    @Value("${com.dwarfeng.bitalarm.cache.prefix.entity.alarm_setting}")
     private String alarmSettingPrefix;
-    @Value("${cache.prefix.entity.alarm_history}")
+    @Value("${com.dwarfeng.bitalarm.cache.prefix.entity.alarm_history}")
     private String alarmHistoryPrefix;
-    @Value("${cache.prefix.list.enabled_alarm_setting}")
+    @Value("${com.dwarfeng.bitalarm.cache.prefix.list.enabled_alarm_setting}")
     private String enabledAlarmSettingPrefix;
-    @Value("${cache.prefix.entity.alarm_type_indicator}")
+    @Value("${com.dwarfeng.bitalarm.cache.prefix.entity.alarm_type_indicator}")
     private String alarmTypeIndicatorPrefix;
-    @Value("${cache.prefix.entity.point}")
+    @Value("${com.dwarfeng.bitalarm.cache.prefix.entity.point}")
     private String pointPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {

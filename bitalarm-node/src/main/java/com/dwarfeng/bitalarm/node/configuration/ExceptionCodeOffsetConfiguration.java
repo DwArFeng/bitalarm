@@ -9,17 +9,17 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class ExceptionCodeOffsetConfiguration {
 
-    @Value("${bitalarm.exception_code_offset}")
+    @Value("${com.dwarfeng.bitalarm.bitalarm.exception_code_offset}")
     private int exceptionCodeOffset;
-    @Value("${bitalarm.exception_code_offset.subgrade}")
+    @Value("${com.dwarfeng.bitalarm.bitalarm.exception_code_offset.subgrade}")
     private int subgradeExceptionCodeOffset;
-    @Value("${bitalarm.exception_code_offset.spring_telqos}")
+    @Value("${com.dwarfeng.bitalarm.bitalarm.exception_code_offset.spring_telqos}")
     private int springTelqosExceptionCodeOffset;
-    @Value("${bitalarm.exception_code_offset.spring_terminator}")
+    @Value("${com.dwarfeng.bitalarm.bitalarm.exception_code_offset.spring_terminator}")
     private int springTerminatorExceptionCodeOffset;
-    @Value("${bitalarm.exception_code_offset.dwarfeng_datamark}")
+    @Value("${com.dwarfeng.bitalarm.bitalarm.exception_code_offset.dwarfeng_datamark}")
     private int dwarfengDatamarkExceptionCodeOffset;
-    @Value("${bitalarm.exception_code_offset.dcti}")
+    @Value("${com.dwarfeng.bitalarm.bitalarm.exception_code_offset.dcti}")
     private int dctiExceptionCodeOffset;
 
     @PostConstruct

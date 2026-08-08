@@ -22,7 +22,7 @@ public class FixedDelayResetter extends AbstractResetter {
 
     private final ThreadPoolTaskScheduler scheduler;
 
-    @Value("${resetter.fixed_delay.delay}")
+    @Value("${com.dwarfeng.bitalarm.resetter.fixed_delay.delay}")
     private long delay;
 
     private final ResetTask resetTask = new ResetTask();

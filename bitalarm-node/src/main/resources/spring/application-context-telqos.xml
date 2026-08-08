@@ -11,11 +11,11 @@
 
     <telqos:config>
         <telqos:connection-setting
-                port="${telqos.port}"
-                charset="${telqos.charset}"
+                port="${com.dwarfeng.bitalarm.telqos.port}"
+                charset="${com.dwarfeng.bitalarm.telqos.charset}"
                 banner-url="classpath:telqos/my-banner.txt"
-                whitelist-regex="${telqos.whitelist_regex}"
-                blacklist-regex="${telqos.blacklist_regex}"
+                whitelist-regex="${com.dwarfeng.bitalarm.telqos.whitelist_regex}"
+                blacklist-regex="${com.dwarfeng.bitalarm.telqos.blacklist_regex}"
         />
         <telqos:command>
             <telqos:command-impl package-scan="com.dwarfeng.springtelqos.api.integration.dubbo"/>

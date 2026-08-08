@@ -22,7 +22,7 @@ public class EnabledAlarmSettingLookupServiceImpl implements EnabledAlarmSetting
     private final EnabledAlarmSettingCache cache;
     private final ServiceExceptionMapper sem;
 
-    @Value("${cache.timeout.key_list.enabled_alarm_setting}")
+    @Value("${com.dwarfeng.bitalarm.cache.timeout.key_list.enabled_alarm_setting}")
     private long timeout;
 
     public EnabledAlarmSettingLookupServiceImpl(

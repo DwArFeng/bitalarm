@@ -4,6 +4,13 @@
 
 ### 功能构建
 
+- 配置命名空间全局唯一化改造。
+  - 为 `bitalarm-impl` 模块配置键统一增加全球唯一前缀，以消除跨微服务同名配置冲突。
+  - 为 `bitalarm-node` 模块配置键统一增加全球唯一前缀，以消除跨微服务同名配置冲突。
+  - 处理 `redis/prefix.properties` 缓存前缀配置的实体命名空间。
+  - 同步调整 `*.java` 中的配置读取占位符。
+  - 同步调整 `*application-context-*.xml` 中的配置读取占位符。
+
 - 部分代理类实现中的字段类型提升为对应的接口，与具体实现解耦。
   - com.dwarfeng.bitalarm.impl.cache.AlarmHistoryCacheImpl。
   - com.dwarfeng.bitalarm.impl.cache.AlarmSettingCacheImpl。

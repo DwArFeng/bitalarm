@@ -23,7 +23,7 @@ public class CronResetter extends AbstractResetter {
 
     private final ThreadPoolTaskScheduler scheduler;
 
-    @Value("${resetter.cron.cron}")
+    @Value("${com.dwarfeng.bitalarm.resetter.cron.cron}")
     private String cron;
 
     private final ResetTask resetTask = new ResetTask();

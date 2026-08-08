@@ -40,11 +40,11 @@ public class NativeKafkaPusher extends AbstractPusher {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    @Value("${pusher.kafka.native.topic.alarm_updated}")
+    @Value("${com.dwarfeng.bitalarm.pusher.kafka.native.topic.alarm_updated}")
     private String alarmUpdatedTopic;
-    @Value("${pusher.kafka.native.topic.history_recorded}")
+    @Value("${com.dwarfeng.bitalarm.pusher.kafka.native.topic.history_recorded}")
     private String historyRecordedTopic;
-    @Value("${pusher.kafka.native.topic.alarm_reset}")
+    @Value("${com.dwarfeng.bitalarm.pusher.kafka.native.topic.alarm_reset}")
     private String alarmResetTopic;
 
     public NativeKafkaPusher(
@@ -92,19 +92,19 @@ public class NativeKafkaPusher extends AbstractPusher {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(KafkaPusherConfiguration.class);
 
-        @Value("${pusher.kafka.native.bootstrap_servers}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.native.bootstrap_servers}")
         private String producerBootstrapServers;
-        @Value("${pusher.kafka.native.retries}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.native.retries}")
         private int retries;
-        @Value("${pusher.kafka.native.linger}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.native.linger}")
         private long linger;
-        @Value("${pusher.kafka.native.buffer_memory}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.native.buffer_memory}")
         private long bufferMemory;
-        @Value("${pusher.kafka.native.batch_size}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.native.batch_size}")
         private int batchSize;
-        @Value("${pusher.kafka.native.acks}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.native.acks}")
         private String acks;
-        @Value("${pusher.kafka.native.transaction_prefix}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.native.transaction_prefix}")
         private String transactionPrefix;
 
         @SuppressWarnings("DuplicatedCode")

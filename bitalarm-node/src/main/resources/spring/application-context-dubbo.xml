@@ -16,11 +16,13 @@
     </dubbo:application>
 
     <!-- Zookeeper 注册中心。 -->
-    <dubbo:registry address="${dubbo.registry.zookeeper.address}" timeout="${dubbo.registry.zookeeper.timeout}"/>
+    <dubbo:registry address="${com.dwarfeng.bitalarm.dubbo.registry.zookeeper.address}"
+                    timeout="${com.dwarfeng.bitalarm.dubbo.registry.zookeeper.timeout}"/>
 
     <!-- Dubbo 协议。 -->
     <dubbo:protocol
-            name="dubbo" port="${dubbo.protocol.dubbo.port}" host="${dubbo.protocol.dubbo.host}"
+            name="dubbo" port="${com.dwarfeng.bitalarm.dubbo.protocol.dubbo.port}"
+            host="${com.dwarfeng.bitalarm.dubbo.protocol.dubbo.host}"
             dispatcher="message" threadpool="fixed" threads="100"
     />
 
@@ -33,42 +35,42 @@
     <dubbo:service
             interface="com.dwarfeng.bitalarm.stack.service.AlarmSettingMaintainService"
             ref="alarmSettingMaintainServiceImpl"
-            group="${dubbo.provider.group}"
+            group="${com.dwarfeng.bitalarm.dubbo.provider.group}"
     />
     <dubbo:service
             interface="com.dwarfeng.bitalarm.stack.service.CurrentAlarmMaintainService"
             ref="currentAlarmMaintainServiceImpl"
-            group="${dubbo.provider.group}"
+            group="${com.dwarfeng.bitalarm.dubbo.provider.group}"
     />
     <dubbo:service
             interface="com.dwarfeng.bitalarm.stack.service.AlarmInfoMaintainService"
             ref="alarmInfoMaintainServiceImpl"
-            group="${dubbo.provider.group}"
+            group="${com.dwarfeng.bitalarm.dubbo.provider.group}"
     />
     <dubbo:service
             interface="com.dwarfeng.bitalarm.stack.service.AlarmHistoryMaintainService"
             ref="alarmHistoryMaintainServiceImpl"
-            group="${dubbo.provider.group}"
+            group="${com.dwarfeng.bitalarm.dubbo.provider.group}"
     />
     <dubbo:service
             interface="com.dwarfeng.bitalarm.stack.service.EnabledAlarmSettingLookupService"
             ref="enabledAlarmSettingLookupServiceImpl"
-            group="${dubbo.provider.group}"
+            group="${com.dwarfeng.bitalarm.dubbo.provider.group}"
     />
     <dubbo:service
             interface="com.dwarfeng.bitalarm.stack.service.AlarmService"
             ref="alarmServiceImpl"
-            group="${dubbo.provider.group}"
+            group="${com.dwarfeng.bitalarm.dubbo.provider.group}"
     />
     <dubbo:service
             interface="com.dwarfeng.bitalarm.stack.service.AlarmTypeIndicatorMaintainService"
             ref="alarmTypeIndicatorMaintainServiceImpl"
-            group="${dubbo.provider.group}"
+            group="${com.dwarfeng.bitalarm.dubbo.provider.group}"
     />
     <dubbo:service
             interface="com.dwarfeng.bitalarm.stack.service.PointMaintainService"
             ref="pointMaintainServiceImpl"
-            group="${dubbo.provider.group}"
+            group="${com.dwarfeng.bitalarm.dubbo.provider.group}"
     />
 
     <!-- endregion -->
@@ -83,7 +85,7 @@
             id="snowflakeGenerateService"
             interface="com.dwarfeng.sfds.stack.service.GenerateService"
             check="false"
-            group="${dubbo.consumer.snowflake.group}"
+            group="${com.dwarfeng.bitalarm.dubbo.consumer.snowflake.group}"
     />
 
     <!-- endregion -->

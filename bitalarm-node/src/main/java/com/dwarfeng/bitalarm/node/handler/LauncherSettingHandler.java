@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class LauncherSettingHandler implements Handler {
 
-    @Value("${launcher.start_alarm_delay}")
+    @Value("${com.dwarfeng.bitalarm.launcher.start_alarm_delay}")
     private long startAlarmDelay;
-    @Value("${launcher.start_reset_delay}")
+    @Value("${com.dwarfeng.bitalarm.launcher.start_reset_delay}")
     private long startResetDelay;
 
     public long getStartAlarmDelay() {

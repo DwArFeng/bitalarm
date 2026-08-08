@@ -41,11 +41,11 @@ public class DctiKafkaPusher extends AbstractPusher {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    @Value("${pusher.kafka.dcti.topic.alarm_updated}")
+    @Value("${com.dwarfeng.bitalarm.pusher.kafka.dcti.topic.alarm_updated}")
     private String alarmUpdatedTopic;
-    @Value("${pusher.kafka.dcti.topic.history_recorded}")
+    @Value("${com.dwarfeng.bitalarm.pusher.kafka.dcti.topic.history_recorded}")
     private String historyRecordedTopic;
-    @Value("${pusher.kafka.dcti.topic.alarm_reset}")
+    @Value("${com.dwarfeng.bitalarm.pusher.kafka.dcti.topic.alarm_reset}")
     private String alarmResetTopic;
 
     public DctiKafkaPusher(
@@ -97,19 +97,19 @@ public class DctiKafkaPusher extends AbstractPusher {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(KafkaPusherConfiguration.class);
 
-        @Value("${pusher.kafka.dcti.bootstrap_servers}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.dcti.bootstrap_servers}")
         private String producerBootstrapServers;
-        @Value("${pusher.kafka.dcti.retries}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.dcti.retries}")
         private int retries;
-        @Value("${pusher.kafka.dcti.linger}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.dcti.linger}")
         private long linger;
-        @Value("${pusher.kafka.dcti.buffer_memory}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.dcti.buffer_memory}")
         private long bufferMemory;
-        @Value("${pusher.kafka.dcti.batch_size}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.dcti.batch_size}")
         private int batchSize;
-        @Value("${pusher.kafka.dcti.acks}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.dcti.acks}")
         private String acks;
-        @Value("${pusher.kafka.dcti.transaction_prefix}")
+        @Value("${com.dwarfeng.bitalarm.pusher.kafka.dcti.transaction_prefix}")
         private String transactionPrefix;
 
         @SuppressWarnings("DuplicatedCode")

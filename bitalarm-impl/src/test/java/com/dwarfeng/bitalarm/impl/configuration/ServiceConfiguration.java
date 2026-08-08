@@ -32,7 +32,7 @@ public class ServiceConfiguration {
     private final PointCrudOperation pointCrudOperation;
     private final PointDao pointDao;
 
-    @Value("${cache.timeout.entity.alarm_type_indicator}")
+    @Value("${com.dwarfeng.bitalarm.cache.timeout.entity.alarm_type_indicator}")
     private long alarmTypeIndicatorTimeout;
 
     public ServiceConfiguration(

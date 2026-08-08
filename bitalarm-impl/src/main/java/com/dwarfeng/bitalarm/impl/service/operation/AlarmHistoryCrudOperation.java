@@ -16,7 +16,7 @@ public class AlarmHistoryCrudOperation implements BatchCrudOperation<LongIdKey, 
 
     private final AlarmHistoryDao alarmHistoryDao;
 
-    @Value("${cache.timeout.entity.alarm_history}")
+    @Value("${com.dwarfeng.bitalarm.cache.timeout.entity.alarm_history}")
     private long alarmHistoryTimeout;
 
     public AlarmHistoryCrudOperation(AlarmHistoryDao alarmHistoryDao) {

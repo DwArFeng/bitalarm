@@ -36,12 +36,12 @@ public class DaoConfiguration {
     private final CurrentAlarmPresetEntityFilter currentAlarmPresetEntityFilter;
     private final AlarmInfoPresetEntityFilter alarmInfoPresetEntityFilter;
 
-    @Value("${redis.dbkey.current_alarm}")
+    @Value("${com.dwarfeng.bitalarm.redis.dbkey.current_alarm}")
     private String currentAlarmDbKey;
-    @Value("${redis.dbkey.alarm_info}")
+    @Value("${com.dwarfeng.bitalarm.redis.dbkey.alarm_info}")
     private String alarmInfoDbKey;
 
-    @Value("${hibernate.jdbc.batch_size}")
+    @Value("${com.dwarfeng.bitalarm.hibernate.jdbc.batch_size}")
     private int batchSize;
 
     public DaoConfiguration(

@@ -34,11 +34,11 @@ public class MockSource extends AbstractSource {
     private final ThreadPoolTaskScheduler scheduler;
     private final Random random;
 
-    @Value("${source.mock.alarm_interval}")
+    @Value("${com.dwarfeng.bitalarm.source.mock.alarm_interval}")
     private long alarmInterval;
-    @Value("#{new com.dwarfeng.subgrade.stack.bean.key.LongIdKey('${source.mock.point_id}')}")
+    @Value("#{new com.dwarfeng.subgrade.stack.bean.key.LongIdKey('${com.dwarfeng.bitalarm.source.mock.point_id}')}")
     private LongIdKey pointKey;
-    @Value("${source.mock.bit_size}")
+    @Value("${com.dwarfeng.bitalarm.source.mock.bit_size}")
     private int bitSize;
 
     private MockAlarmPlain mockAlarmPlain = null;
@@ -81,9 +81,9 @@ public class MockSource extends AbstractSource {
     @Configuration
     public static class MockSourceConfiguration {
 
-        @Value("${source.mock.use_specific_random_seed}")
+        @Value("${com.dwarfeng.bitalarm.source.mock.use_specific_random_seed}")
         private boolean useSpecificRandomSeed;
-        @Value("${source.mock.random_seed}")
+        @Value("${com.dwarfeng.bitalarm.source.mock.random_seed}")
         private long randomSeed;
 
         @Bean("mockSource.random")

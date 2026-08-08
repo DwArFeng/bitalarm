@@ -25,16 +25,16 @@ public class ConsumeConfiguration {
     private final HistoryRecordEventConsumer historyRecordEventConsumer;
     private final AlarmHistoryValueConsumer alarmHistoryValueConsumer;
 
-    @Value("${consume.threshold.warn}")
+    @Value("${com.dwarfeng.bitalarm.consume.threshold.warn}")
     private double warnThreshold;
 
-    @Value("${consume.alarm_updated_event.consumer_thread}")
+    @Value("${com.dwarfeng.bitalarm.consume.alarm_updated_event.consumer_thread}")
     private int alarmUpdatedEventConsumerThread;
-    @Value("${consume.alarm_updated_event.buffer_size}")
+    @Value("${com.dwarfeng.bitalarm.consume.alarm_updated_event.buffer_size}")
     private int alarmUpdatedEventBufferSize;
-    @Value("${consume.alarm_updated_event.batch_size}")
+    @Value("${com.dwarfeng.bitalarm.consume.alarm_updated_event.batch_size}")
     private int alarmUpdatedEventBatchSize;
-    @Value("${consume.alarm_updated_event.max_idle_time}")
+    @Value("${com.dwarfeng.bitalarm.consume.alarm_updated_event.max_idle_time}")
     private long alarmUpdatedEventMaxIdleTime;
 
     public ConsumeConfiguration(
@@ -67,13 +67,13 @@ public class ConsumeConfiguration {
         return consumeHandler;
     }
 
-    @Value("${consume.history_recorded_event.consumer_thread}")
+    @Value("${com.dwarfeng.bitalarm.consume.history_recorded_event.consumer_thread}")
     private int historyRecordedEventConsumerThread;
-    @Value("${consume.history_recorded_event.buffer_size}")
+    @Value("${com.dwarfeng.bitalarm.consume.history_recorded_event.buffer_size}")
     private int historyRecordedEventBufferSize;
-    @Value("${consume.history_recorded_event.batch_size}")
+    @Value("${com.dwarfeng.bitalarm.consume.history_recorded_event.batch_size}")
     private int historyRecordedEventBatchSize;
-    @Value("${consume.history_recorded_event.max_idle_time}")
+    @Value("${com.dwarfeng.bitalarm.consume.history_recorded_event.max_idle_time}")
     private long historyRecordedEventMaxIdleTime;
 
     @Bean("historyRecordedEventConsumeHandler")
@@ -92,13 +92,13 @@ public class ConsumeConfiguration {
         return consumeHandler;
     }
 
-    @Value("${consume.alarm_history_value.consumer_thread}")
+    @Value("${com.dwarfeng.bitalarm.consume.alarm_history_value.consumer_thread}")
     private int alarmHistoryValueConsumerThread;
-    @Value("${consume.alarm_history_value.buffer_size}")
+    @Value("${com.dwarfeng.bitalarm.consume.alarm_history_value.buffer_size}")
     private int alarmHistoryValueBufferSize;
-    @Value("${consume.alarm_history_value.batch_size}")
+    @Value("${com.dwarfeng.bitalarm.consume.alarm_history_value.batch_size}")
     private int alarmHistoryValueBatchSize;
-    @Value("${consume.alarm_history_value.max_idle_time}")
+    @Value("${com.dwarfeng.bitalarm.consume.alarm_history_value.max_idle_time}")
     private long alarmHistoryValueMaxIdleTime;
 
     @Bean("alarmHistoryValueConsumeHandler")

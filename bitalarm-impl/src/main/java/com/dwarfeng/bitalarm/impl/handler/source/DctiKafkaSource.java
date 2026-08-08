@@ -45,7 +45,7 @@ public class DctiKafkaSource extends AbstractSource {
 
     private final KafkaListenerEndpointRegistry registry;
 
-    @Value("${source.kafka.dcti.listener_id}")
+    @Value("${com.dwarfeng.bitalarm.source.kafka.dcti.listener_id}")
     private String listenerId;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -78,9 +78,9 @@ public class DctiKafkaSource extends AbstractSource {
     }
 
     @KafkaListener(
-            id = "${source.kafka.dcti.listener_id}",
+            id = "${com.dwarfeng.bitalarm.source.kafka.dcti.listener_id}",
             containerFactory = "dctiKafkaSource.kafkaListenerContainerFactory",
-            topics = "${source.kafka.dcti.listener_topic}"
+            topics = "${com.dwarfeng.bitalarm.source.kafka.dcti.listener_topic}"
     )
     public void handleDataInfo(
             List<ConsumerRecord<String, String>> consumerRecords, Consumer<String, String> consumer, Acknowledgment ack
@@ -130,19 +130,19 @@ public class DctiKafkaSource extends AbstractSource {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(KafkaSourceConfiguration.class);
 
-        @Value("${source.kafka.dcti.bootstrap_servers}")
+        @Value("${com.dwarfeng.bitalarm.source.kafka.dcti.bootstrap_servers}")
         private String consumerBootstrapServers;
-        @Value("${source.kafka.dcti.session_timeout_ms}")
+        @Value("${com.dwarfeng.bitalarm.source.kafka.dcti.session_timeout_ms}")
         private int sessionTimeoutMs;
-        @Value("${source.kafka.dcti.auto_offset_reset}")
+        @Value("${com.dwarfeng.bitalarm.source.kafka.dcti.auto_offset_reset}")
         private String autoOffsetReset;
-        @Value("${source.kafka.dcti.concurrency}")
+        @Value("${com.dwarfeng.bitalarm.source.kafka.dcti.concurrency}")
         private int concurrency;
-        @Value("${source.kafka.dcti.poll_timeout}")
+        @Value("${com.dwarfeng.bitalarm.source.kafka.dcti.poll_timeout}")
         private int pollTimeout;
-        @Value("${source.kafka.dcti.max_poll_records}")
+        @Value("${com.dwarfeng.bitalarm.source.kafka.dcti.max_poll_records}")
         private int maxPollRecords;
-        @Value("${source.kafka.dcti.max_poll_interval_ms}")
+        @Value("${com.dwarfeng.bitalarm.source.kafka.dcti.max_poll_interval_ms}")
         private int maxPollIntervalMs;
 
         @Bean("dctiKafkaSource.consumerProperties")

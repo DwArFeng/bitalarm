@@ -32,7 +32,7 @@ public class AlarmSettingCrudOperation implements BatchCrudOperation<LongIdKey, 
 
     private final EnabledAlarmSettingCache enabledAlarmSettingCache;
 
-    @Value("${cache.timeout.entity.alarm_setting}")
+    @Value("${com.dwarfeng.bitalarm.cache.timeout.entity.alarm_setting}")
     private long alarmSettingTimeout;
 
     public AlarmSettingCrudOperation(
