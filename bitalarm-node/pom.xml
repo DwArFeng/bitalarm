@@ -14,111 +14,18 @@
         <version>2.0.0.a-SNAPSHOT</version>
     </parent>
 
+    <packaging>pom</packaging>
+
     <artifactId>bitalarm-node</artifactId>
     <name>bitalarm-node</name>
     <url>http://maven.apache.org</url>
 
     <properties>
         <!-- 进行工程编码声明 -->
-        <!-- 进行 JDK 版本声明 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <!-- 主方法类声明 -->
-        <mainClass>com.dwarfeng.bitalarm.node.launcher.Launcher</mainClass>
     </properties>
 
-    <dependencies>
-        <!-- Spring-telqos 组件 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>spring-telqos-api</artifactId>
-        </dependency>
-        <!-- Spring-terminator 组件 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>spring-terminator-api</artifactId>
-        </dependency>
-        <!-- Dwarfeng-datamark 组件 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>dwarfeng-datamark-api</artifactId>
-        </dependency>
-        <!-- Dcti 标准接口 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>dcti-api</artifactId>
-        </dependency>
-        <!-- 程序自身模块 -->
-        <dependency>
-            <groupId>com.dwarfeng</groupId>
-            <artifactId>bitalarm-impl</artifactId>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <!-- 插件列表 -->
-        <plugins>
-            <!-- Maven 清理插件，用于清理测试时留下的日志。 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>logs</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-            <!-- Maven 装配插件，用于装配项目文件。 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>single</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/assembly/assembly.xml</descriptor>
-                            </descriptors>
-                            <tarLongFileMode>gnu</tarLongFileMode>
-                            <attach>false</attach>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Maven 打包插件，用于打可以运行的 jar 包。 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>./</classpathPrefix>
-                            <mainClass>${mainClass}</mainClass>
-                        </manifest>
-                    </archive>
-                    <finalName>${project.name}-${project.version}</finalName>
-                </configuration>
-            </plugin>
-        </plugins>
-        <!-- 配置资源目录 -->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-        <!-- 配置测试资源目录 -->
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-        </testResources>
-    </build>
+    <modules>
+        <module>bitalarm-node-all-he</module>
+    </modules>
 </project>

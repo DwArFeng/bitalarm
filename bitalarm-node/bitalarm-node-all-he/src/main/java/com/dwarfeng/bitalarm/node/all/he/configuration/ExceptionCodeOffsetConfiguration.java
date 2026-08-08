@@ -1,4 +1,4 @@
-package com.dwarfeng.bitalarm.node.configuration;
+package com.dwarfeng.bitalarm.node.all.he.configuration;
 
 import com.dwarfeng.bitalarm.sdk.util.ServiceExceptionCodes;
 import org.springframework.beans.factory.annotation.Value;

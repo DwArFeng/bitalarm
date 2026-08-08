@@ -1,4 +1,4 @@
-package com.dwarfeng.bitalarm.node.configuration;
+package com.dwarfeng.bitalarm.node.all.he.configuration;
 
 import com.dwarfeng.bitalarm.impl.bean.BeanMapper;
 import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmHistory;

@@ -21,7 +21,7 @@
     <fileSets>
         <fileSet>
             <outputDirectory>docs</outputDirectory>
-            <directory>../docs</directory>
+            <directory>../../docs</directory>
             <includes>
                 <include>**/*.md</include>
             </includes>
@@ -31,7 +31,7 @@
         </fileSet>
         <fileSet>
             <outputDirectory>docs</outputDirectory>
-            <directory>../docs</directory>
+            <directory>../../docs</directory>
             <includes>
                 <include>**/*.png</include>
             </includes>
@@ -162,23 +162,18 @@
     <files>
         <file>
             <outputDirectory>./</outputDirectory>
-            <source>../README.md</source>
+            <source>../../README.md</source>
             <fileMode>0644</fileMode>
         </file>
         <file>
             <outputDirectory>./</outputDirectory>
-            <source>../CHANGELOG.md</source>
+            <source>../../CHANGELOG.md</source>
             <fileMode>0644</fileMode>
         </file>
         <file>
             <outputDirectory>./</outputDirectory>
-            <source>../LICENSE</source>
+            <source>../../LICENSE</source>
             <fileMode>0644</fileMode>
-        </file>
-        <file>
-            <outputDirectory>lib</outputDirectory>
-            <source>${project.build.directory}/${project.name}-${project.version}.jar</source>
-            <fileMode>0755</fileMode>
         </file>
     </files>
 </assembly>

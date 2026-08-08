@@ -4,6 +4,14 @@
 
 ### 功能构建
 
+- `bitalarm-distribute` 模块新增。
+  - 新增 `bitalarm-distribute` 模块，负责各个构型的产物分发。
+
+- `bitalarm-node` 模块重构。
+  - 将 `bitalarm-node` 调整为聚合模块。
+  - 新建 `bitalarm-node-all-he` 模块，迁移项目原有内容，并形成项目的 `he` 构型。
+  - 其它相关文件路径、包路径、配置路径等同步调整。
+
 - 配置命名空间全局唯一化改造。
   - 为 `bitalarm-impl` 模块配置键统一增加全球唯一前缀，以消除跨微服务同名配置冲突。
   - 为 `bitalarm-node` 模块配置键统一增加全球唯一前缀，以消除跨微服务同名配置冲突。

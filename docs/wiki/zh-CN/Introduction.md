@@ -61,7 +61,7 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
    找到打包后的目标文件：
 
    ```
-   bitalarm-node/target/bitalarm-node-[version]-release.tar.gz
+   bitalarm-distribute/target/distribute/bitalarm-all-he/bitalarm-all-he-[version]-release.tar.gz
    ```
 
    将其解压至 windows 系统或者 linux 系统。

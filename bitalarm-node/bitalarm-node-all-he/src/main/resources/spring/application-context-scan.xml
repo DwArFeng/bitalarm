@@ -22,9 +22,9 @@
     <!-- 扫描 cache 的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.bitalarm.impl.cache"/>
     <!-- 扫描配置类所在的包。 -->
-    <context:component-scan base-package="com.dwarfeng.bitalarm.node.configuration"/>
+    <context:component-scan base-package="com.dwarfeng.bitalarm.node.all.he.configuration"/>
     <!-- 扫描启动器有关的 handler 所在的包。 -->
-    <context:component-scan base-package="com.dwarfeng.bitalarm.node.handler"/>
+    <context:component-scan base-package="com.dwarfeng.bitalarm.node.all.he.handler"/>
     <!-- 扫描 aop 增强所在的包。 -->
     <context:component-scan base-package="com.dwarfeng.subgrade.sdk.interceptor.analyse"/>
 </beans>

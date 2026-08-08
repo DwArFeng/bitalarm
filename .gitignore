@@ -72,30 +72,30 @@ buildNumber.properties
 ## Logger Files
 #################
 /bitalarm-impl/logs/
-/bitalarm-node/logs/
+/bitalarm-node/bitalarm-node-all-he/logs/
 
 #################
 ## Configuration Files
 #################
 /bitalarm-impl/conf/
-/bitalarm-node/conf/
+/bitalarm-node/bitalarm-node-all-he/conf/
 
 #################
 ## Libext Files
 #################
-/bitalarm-node/libext/
+/bitalarm-node/bitalarm-node-all-he/libext/
 
 #################
 ## Opt Files
 #################
-/bitalarm-node/opt/
+/bitalarm-node/bitalarm-node-all-he/opt/
 
 #################
 ## Optext Files
 #################
-/bitalarm-node/optext/
+/bitalarm-node/bitalarm-node-all-he/optext/
 
 #################
 ## Confext Files
 #################
-/bitalarm-node/confext/
+/bitalarm-node/bitalarm-node-all-he/confext/

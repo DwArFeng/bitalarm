@@ -1,4 +1,4 @@
-package com.dwarfeng.bitalarm.node.configuration;
+package com.dwarfeng.bitalarm.node.all.he.configuration;
 
 import com.dwarfeng.bitalarm.impl.service.operation.*;
 import com.dwarfeng.bitalarm.stack.bean.entity.*;

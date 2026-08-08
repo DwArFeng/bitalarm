@@ -1,4 +1,4 @@
-package com.dwarfeng.bitalarm.node.configuration;
+package com.dwarfeng.bitalarm.node.all.he.configuration;
 
 import com.dwarfeng.bitalarm.impl.handler.ConsumeHandlerImpl;
 import com.dwarfeng.bitalarm.impl.handler.consumer.AlarmHistoryValueConsumer;

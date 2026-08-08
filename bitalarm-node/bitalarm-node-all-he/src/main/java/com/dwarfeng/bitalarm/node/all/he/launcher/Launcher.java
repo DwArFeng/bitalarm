@@ -1,6 +1,6 @@
-package com.dwarfeng.bitalarm.node.launcher;
+package com.dwarfeng.bitalarm.node.all.he.launcher;
 
-import com.dwarfeng.bitalarm.node.handler.LauncherSettingHandler;
+import com.dwarfeng.bitalarm.node.all.he.handler.LauncherSettingHandler;
 import com.dwarfeng.bitalarm.stack.service.AlarmQosService;
 import com.dwarfeng.bitalarm.stack.service.ResetQosService;
 import com.dwarfeng.springterminator.sdk.util.ApplicationUtil;

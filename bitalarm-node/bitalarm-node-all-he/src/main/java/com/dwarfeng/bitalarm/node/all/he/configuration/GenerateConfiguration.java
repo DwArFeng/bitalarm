@@ -1,4 +1,4 @@
-package com.dwarfeng.bitalarm.node.configuration;
+package com.dwarfeng.bitalarm.node.all.he.configuration;
 
 import com.dwarfeng.sfds.api.integration.subgrade.SnowflakeLongIdKeyGenerator;
 import com.dwarfeng.sfds.stack.service.GenerateService;

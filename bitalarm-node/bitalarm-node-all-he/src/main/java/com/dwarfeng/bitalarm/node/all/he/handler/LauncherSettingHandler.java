@@ -1,4 +1,4 @@
-package com.dwarfeng.bitalarm.node.handler;
+package com.dwarfeng.bitalarm.node.all.he.handler;
 
 import com.dwarfeng.subgrade.stack.handler.Handler;
 import org.springframework.beans.factory.annotation.Value;

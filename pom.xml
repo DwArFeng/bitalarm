@@ -471,6 +471,16 @@
                 <artifactId>bitalarm-node</artifactId>
                 <version>2.0.0.a-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>bitalarm-node-all-he</artifactId>
+                <version>2.0.0.a-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dwarfeng</groupId>
+                <artifactId>bitalarm-distribute</artifactId>
+                <version>2.0.0.a-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -516,5 +526,6 @@
         <module>bitalarm-sdk</module>
         <module>bitalarm-impl</module>
         <module>bitalarm-node</module>
+        <module>bitalarm-distribute</module>
     </modules>
 </project>

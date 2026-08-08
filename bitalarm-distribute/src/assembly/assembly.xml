@@ -1,0 +1,44 @@
+<assembly
+        xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0
+        http://maven.apache.org/xsd/assembly-2.0.0.xsd"
+>
+    <id>release</id>
+
+    <formats>
+        <format>dir</format>
+    </formats>
+
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <fileSets>
+        <!-- region bitalarm-node-all-he -->
+        <fileSet>
+            <outputDirectory>./bitalarm-all-he</outputDirectory>
+            <directory>
+                ../bitalarm-node/bitalarm-node-all-he/target
+            </directory>
+            <includes>
+                <include>bitalarm-all-he-${project.version}-release/**</include>
+            </includes>
+            <filtered>false</filtered>
+            <fileMode>0644</fileMode>
+            <directoryMode>0755</directoryMode>
+        </fileSet>
+        <!-- endregion -->
+    </fileSets>
+
+    <files>
+        <!-- region bitalarm-node-all-he -->
+        <file>
+            <outputDirectory>./bitalarm-all-he</outputDirectory>
+            <source>
+                ../bitalarm-node/bitalarm-node-all-he/target/bitalarm-all-he-${project.version}-release.tar.gz
+            </source>
+            <filtered>false</filtered>
+            <fileMode>0644</fileMode>
+        </file>
+        <!-- endregion -->
+    </files>
+</assembly>
