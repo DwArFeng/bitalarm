@@ -2,14 +2,14 @@ package com.dwarfeng.bitalarm.impl.service;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator;
 import com.dwarfeng.bitalarm.stack.service.AlarmTypeIndicatorMaintainService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +18,12 @@ import java.util.List;
 @Service
 public class AlarmTypeIndicatorMaintainServiceImpl implements AlarmTypeIndicatorMaintainService {
 
-    private final GeneralBatchCrudService<StringIdKey, AlarmTypeIndicator> crudService;
-    private final DaoOnlyEntireLookupService<AlarmTypeIndicator> entireLookupService;
+    private final BatchCrudService<StringIdKey, AlarmTypeIndicator> crudService;
+    private final EntireLookupService<AlarmTypeIndicator> entireLookupService;
 
     public AlarmTypeIndicatorMaintainServiceImpl(
-            GeneralBatchCrudService<StringIdKey, AlarmTypeIndicator> crudService,
-            DaoOnlyEntireLookupService<AlarmTypeIndicator> entireLookupService
+            BatchCrudService<StringIdKey, AlarmTypeIndicator> crudService,
+            EntireLookupService<AlarmTypeIndicator> entireLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

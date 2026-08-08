@@ -1,15 +1,13 @@
 package com.dwarfeng.bitalarm.impl.dao;
 
-import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmTypeIndicator;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator;
 import com.dwarfeng.bitalarm.stack.dao.AlarmTypeIndicatorDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +17,12 @@ import java.util.List;
 @Repository
 public class AlarmTypeIndicatorDaoImpl implements AlarmTypeIndicatorDao {
 
-    private final HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AlarmTypeIndicator,
-            HibernateAlarmTypeIndicator> batchBaseDao;
-    private final HibernateEntireLookupDao<AlarmTypeIndicator, HibernateAlarmTypeIndicator> entireLookupDao;
+    private final BatchBaseDao<StringIdKey, AlarmTypeIndicator> batchBaseDao;
+    private final EntireLookupDao<AlarmTypeIndicator> entireLookupDao;
 
     public AlarmTypeIndicatorDaoImpl(
-            HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AlarmTypeIndicator, HibernateAlarmTypeIndicator>
-                    batchBaseDao,
-            HibernateEntireLookupDao<AlarmTypeIndicator, HibernateAlarmTypeIndicator> entireLookupDao
+            BatchBaseDao<StringIdKey, AlarmTypeIndicator> batchBaseDao,
+            EntireLookupDao<AlarmTypeIndicator> entireLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

@@ -4,6 +4,25 @@
 
 ### 功能构建
 
+- 部分代理类实现中的字段类型提升为对应的接口，与具体实现解耦。
+  - com.dwarfeng.bitalarm.impl.cache.AlarmHistoryCacheImpl。
+  - com.dwarfeng.bitalarm.impl.cache.AlarmSettingCacheImpl。
+  - com.dwarfeng.bitalarm.impl.cache.AlarmTypeIndicatorCacheImpl。
+  - com.dwarfeng.bitalarm.impl.cache.EnabledAlarmSettingCacheImpl。
+  - com.dwarfeng.bitalarm.impl.cache.PointCacheImpl。
+  - com.dwarfeng.bitalarm.impl.dao.AlarmHistoryDaoImpl。
+  - com.dwarfeng.bitalarm.impl.dao.AlarmInfoDaoImpl。
+  - com.dwarfeng.bitalarm.impl.dao.AlarmSettingDaoImpl。
+  - com.dwarfeng.bitalarm.impl.dao.AlarmTypeIndicatorDaoImpl。
+  - com.dwarfeng.bitalarm.impl.dao.CurrentAlarmDaoImpl。
+  - com.dwarfeng.bitalarm.impl.dao.PointDaoImpl。
+  - com.dwarfeng.bitalarm.impl.service.AlarmHistoryMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.AlarmInfoMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.AlarmSettingMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.AlarmTypeIndicatorMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.CurrentAlarmMaintainServiceImpl。
+  - com.dwarfeng.bitalarm.impl.service.PointMaintainServiceImpl。
+
 - 优化项目的异常处理机制。
   - `bitalarm-sdk` 子模块新增 `ServiceExceptionHelper` 工具类，统一维护项目自身的异常映射关系。
   - `bitalarm-impl` 子模块 `ServiceExceptionMapperConfiguration` 配置类的异常映射处理逻辑优化。

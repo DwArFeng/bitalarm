@@ -1,16 +1,14 @@
 package com.dwarfeng.bitalarm.impl.dao;
 
-import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmSetting;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmSetting;
 import com.dwarfeng.bitalarm.stack.dao.AlarmSettingDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,15 +18,14 @@ import java.util.List;
 @Repository
 public class AlarmSettingDaoImpl implements AlarmSettingDao {
 
-    private final HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmSetting, HibernateAlarmSetting>
-            batchBaseDao;
-    private final HibernateEntireLookupDao<AlarmSetting, HibernateAlarmSetting> entireLookupDao;
-    private final HibernatePresetLookupDao<AlarmSetting, HibernateAlarmSetting> presetLookupDao;
+    private final BatchBaseDao<LongIdKey, AlarmSetting> batchBaseDao;
+    private final EntireLookupDao<AlarmSetting> entireLookupDao;
+    private final PresetLookupDao<AlarmSetting> presetLookupDao;
 
     public AlarmSettingDaoImpl(
-            HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmSetting, HibernateAlarmSetting> batchBaseDao,
-            HibernateEntireLookupDao<AlarmSetting, HibernateAlarmSetting> entireLookupDao,
-            HibernatePresetLookupDao<AlarmSetting, HibernateAlarmSetting> presetLookupDao
+            BatchBaseDao<LongIdKey, AlarmSetting> batchBaseDao,
+            EntireLookupDao<AlarmSetting> entireLookupDao,
+            PresetLookupDao<AlarmSetting> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

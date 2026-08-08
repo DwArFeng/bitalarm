@@ -2,15 +2,15 @@ package com.dwarfeng.bitalarm.impl.service;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.Point;
 import com.dwarfeng.bitalarm.stack.service.PointMaintainService;
-import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Service
 public class PointMaintainServiceImpl implements PointMaintainService {
 
-    private final CustomBatchCrudService<LongIdKey, Point> crudService;
-    private final DaoOnlyEntireLookupService<Point> entireLookupService;
-    private final DaoOnlyPresetLookupService<Point> presetLookupService;
+    private final BatchCrudService<LongIdKey, Point> crudService;
+    private final EntireLookupService<Point> entireLookupService;
+    private final PresetLookupService<Point> presetLookupService;
 
     public PointMaintainServiceImpl(
-            CustomBatchCrudService<LongIdKey, Point> crudService,
-            DaoOnlyEntireLookupService<Point> entireLookupService,
-            DaoOnlyPresetLookupService<Point> presetLookupService
+            BatchCrudService<LongIdKey, Point> crudService,
+            EntireLookupService<Point> entireLookupService,
+            PresetLookupService<Point> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

@@ -1,15 +1,14 @@
 package com.dwarfeng.bitalarm.impl.dao;
 
-import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmInfo;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.dao.AlarmInfoDao;
-import com.dwarfeng.subgrade.impl.dao.RedisBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.RedisEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.RedisPresetLookupDao;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +18,14 @@ import java.util.List;
 @Repository
 public class AlarmInfoDaoImpl implements AlarmInfoDao {
 
-    private final RedisBatchBaseDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> batchBaseDao;
-    private final RedisEntireLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> entireLookupDao;
-    private final RedisPresetLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> presetLookupDao;
+    private final BatchBaseDao<LongIdKey, AlarmInfo> batchBaseDao;
+    private final EntireLookupDao<AlarmInfo> entireLookupDao;
+    private final PresetLookupDao<AlarmInfo> presetLookupDao;
 
     public AlarmInfoDaoImpl(
-            RedisBatchBaseDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> batchBaseDao,
-            RedisEntireLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> entireLookupDao,
-            RedisPresetLookupDao<LongIdKey, AlarmInfo, FastJsonAlarmInfo> presetLookupDao
+            BatchBaseDao<LongIdKey, AlarmInfo> batchBaseDao,
+            EntireLookupDao<AlarmInfo> entireLookupDao,
+            PresetLookupDao<AlarmInfo> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

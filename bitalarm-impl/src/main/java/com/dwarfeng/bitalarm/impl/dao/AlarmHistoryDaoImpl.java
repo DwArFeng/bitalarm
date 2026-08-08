@@ -1,16 +1,14 @@
 package com.dwarfeng.bitalarm.impl.dao;
 
-import com.dwarfeng.bitalarm.impl.bean.entity.HibernateAlarmHistory;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmHistory;
 import com.dwarfeng.bitalarm.stack.dao.AlarmHistoryDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,15 +18,14 @@ import java.util.List;
 @Repository
 public class AlarmHistoryDaoImpl implements AlarmHistoryDao {
 
-    private final HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmHistory, HibernateAlarmHistory>
-            batchBaseDao;
-    private final HibernateEntireLookupDao<AlarmHistory, HibernateAlarmHistory> entireLookupDao;
-    private final HibernatePresetLookupDao<AlarmHistory, HibernateAlarmHistory> presetLookupDao;
+    private final BatchBaseDao<LongIdKey, AlarmHistory> batchBaseDao;
+    private final EntireLookupDao<AlarmHistory> entireLookupDao;
+    private final PresetLookupDao<AlarmHistory> presetLookupDao;
 
     public AlarmHistoryDaoImpl(
-            HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, AlarmHistory, HibernateAlarmHistory> batchBaseDao,
-            HibernateEntireLookupDao<AlarmHistory, HibernateAlarmHistory> entireLookupDao,
-            HibernatePresetLookupDao<AlarmHistory, HibernateAlarmHistory> presetLookupDao
+            BatchBaseDao<LongIdKey, AlarmHistory> batchBaseDao,
+            EntireLookupDao<AlarmHistory> entireLookupDao,
+            PresetLookupDao<AlarmHistory> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;

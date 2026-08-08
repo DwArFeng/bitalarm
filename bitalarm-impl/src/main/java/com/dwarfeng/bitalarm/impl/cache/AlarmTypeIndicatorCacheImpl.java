@@ -1,12 +1,11 @@
 package com.dwarfeng.bitalarm.impl.cache;
 
-import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonAlarmTypeIndicator;
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmTypeIndicator;
 import com.dwarfeng.bitalarm.stack.cache.AlarmTypeIndicatorCache;
-import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
+import com.dwarfeng.subgrade.stack.cache.BatchBaseCache;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +15,10 @@ import java.util.List;
 @Repository
 public class AlarmTypeIndicatorCacheImpl implements AlarmTypeIndicatorCache {
 
-    private final RedisBatchBaseCache<StringIdKey, AlarmTypeIndicator, FastJsonAlarmTypeIndicator> batchBaseCache;
+    private final BatchBaseCache<StringIdKey, AlarmTypeIndicator> batchBaseCache;
 
     public AlarmTypeIndicatorCacheImpl(
-            RedisBatchBaseCache<StringIdKey, AlarmTypeIndicator, FastJsonAlarmTypeIndicator> batchBaseCache
+            BatchBaseCache<StringIdKey, AlarmTypeIndicator> batchBaseCache
     ) {
         this.batchBaseCache = batchBaseCache;
     }

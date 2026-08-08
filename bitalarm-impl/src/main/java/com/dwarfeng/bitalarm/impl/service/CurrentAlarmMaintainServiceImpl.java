@@ -2,15 +2,15 @@ package com.dwarfeng.bitalarm.impl.service;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
 import com.dwarfeng.bitalarm.stack.service.CurrentAlarmMaintainService;
-import com.dwarfeng.subgrade.impl.service.CustomCrudService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.CrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
+import com.dwarfeng.subgrade.stack.service.PresetLookupService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +19,14 @@ import java.util.List;
 @Service
 public class CurrentAlarmMaintainServiceImpl implements CurrentAlarmMaintainService {
 
-    private final CustomCrudService<LongIdKey, CurrentAlarm> crudService;
-    private final DaoOnlyEntireLookupService<CurrentAlarm> entireLookupService;
-    private final DaoOnlyPresetLookupService<CurrentAlarm> presetLookupService;
+    private final CrudService<LongIdKey, CurrentAlarm> crudService;
+    private final EntireLookupService<CurrentAlarm> entireLookupService;
+    private final PresetLookupService<CurrentAlarm> presetLookupService;
 
     public CurrentAlarmMaintainServiceImpl(
-            CustomCrudService<LongIdKey, CurrentAlarm> crudService,
-            DaoOnlyEntireLookupService<CurrentAlarm> entireLookupService,
-            DaoOnlyPresetLookupService<CurrentAlarm> presetLookupService
+            CrudService<LongIdKey, CurrentAlarm> crudService,
+            EntireLookupService<CurrentAlarm> entireLookupService,
+            PresetLookupService<CurrentAlarm> presetLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

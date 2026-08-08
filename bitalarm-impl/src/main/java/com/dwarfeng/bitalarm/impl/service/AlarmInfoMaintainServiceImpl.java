@@ -2,14 +2,14 @@ package com.dwarfeng.bitalarm.impl.service;
 
 import com.dwarfeng.bitalarm.stack.bean.entity.AlarmInfo;
 import com.dwarfeng.bitalarm.stack.service.AlarmInfoMaintainService;
-import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
-import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
+import com.dwarfeng.subgrade.stack.service.BatchCrudService;
+import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +18,12 @@ import java.util.List;
 @Service
 public class AlarmInfoMaintainServiceImpl implements AlarmInfoMaintainService {
 
-    private final CustomBatchCrudService<LongIdKey, AlarmInfo> crudService;
-    private final DaoOnlyEntireLookupService<AlarmInfo> entireLookupService;
+    private final BatchCrudService<LongIdKey, AlarmInfo> crudService;
+    private final EntireLookupService<AlarmInfo> entireLookupService;
 
     public AlarmInfoMaintainServiceImpl(
-            CustomBatchCrudService<LongIdKey, AlarmInfo> crudService,
-            DaoOnlyEntireLookupService<AlarmInfo> entireLookupService
+            BatchCrudService<LongIdKey, AlarmInfo> crudService,
+            EntireLookupService<AlarmInfo> entireLookupService
     ) {
         this.crudService = crudService;
         this.entireLookupService = entireLookupService;

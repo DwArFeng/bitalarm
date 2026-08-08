@@ -1,15 +1,14 @@
 package com.dwarfeng.bitalarm.impl.dao;
 
-import com.dwarfeng.bitalarm.sdk.bean.entity.FastJsonCurrentAlarm;
 import com.dwarfeng.bitalarm.stack.bean.entity.CurrentAlarm;
 import com.dwarfeng.bitalarm.stack.dao.CurrentAlarmDao;
-import com.dwarfeng.subgrade.impl.dao.RedisBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.RedisEntireLookupDao;
-import com.dwarfeng.subgrade.impl.dao.RedisPresetLookupDao;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.dao.BatchBaseDao;
+import com.dwarfeng.subgrade.stack.dao.EntireLookupDao;
+import com.dwarfeng.subgrade.stack.dao.PresetLookupDao;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +18,14 @@ import java.util.List;
 @Repository
 public class CurrentAlarmDaoImpl implements CurrentAlarmDao {
 
-    private final RedisBatchBaseDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> batchBaseDao;
-    private final RedisEntireLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> entireLookupDao;
-    private final RedisPresetLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> presetLookupDao;
+    private final BatchBaseDao<LongIdKey, CurrentAlarm> batchBaseDao;
+    private final EntireLookupDao<CurrentAlarm> entireLookupDao;
+    private final PresetLookupDao<CurrentAlarm> presetLookupDao;
 
     public CurrentAlarmDaoImpl(
-            RedisBatchBaseDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> batchBaseDao,
-            RedisEntireLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> entireLookupDao,
-            RedisPresetLookupDao<LongIdKey, CurrentAlarm, FastJsonCurrentAlarm> presetLookupDao
+            BatchBaseDao<LongIdKey, CurrentAlarm> batchBaseDao,
+            EntireLookupDao<CurrentAlarm> entireLookupDao,
+            PresetLookupDao<CurrentAlarm> presetLookupDao
     ) {
         this.batchBaseDao = batchBaseDao;
         this.entireLookupDao = entireLookupDao;
