@@ -42,7 +42,7 @@
         <dubbo.version>2.7.23</dubbo.version>
         <netty.version>4.2.9.Final</netty.version>
         <zookeeper.version>3.9.5</zookeeper.version>
-        <guava.version>32.0.1-jre</guava.version>
+        <guava.version>33.7.1-jre</guava.version>
         <curator.version>4.3.0</curator.version>
         <aspectj.version>1.8.2</aspectj.version>
         <hibernate.version>5.4.24.Final</hibernate.version>
